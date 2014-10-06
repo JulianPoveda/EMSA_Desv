@@ -1,0 +1,86 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <TextView
+        android:id="@+id/LogginLblUsuario"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/LogginTxtUsuario"
+        android:layout_alignTop="@+id/LogginTxtUsuario"
+        android:layout_marginRight="13dp"
+        android:layout_toLeftOf="@+id/LogginTxtUsuario"
+        android:gravity="right|center_vertical"
+        android:text="@string/LogginLblUsuario"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/LogginTxtContrasena"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/LogginTxtUsuario"
+        android:layout_below="@+id/LogginTxtUsuario"
+        android:layout_marginTop="14dp"
+        android:layout_toRightOf="@+id/LogginLblUsuario"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/LogginLblContrasena"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/LogginTxtContrasena"
+        android:layout_alignLeft="@+id/LogginLblUsuario"
+        android:layout_alignTop="@+id/LogginTxtContrasena"
+        android:gravity="right|center_vertical"
+        android:text="@string/LogginLblContrasena"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/LogginLblVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/LogginLblVersion"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/LogginLblCodigo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/LogginLblUsuario"
+        android:layout_alignLeft="@+id/LogginLblUsuario"
+        android:layout_alignRight="@+id/LogginTxtUsuario"
+        android:layout_marginBottom="38dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/LogginLblEquipo"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/LogginBtnIniciar"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/LogginTxtContrasena"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="@string/LogginBtnIniciar" />
+
+    <EditText
+        android:id="@+id/LogginTxtUsuario"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/LogginLblVersion"
+        android:layout_marginRight="18dp"
+        android:layout_marginTop="118dp"
+        android:ems="10"
+        android:inputType="text" >
+
+        <requestFocus />
+    </EditText>
+
+</RelativeLayout>

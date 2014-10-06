@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/OrdenesTrabajo" android:title="Ordenes de Trabajo"></item>
+    <item android:id="@+id/ImpresionPrueba" android:title="Impresion de Prueba"></item>
+    <item android:id="@+id/Cargue" android:title="Cargue">
+        <menu>
+            <item android:id="@+id/ParametrosArchivo" android:title="Parametros Por Archivo" /><item android:id="@+id/ParametrosRed" android:title="Parametros Por Red" />
+            <item android:id="@+id/TrabajoArchivo" android:title="Trabajo Por Archivo"/><item android:id="@+id/TrabajoRed" android:title="Trabajo Por Red" />
+            
+            
+        </menu>
+    </item>
+    <item android:id="@+id/Descargue" android:title="Descargue">
+        <menu>
+            <item android:id="@+id/OrdenesRealizadas" android:title="Ordenes Ejecutadas"/>
+            <item android:id="@+id/OrdenesPendientes" android:title="Ordenes Sin Ejecutar"/>
+        </menu>
+    </item>
+    <item android:id="@+id/Configuracion" android:title="Configuracion"></item><item android:id="@+id/Salir" android:title="Salir"></item>
+    
+    
+
+</menu>

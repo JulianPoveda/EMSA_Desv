@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="CfgLblServidor">Servidor</string>
+    <string name="CfgLblPuerto">Puerto</string>
+    <string name="CfgLblModulo">Modulo</string>
+    <string name="CfgLblWebService">Web Service</string>
+    <string name="CfgLblVersion">Version</string>
+    <string name="CfgLblEquipo">Equipo</string>
+    <string name="CfgLblCedula">Cedula</string>
+    <string name="CfgLblNombre">Nombre</string>
+    <string name="CfglblImpresora">Impresora</string>
+    <string name="CfgBtnGuardar">Guardar</string>
+    
+</resources>
