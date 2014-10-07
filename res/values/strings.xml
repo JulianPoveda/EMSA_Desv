@@ -5,5 +5,12 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_configuracion">Configuracion Del Sistema</string>
     <string name="title_activity_lista_trabajo">ListaTrabajo</string>
+    <string name="title_activity_dialogo_informacion">DialogoInformacion</string>
+    <string name="title_activity_dialogo_confirmacion">DialogoConfirmacion</string>
+    <string name="title_activity_datos_actas">DatosActas</string>
+    <string name="title_activity_acometida">Acometida</string>
+    <string name="title_activity_sellos">Sellos</string>
+    <string name="title_activity_censo_carga">CensoCarga</string>
+    <string name="title_activity_contador">Contador</string>
 
 </resources>

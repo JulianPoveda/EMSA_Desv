@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="CensoLblElemento">Elemento</string>
+    <string name="CensoLblCarga">Carga</string>
+    <string name="CensoLblTipoServicio">Tipo Servicio</string>
+    <string name="CensoLblVatios">Vatios</string>
+    <string name="CensoLblCantidad">Cnt</string>
+    <string name="CensoBtnRegistrar">Registrar</string>
+    <string name="CensoLblTotalCensoCarga">Total Censo Carga:</string>
+    <string name="CensoLblTotalCargaRegistrada">Total Carga Registrada:</string>
+    <string name="CensoLblTotalCargaDirecta">Total Carga Directa:</string>
+    <string name="CensoLblTotalCargaComercial">Total Carga Comercial:</string>
+    <string name="CensoLblTotalCargaResidencial">Total Carga Residencial:</string>
+    
+</resources>

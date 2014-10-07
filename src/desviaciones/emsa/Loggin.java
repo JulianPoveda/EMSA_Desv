@@ -2,6 +2,7 @@ package desviaciones.emsa;
 
 import java.io.File;
 
+import ws_connect.DownLoadParametros;
 import ws_connect.DownLoadTrabajo;
 
 import clases.ClassConfiguracion;
@@ -100,32 +101,35 @@ public class Loggin extends Activity implements OnClickListener{
 	}
 
 	 
-	 @Override
-		public boolean onOptionsItemSelected(MenuItem item) {
-			switch (item.getItemId()) {				
-				case R.id.Configuracion:
-					this.k = new Intent(this, Configuracion.class);
-					this.k.putExtra("NivelLogged", this.NivelUsuario);
-					this.k.putExtra("FolderAplicacion", this.FolderAplicacion);
-					startActivity(this.k);
-					return true;
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {				
+			case R.id.Configuracion:
+				this.k = new Intent(this, Configuracion.class);
+				this.k.putExtra("NivelLogged", this.NivelUsuario);
+				this.k.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.k);
+				return true;
+			
+			case R.id.ParametrosRed:	
+				new DownLoadParametros(this, this.FolderAplicacion).execute(this.FcnCfg.getEquipo()+"");
+				return true;
 				
-				case R.id.TrabajoRed:
-					new DownLoadTrabajo(this, this.FolderAplicacion).execute(this.FcnCfg.getEquipo()+"");
-					return true;
+			case R.id.TrabajoRed:
+				new DownLoadTrabajo(this, this.FolderAplicacion).execute(this.FcnCfg.getEquipo()+"");
+				return true;
 					
-				case R.id.OrdenesTrabajo:
-					this.k = new Intent(this, ListaTrabajo.class);
-					this.k.putExtra("NivelLogged", this.NivelUsuario);
-					this.k.putExtra("FolderAplicacion", this.FolderAplicacion);
-					startActivity(this.k);
-					return true;
-					
-					
-				default:
-					return super.onOptionsItemSelected(item);	
-			}
-	 }
+			case R.id.OrdenesTrabajo:
+				this.k = new Intent(this, ListaTrabajo.class);
+				this.k.putExtra("NivelLogged", this.NivelUsuario);
+				this.k.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.k);
+				return true;
+									
+			default:
+				return super.onOptionsItemSelected(item);	
+		}
+	}
 
 	@Override
 	public void onClick(View v) {

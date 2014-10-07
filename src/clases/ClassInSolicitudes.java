@@ -1,5 +1,6 @@
 package clases;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import sistema.SQLite;
@@ -14,7 +15,9 @@ public class ClassInSolicitudes {
 	private Context 				_ctxInSolicitudes;
 	private String 					_folderAplicacion;	
 	private String 					LineasSQL[];
-
+	
+	private DecimalFormat formatoIdSerial = new DecimalFormat("0000"); 
+	
 	public ClassInSolicitudes(Context _ctx, String _folder){
 		this._ctxInSolicitudes	= _ctx;
 		this._folderAplicacion	= _folder;
@@ -76,5 +79,30 @@ public class ClassInSolicitudes {
 			_listaNodos.add(this._tempTabla.get(i).getAsString("nodo"));
 		}	
 		return _listaNodos;
+	}
+	
+	
+	/*public String getNumeroActa(String _solicitud){
+		this._tempRegistro = this.InSolicitudesSQL.SelectDataRegistro("in_ordenes_trabajo","id_serial,dependencia,solicitud","solicitud='"+_solicitud+"'");
+		return this._tempRegistro.getAsString("dependencia")+this._tempRegistro.getAsString("solicitud")+ formatoIdEquipo.format(this.InSolicitudesSQL.IntSelectShieldWhere("amd_configuracion", "valor", "item='equipo'")) + formatoIdSerial.format(this._tempRegistro.getAsDouble("id_serial"));
+	}*/
+	
+	public String getCuenta(String _solicitud){
+		return this.InSolicitudesSQL.StrSelectShieldWhere("in_ordenes_trabajo", "cuenta", "solicitud='"+_solicitud+"'");
+	}
+	
+	
+	public String getDependencia(String _solicitud){
+		return this.InSolicitudesSQL.StrSelectShieldWhere("in_ordenes_trabajo", "dependencia", "solicitud='"+_solicitud+"'");
+	}
+	
+	
+	public String getIdSerial(String _solicitud){
+		return formatoIdSerial.format(this.InSolicitudesSQL.DoubleSelectShieldWhere("in_ordenes_trabajo", "id_serial", "solicitud='"+_solicitud+"'"));
+	}
+	
+		
+	public boolean IniciarSolicitud(String _solicitud){
+		return true;
 	}
 }

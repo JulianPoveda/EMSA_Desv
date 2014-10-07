@@ -59,11 +59,11 @@ public class SQLite {
 			
 			//Tabla con los parametros del sistema
 			db.execSQL("CREATE TABLE amd_configuracion (item TEXT PRIMARY KEY, valor TEXT NOT NULL, nivel INTEGER NOT NULL)");				
-			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('servidor','http://190.93.133.87',0) ");
-			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('puerto','8080',0) ");
-			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('modulo','ControlEnergia/WS',0) ");
-			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('web_service','AndroidWS.php?wsdl',0)");
-			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('equipo','302',0)");
+			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('servidor','http://192.168.0.43',0) ");
+			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('puerto','80',0) ");
+			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('modulo','DesviacionesLecturas/WS',0) ");
+			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('web_service','JavaWS.php?wsdl',0)");
+			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('equipo','1',0)");
 			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('cedula_tecnico','sin_asignar',0)");
 			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('nombre_tecnico','sin_asignar',0)");
 			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('impresora','sin asignar',1)");
@@ -83,7 +83,8 @@ public class SQLite {
 														" nodo				VARCHAR(10) NOT NULL," +
 														" marca				VARCHAR(20) NOT NULL," +
 														" serie				VARCHAR(50) NOT NULL," +
-														" carga_contratada	INTEGER);");
+														" carga_contratada	INTEGER," +
+														" estado			VARCHAR(1) NOT NULL DEFAULT 'P');");
 			
 			db.execSQL(	"CREATE TABLE in_sellos( id_serial 	INTEGER NOT NULL," +
 												"solicitud  VARCHAR(20) NOT NULL," +
@@ -105,6 +106,59 @@ public class SQLite {
 													"lectura_anterior	DOUBLE PRECISION NOT NULL," +
 													"consumo			DOUBLE PRECISION NOT NULL," +
 													"PRIMARY KEY(solicitud, fecha_tomada));");
+			
+			
+			db.execSQL(	"CREATE TABLE parametros_acometida( 	 combo 					VARCHAR(100) NOT NULL," +
+																"id_opcion 				INTEGER NOT NULL," +
+																"descripcion_opcion 	VARCHAR(255) NOT NULL," +
+																"PRIMARY KEY(combo,id_opcion));");
+			
+			
+			db.execSQL(	"CREATE TABLE parametros_actas( 	 combo 					VARCHAR(100) NOT NULL," +
+															"id_opcion 				INTEGER NOT NULL," +
+															"descripcion_opcion 	VARCHAR(255) NOT NULL," +
+															"PRIMARY KEY(combo,id_opcion));");
+			
+			
+			db.execSQL(	"CREATE TABLE parametros_sellos(	 combo 					VARCHAR(100) NOT NULL," +
+															"id_opcion 				INTEGER NOT NULL," +
+															"descripcion_opcion 	VARCHAR(255) NOT NULL," +
+															"PRIMARY KEY(combo,id_opcion));");
+			
+			
+			db.execSQL(	"CREATE TABLE parametros_municipios(	 id_municipio			INTEGER NOT NULL PRIMARY KEY," +
+																"municipio 				VARCHAR(255) NOT NULL);");
+			
+			db.execSQL(	"CREATE TABLE parametros_medidores(	 marca			VARCHAR(20) NOT NULL PRIMARY KEY," +
+															"nombre 		VARCHAR(255) NOT NULL);");
+			
+			db.execSQL(	"CREATE TABLE parametros_irregularidades( 	 id_irregularidad		INTEGER NOT NULL PRIMARY KEY," +
+																	"descripcion 			VARCHAR(255) NOT NULL," +
+																	"tipo			 		VARCHAR(10) NOT NULL);");
+			
+			db.execSQL(	"CREATE TABLE parametros_elementos_censo( 	 codigo			INTEGER NOT NULL PRIMARY KEY," +
+																	"descripcion 	VARCHAR(255) NOT NULL," +
+																	"minimo			DOUBLE PRECISION NOT NULL," +
+																	"maximo			DOUBLE PRECISION NOT NULL);");
+			
+			db.execSQL( "CREATE TABLE dig_contador(  solicitud 	VARCHAR(20) NOT NULL PRIMARY KEY," +
+													"marca 		VARCHAR(30) NOT NULL," +
+													"serie		VARCHAR(30)," +
+													"lectura1	DOUBLE PRECISION," +
+													"lectura2   DOUBLE PRECISION," +
+													"tipo 		VARCHAR(30));");
+			
+			db.execSQL( "CREATE TABLE dig_actas(     solicitud 		VARCHAR(20) NOT NULL PRIMARY KEY," +
+													"doc_enterado 	VARCHAR(30)," +
+													"nom_enterado	VARCHAR(100)," +
+													"doc_testigo	VARCHAR(30)," +
+													"nom_testigo   	VARCHAR(100)," +
+													"tipo_enterado	VARCHAR(30)," +
+													"respuesta_pqr	VARCHAR(50));");
+			
+			
+			db.execSQL(	"CREATE VIEW vista_parametros_medidores AS SELECT marca, nombre , marca||' ('||nombre||')' AS resumen FROM parametros_medidores;");
+			
 			
 			
 			/*db.execSQL(	"CREATE TABLE amd_tipo_enterado(id_serial INTEGER PRIMARY KEY AUTOINCREMENT,descripcion VARCHAR(255) UNIQUE NOT NULL)");

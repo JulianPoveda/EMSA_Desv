@@ -11,13 +11,24 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <ExpandableListView
-        android:id="@+id/expandableListView1"
-        android:layout_width="match_parent"
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/TrabajoCmbNodos" >
 
-    </ExpandableListView>
+        <ListView
+            android:id="@+id/TrabajoLstSolicitudes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars="horizontal|vertical"
+            android:choiceMode="singleChoice" 
+        	android:listSelector="@android:color/darker_gray" >
+
+        </ListView>
+
+    </HorizontalScrollView>
 
 </RelativeLayout>

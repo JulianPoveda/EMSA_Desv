@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="SellosLblTipoIngreso">Tipo Ingreso</string>
+    <string name="SellosLblTipoSello">Tipo Sello</string>
+    <string name="SellosLblUbicacion">Ubicacion</string>
+    <string name="SellosLblColor">Color</string>
+    <string name="SellosLblSerie">Serie</string>
+    <string name="SellosLblIrregularidad">Irregularidad</string>
+    <string name="SellosBtnRegistrar">Registrar</string>
+    
+</resources>

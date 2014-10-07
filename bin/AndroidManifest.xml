@@ -40,6 +40,35 @@
             android:name=".ListaTrabajo"
             android:label="@string/title_activity_lista_trabajo" >
         </activity>
+        <activity
+            android:name="dialogos.DialogoInformacion"
+            android:label="@string/title_activity_dialogo_informacion"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name=".DialogoConfirmacion"
+            android:label="@string/title_activity_dialogo_confirmacion" >
+        </activity>
+        <activity
+            android:name=".DatosActas"
+            android:label="@string/title_activity_datos_actas" >
+        </activity>
+        <activity
+            android:name=".Acometida"
+            android:label="@string/title_activity_acometida" >
+        </activity>
+        <activity
+            android:name=".Sellos"
+            android:label="@string/title_activity_sellos" >
+        </activity>
+        <activity
+            android:name=".CensoCarga"
+            android:label="@string/title_activity_censo_carga" >
+        </activity>
+        <activity
+            android:name=".Contador"
+            android:label="@string/title_activity_contador" >
+        </activity>
     </application>
 
 </manifest>

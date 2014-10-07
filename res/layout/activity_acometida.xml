@@ -1,0 +1,169 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <Spinner
+        android:id="@+id/ContadorCmbMarca"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/AcometidaLblTipoIngreso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ContadorCmbMarca"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/ContadorCmbMarca"
+        android:layout_toLeftOf="@+id/ContadorCmbMarca"
+        android:gravity="right|center_vertical"
+        android:text="@string/AcometidaLblTipoIngreso"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Spinner
+        android:id="@+id/ContadorCmbTipo"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignLeft="@+id/ContadorCmbMarca"
+        android:layout_below="@+id/ContadorCmbMarca" />
+
+    <Spinner
+        android:id="@+id/CensoCmbTipo"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignLeft="@+id/ContadorCmbTipo"
+        android:layout_below="@+id/ContadorCmbTipo" />
+
+    <Spinner
+        android:id="@+id/CensoCmbCantidad"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignLeft="@+id/CensoCmbTipo"
+        android:layout_below="@+id/CensoCmbTipo" />
+
+    <Spinner
+        android:id="@+id/CensoCmbVatios"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignLeft="@+id/CensoCmbCantidad"
+        android:layout_below="@+id/CensoCmbCantidad" />
+
+    <Spinner
+        android:id="@+id/spinner6"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignLeft="@+id/CensoCmbVatios"
+        android:layout_below="@+id/CensoCmbVatios" />
+
+    <TextView
+        android:id="@+id/AcometidaLblConductor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/CensoCmbTipo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/AcometidaLblTipoIngreso"
+        android:layout_below="@+id/AcometidaLblTipoIngreso"
+        android:gravity="right|center_vertical"
+        android:text="@string/AcometidaLblConductor"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/AcometidaLblTipo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/CensoCmbCantidad"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/CensoCmbTipo"
+        android:layout_toLeftOf="@+id/CensoCmbTipo"
+        android:gravity="right|center_vertical"
+        android:text="@string/AcometidaLblTipo"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/AcometidaLblCalibre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/CensoCmbCantidad"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/CensoCmbCantidad"
+        android:layout_toLeftOf="@+id/CensoCmbCantidad"
+        android:gravity="right|center_vertical"
+        android:text="@string/AcometidaLblCalibre"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/AcometidaLblClase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/spinner6"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/AcometidaLblCalibre"
+        android:layout_alignTop="@+id/CensoCmbVatios"
+        android:gravity="right|center_vertical"
+        android:text="@string/AcometidaLblClase"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/AcometidaLblFases"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/spinner6"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/AcometidaLblClase"
+        android:layout_alignTop="@+id/spinner6"
+        android:gravity="right|center_vertical"
+        android:text="@string/AcometidaLblFases"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/AcometidaLblLongitud"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/AcometidaTxtLongitud"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/AcometidaTxtLongitud"
+        android:layout_toLeftOf="@+id/AcometidaTxtLongitud"
+        android:gravity="right|center_vertical"
+        android:text="@string/AcometidaLblLongitud"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/AcometidaTxtLongitud"
+        android:layout_width="120dp"
+        android:layout_height="25dp"
+        android:layout_alignLeft="@+id/spinner6"
+        android:layout_below="@+id/spinner6"
+        android:ems="10"
+        android:inputType="numberDecimal" />
+
+    <Button
+        android:id="@+id/AcometidaBtnRegistrar"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="73dp"
+        android:text="@string/AcometidaBtnRegistrar" />
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/AcometidaBtnRegistrar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/AcometidaLblLongitud" >
+
+        <ListView
+            android:id="@+id/AcometidaListAcometida"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" >
+        </ListView>
+
+    </HorizontalScrollView>
+
+</RelativeLayout>

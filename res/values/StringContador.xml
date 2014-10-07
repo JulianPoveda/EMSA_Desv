@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ContadorLblMarca">Marca</string>
+    <string name="ContadorLblTipo">Tipo</string>
+    <string name="ContadorLblSerie">Serie</string>
+    <string name="ContadorLblLectura1">Lectura 1</string>
+    <string name="ContadorLblLectura2">Lectura 2</string>
+    <string name="ContadorBtnRegistrar">Registrar</string>
+    <string name="ContadorBtnEliminar">Eliminar</string>
+    
+</resources>

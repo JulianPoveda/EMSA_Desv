@@ -1,0 +1,220 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <EditText
+        android:id="@+id/ActaTxtOrden"
+        android:layout_width="220dp"
+        android:layout_height="35dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:gravity="left|center_vertical"
+        android:inputType="text"
+        android:textSize="@dimen/Text6pts"
+        android:textStyle="normal" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/ActaTxtActa"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignLeft="@+id/ActaTxtOrden"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/ActaTxtOrden"
+        android:ems="10"
+        android:gravity="left|center_vertical"
+        android:inputType="text"
+        android:textSize="@dimen/Text6pts"
+        android:textStyle="normal" />
+
+    <EditText
+        android:id="@+id/ActaTxtCuenta"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignLeft="@+id/ActaTxtActa"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/ActaTxtActa"
+        android:ems="10"
+        android:gravity="left|center_vertical"
+        android:inputType="text"
+        android:textSize="@dimen/Text6pts"
+        android:textStyle="normal" />
+
+    <TextView
+        android:id="@+id/ActaLblOrden"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ActaTxtOrden"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/ActaTxtOrden"
+        android:layout_toLeftOf="@+id/ActaTxtOrden"
+        android:gravity="right|center_vertical"
+        android:text="@string/ActaLblOrden"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/ActaLblActa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ActaTxtActa"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/ActaLblOrden"
+        android:layout_below="@+id/ActaLblOrden"
+        android:gravity="right|center_vertical"
+        android:text="@string/ActaLblActa"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/ActaLblCuenta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ActaTxtCuenta"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/ActaLblActa"
+        android:layout_below="@+id/ActaLblActa"
+        android:gravity="right|center_vertical"
+        android:text="@string/ActaLblCuenta"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/ActaTxtNomEnterado"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignLeft="@+id/ActaTxtDocEnterado"
+        android:layout_below="@+id/ActaTxtDocEnterado"
+        android:ems="10"
+        android:inputType="text"
+        android:textSize="@dimen/Text6pts" />
+
+    <Spinner
+        android:id="@+id/ActaCmbTipoEnterado"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignLeft="@+id/ActaTxtNomEnterado"
+        android:layout_below="@+id/ActaTxtNomEnterado" />
+
+    <EditText
+        android:id="@+id/ActaTxtDocTestigo"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignLeft="@+id/ActaCmbTipoEnterado"
+        android:layout_below="@+id/ActaCmbTipoEnterado"
+        android:ems="10"
+        android:inputType="number"
+        android:textSize="@dimen/Text6pts" />
+
+    <EditText
+        android:id="@+id/ActaTxtNomTestigo"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignLeft="@+id/ActaTxtDocTestigo"
+        android:layout_below="@+id/ActaTxtDocTestigo"
+        android:ems="10"
+        android:inputType="text"
+        android:textSize="@dimen/Text6pts" />
+
+    <Spinner
+        android:id="@+id/ActaCmbRtaPQR"
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/ActLblRtaPQR" />
+
+    <Button
+        android:id="@+id/ActaBtnRegistrar"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/ActaCmbRtaPQR"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="@string/ActaBtnRegistrar" />
+
+    <TextView
+        android:id="@+id/ActaLblDocEnterado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ActaTxtDocEnterado"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/ActaTxtDocEnterado"
+        android:layout_toLeftOf="@+id/ActaTxtDocEnterado"
+        android:gravity="right|center_vertical"
+        android:text="@string/ActaLblDocEnterado"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/ActaLblNomEnterado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ActaTxtNomEnterado"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/ActaLblDocEnterado"
+        android:layout_below="@+id/ActaLblDocEnterado"
+        android:gravity="right|center_vertical"
+        android:text="@string/ActaLblNomEnterado"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/ActaLblTipoEnterado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ActaTxtDocTestigo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/ActaLblNomEnterado"
+        android:layout_alignTop="@+id/ActaCmbTipoEnterado"
+        android:gravity="right|center_vertical"
+        android:text="@string/ActaLblTipoEnterado"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/ActaLblDocTestigo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ActaTxtDocTestigo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/ActaLblTipoEnterado"
+        android:layout_alignTop="@+id/ActaTxtDocTestigo"
+        android:gravity="right|center_vertical"
+        android:text="@string/ActaLblDocTestigo"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/ActaLblNomTestigo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ActaTxtNomTestigo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/ActaLblDocTestigo"
+        android:layout_alignTop="@+id/ActaTxtNomTestigo"
+        android:gravity="right|center_vertical"
+        android:text="@string/ActaLblNomTestigo"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/ActaTxtDocEnterado"
+        android:layout_width="200dp"
+        android:layout_height="35dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/ActaTxtCuenta"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textSize="@dimen/Text6pts" />
+
+    <TextView
+        android:id="@+id/ActLblRtaPQR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/ActaTxtNomTestigo"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/ActaLblRtaPQR"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>

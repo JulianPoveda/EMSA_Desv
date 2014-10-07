@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/CensoCarga" android:title="Censo de Carga"></item><item android:id="@+id/Medidor" android:title="Medidor"></item>
+    
+    
+
+</menu>

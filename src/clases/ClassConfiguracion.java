@@ -1,5 +1,7 @@
 package clases;
 
+import java.text.DecimalFormat;
+
 import sistema.SQLite;
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,7 +13,8 @@ public class ClassConfiguracion {
 	private Context	 		_ctxCfg;
 	private String 			_folderAplicacion;
 
-	
+	private DecimalFormat formatoIdEquipo = new DecimalFormat("000"); 
+		
 	public ClassConfiguracion(Context _ctx, String _folder){
 		this._ctxCfg		= _ctx;
 		this._folderAplicacion	= _folder;
@@ -39,7 +42,7 @@ public class ClassConfiguracion {
 	}
 	
 	public String getEquipo(){
-		return this.CfgSQL.StrSelectShieldWhere("amd_configuracion", "valor", "item='equipo'");
+		return formatoIdEquipo.format(this.CfgSQL.DoubleSelectShieldWhere("amd_configuracion", "valor", "item='equipo'"));
 	}
 	
 	public String getCedula(){
@@ -90,19 +93,19 @@ public class ClassConfiguracion {
 		this.CfgSQL.UpdateRegistro("amd_configuracion", this._tempRegistro, "item='equipo'");
 	}
 	
-	private void setCedula(String _cedula){
+	public void setCedula(String _cedula){
 		this._tempRegistro.clear();
 		this._tempRegistro.put("valor", _cedula);
 		this.CfgSQL.UpdateRegistro("amd_configuracion", this._tempRegistro, "item='cedula_tecnico'");
 	}
 	
-	private void setTecnico(String _nombre){
+	public void setTecnico(String _nombre){
 		this._tempRegistro.clear();
 		this._tempRegistro.put("valor", _nombre);
 		this.CfgSQL.UpdateRegistro("amd_configuracion", this._tempRegistro, "item='nombre_tecnico'");
 	}
 	
-	private void setImpresora(String _impresora){
+	public void setImpresora(String _impresora){
 		this._tempRegistro.clear();
 		this._tempRegistro.put("valor", _impresora);
 		this.CfgSQL.UpdateRegistro("amd_configuracion", this._tempRegistro, "item='impresora'");

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ActaLblOrden">No Orden</string>
+    <string name="ActaLblCuenta">Cuenta</string>
+    <string name="ActaLblActa">No Acta</string>
+    <string name="ActaLblDocEnterado">Doc Enterado</string>
+    <string name="ActaLblNomEnterado">Nombre Enterado</string>
+    <string name="ActaLblTipoEnterado">Tipo Enterado</string>
+    <string name="ActaLblDocTestigo">Doc Testigo</string>
+    <string name="ActaLblNomTestigo">Nombre Testigo</string>
+    <string name="ActaLblRtaPQR">Respuesta PQR</string>
+    <string name="ActaBtnRegistrar">Registrar</string>
+    
+</resources>
