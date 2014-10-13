@@ -196,8 +196,7 @@ public class ListaTrabajo extends Activity implements OnItemSelectedListener, On
 	
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		this.SolicitudSeleccionada = this.ArraySolicitudes.get(position).getItem1();
-		
+		this.SolicitudSeleccionada = this.ArraySolicitudes.get(position).getItem1();		
 	}
 
 

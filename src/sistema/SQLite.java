@@ -59,7 +59,7 @@ public class SQLite {
 			
 			//Tabla con los parametros del sistema
 			db.execSQL("CREATE TABLE amd_configuracion (item TEXT PRIMARY KEY, valor TEXT NOT NULL, nivel INTEGER NOT NULL)");				
-			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('servidor','http://192.168.0.43',0) ");
+			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('servidor','http://192.168.0.49',0) ");
 			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('puerto','80',0) ");
 			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('modulo','DesviacionesLecturas/WS',0) ");
 			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('web_service','JavaWS.php?wsdl',0)");
@@ -156,9 +156,37 @@ public class SQLite {
 													"tipo_enterado	VARCHAR(30)," +
 													"respuesta_pqr	VARCHAR(50));");
 			
+			db.execSQL("CREATE TABLE dig_censo_carga(  	 solicitud 		VARCHAR(20) NOT NULL," +
+														"id_elemento	INTEGER NOT NULL," +
+														"cantidad		INTEGER NOT NULL," +
+														"vatios			INTEGER NOT NULL," +
+														"carga			VARCHAR(10) NOT NULL," +
+														"servicio		VARCHAR(10) NOT NULL," +
+														"PRIMARY KEY(solicitud,id_elemento,carga,servicio));");
 			
-			db.execSQL(	"CREATE VIEW vista_parametros_medidores AS SELECT marca, nombre , marca||' ('||nombre||')' AS resumen FROM parametros_medidores;");
+			db.execSQL("CREATE TABLE dig_sellos(  	 solicitud 		VARCHAR(20) NOT NULL," +
+													"tipo_ingreso	VARCHAR(50) NOT NULL," +
+													"tipo_sello		VARCHAR(50) NOT NULL," +
+													"ubicacion		VARCHAR(50) NOT NULL," +
+													"color			VARCHAR(50) NOT NULL," +
+													"serie			VARCHAR(50) NOT NULL," +
+													"irregularidad	VARCHAR(50) NOT NULL," +
+													"PRIMARY KEY(solicitud,tipo_ingreso,tipo_sello,serie));");
 			
+			db.execSQL("CREATE TABLE dig_irregularidades(solicitud 		VARCHAR(20)  NOT NULL," +
+														"irregularidad	VARCHAR(255) NOT NULL," +
+														"PRIMARY KEY(solicitud,irregularidad));");
+			
+			
+			db.execSQL(	"CREATE VIEW vista_parametros_medidores AS " +
+							"SELECT marca, nombre , marca||' ('||nombre||')' AS resumen " +
+							"FROM parametros_medidores;");
+			
+			db.execSQL(	"CREATE VIEW vista_censo_carga AS " +
+							"SELECT a.solicitud, a.id_elemento, b.descripcion, a.cantidad, a.vatios, a.carga, a.servicio " +
+							"FROM   dig_censo_carga AS a " +
+							"JOIN   parametros_elementos_censo AS b " +
+							"ON     a.id_elemento = b.codigo;");
 			
 			
 			/*db.execSQL(	"CREATE TABLE amd_tipo_enterado(id_serial INTEGER PRIMARY KEY AUTOINCREMENT,descripcion VARCHAR(255) UNIQUE NOT NULL)");

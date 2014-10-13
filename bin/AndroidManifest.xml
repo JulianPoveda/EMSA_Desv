@@ -47,7 +47,8 @@
         </activity>
         <activity
             android:name=".DialogoConfirmacion"
-            android:label="@string/title_activity_dialogo_confirmacion" >
+            android:label="@string/title_activity_dialogo_confirmacion"
+            android:theme="@android:style/Theme.Dialog" >
         </activity>
         <activity
             android:name=".DatosActas"
@@ -68,6 +69,10 @@
         <activity
             android:name=".Contador"
             android:label="@string/title_activity_contador" >
+        </activity>
+        <activity
+            android:name=".Irregularidades"
+            android:label="@string/title_activity_irregularidades" >
         </activity>
     </application>
 

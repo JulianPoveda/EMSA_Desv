@@ -11,5 +11,6 @@
     <string name="CensoLblTotalCargaDirecta">Total Carga Directa:</string>
     <string name="CensoLblTotalCargaComercial">Total Carga Comercial:</string>
     <string name="CensoLblTotalCargaResidencial">Total Carga Residencial:</string>
+    <string name="CensoBtnEliminar">Eliminar</string>
     
 </resources>

@@ -12,5 +12,6 @@
     <string name="title_activity_sellos">Sellos</string>
     <string name="title_activity_censo_carga">CensoCarga</string>
     <string name="title_activity_contador">Contador</string>
+    <string name="title_activity_irregularidades">Irregularidades</string>
 
 </resources>

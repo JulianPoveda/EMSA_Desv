@@ -11,6 +11,14 @@ import android.net.NetworkInfo;
 
 public class Utilidades {
 	
+	public String[] getCmbIncremento(int _inicio, int _final, int _incremento){
+		String[] _strRetorno = new String[(int)((_final-_inicio)/_incremento)+1];
+		for(int i = 0; i<=(int)((_final-_inicio)/_incremento); i++){
+			_strRetorno[i] = String.valueOf(_inicio);
+			_inicio += _incremento;
+		}
+		return _strRetorno;
+	}
 	
 	public boolean validacionCuenta(String _cuenta){
 		boolean _retorno = false;

@@ -114,7 +114,6 @@ public class DatosActas extends Activity implements OnClickListener{
 				startActivity(this.new_form);
 				return true;
 			
-				
 			case R.id.CensoCarga:
 				finish();
 				this.new_form = new Intent(this, CensoCarga.class);
@@ -124,6 +123,23 @@ public class DatosActas extends Activity implements OnClickListener{
 				startActivity(this.new_form);
 				return true;
 				
+			case R.id.Sellos:
+				finish();
+				this.new_form = new Intent(this, Sellos.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;
+				
+			case R.id.Irregularidades:
+				finish();
+				this.new_form = new Intent(this, Irregularidades.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;	
 				
 			default:
 				return super.onOptionsItemSelected(item);	

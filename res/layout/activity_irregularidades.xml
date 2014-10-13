@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <Spinner
+        android:id="@+id/IrregCmbIrregularidades"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
+
+    <Button
+        android:id="@+id/IrregBtnAgregar"
+        android:layout_width="130dp"
+        android:layout_height="35dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/IrregCmbIrregularidades"
+        android:layout_marginLeft="25dp"
+        android:text="@string/IrregBtnAgregar" />
+
+    <Button
+        android:id="@+id/IrregBtnEliminar"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/IrregBtnAgregar"
+        android:layout_alignTop="@+id/IrregBtnAgregar"
+        android:layout_toRightOf="@+id/IrregBtnAgregar"
+        android:text="@string/IrregBtnEliminar" />
+
+    <ListView
+        android:id="@+id/IrregLstIrregularidades"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/IrregBtnAgregar"
+        android:choiceMode="singleChoice" 
+        android:listSelector="@android:color/darker_gray" >
+    </ListView>
+
+</RelativeLayout>

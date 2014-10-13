@@ -7,5 +7,6 @@
     <string name="SellosLblSerie">Serie</string>
     <string name="SellosLblIrregularidad">Irregularidad</string>
     <string name="SellosBtnRegistrar">Registrar</string>
+    <string name="SellosBtnEliminar">Eliminar</string>
     
 </resources>
