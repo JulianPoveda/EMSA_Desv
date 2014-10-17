@@ -101,6 +101,9 @@ public class ClassInSolicitudes {
 		return formatoIdSerial.format(this.InSolicitudesSQL.DoubleSelectShieldWhere("in_ordenes_trabajo", "id_serial", "solicitud='"+_solicitud+"'"));
 	}
 	
+	public double getCargaContratada(String _solicitud){
+		return this.InSolicitudesSQL.DoubleSelectShieldWhere("in_ordenes_trabajo", "carga_contratada", "solicitud='"+_solicitud+"'");
+	}
 		
 	public boolean IniciarSolicitud(String _solicitud){
 		return true;

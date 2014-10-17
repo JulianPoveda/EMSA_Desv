@@ -41,7 +41,18 @@ public class ClassIrregularidades {
 		return _retorno;
 	}
 	
-	public void registrarIrregularidad(String _solicitud, String _irregularidad){
+	public void registrarIrregularidadById(String _solicitud, String _irregularidad){
+		this._tempRegistro.clear();
+		this._tempRegistro.put("solicitud", _solicitud);
+		this._tempRegistro.put("irregularidad", this.IrregSQL.StrSelectShieldWhere("parametros_irregularidades", "descripcion", "id_irregularidad='"+_irregularidad+"'"));
+		if(this.IrregSQL.InsertRegistro("dig_irregularidades", this._tempRegistro)){
+			Toast.makeText(this._ctxIrreg, "Irregularidad registrada correctamente.",Toast.LENGTH_SHORT).show();
+		}else{
+			Toast.makeText(this._ctxIrreg, "Error al registrar la irregularidad.",Toast.LENGTH_SHORT).show();
+		}
+	}
+	
+	public void registrarIrregularidadByDescripcion(String _solicitud, String _irregularidad){
 		this._tempRegistro.clear();
 		this._tempRegistro.put("solicitud", _solicitud);
 		this._tempRegistro.put("irregularidad", _irregularidad);
@@ -52,8 +63,15 @@ public class ClassIrregularidades {
 		}
 	}
 	
+	public void eliminarIrregularidadById(String _solicitud, String _irregularidad){
+		if(this.IrregSQL.DeleteRegistro("dig_irregularidades", "solicitud='"+_solicitud+"' AND irregularidad='"+this.IrregSQL.StrSelectShieldWhere("parametros_irregularidades", "descripcion", "id_irregularidad='"+_irregularidad+"'"))){
+			Toast.makeText(this._ctxIrreg, "Irregularidad eliminada correctamente.",Toast.LENGTH_SHORT).show();
+		}else{
+			
+		}Toast.makeText(this._ctxIrreg, "Error al eliminar la irregularidad.",Toast.LENGTH_SHORT).show();
+	}
 	
-	public void eliminarIrregularidad(String _solicitud, String _irregularidad){
+	public void eliminarIrregularidadByDescripcion(String _solicitud, String _irregularidad){
 		if(this.IrregSQL.DeleteRegistro("dig_irregularidades", "solicitud='"+_solicitud+"' AND irregularidad='"+_irregularidad+"'")){
 			Toast.makeText(this._ctxIrreg, "Irregularidad eliminada correctamente.",Toast.LENGTH_SHORT).show();
 		}else{

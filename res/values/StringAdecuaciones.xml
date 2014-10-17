@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="AdecLblSuspension">Suspension</string>
+    <string name="AdecLblTubo">Cambio o Instalacion Tubo</string>
+    <string name="AdecLblArmario">Instalacion Armario Medidor</string>
+    <string name="AdecLblSoporte">Adecuar Cambiar Soporte</string>
+    <string name="AdecLblTierra">Cambiar Instalar Tierra</string>
+    <string name="AdecLblAcometida">Cambiar Instalar Acometida</string>
+    <string name="AdecLblCaja">Cambiar Instalar Caja</string>
+    <string name="AdeclblMedidor">Cambiar Instalar Medidor</string>
+    <string name="AdecLblOtros">Otros</string>
+    <string name="AdecBtnRegistrar">Registrar</string>
+    
+</resources>

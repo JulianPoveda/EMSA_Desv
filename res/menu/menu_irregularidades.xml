@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/Acta" android:title="Acta"></item>
+    <item android:id="@+id/Acometida" android:title="Acometida"></item>
+    <item android:id="@+id/Adecuaciones" android:title="Adecuaciones"></item><item android:id="@+id/CensoCarga" android:title="Censo de Carga"></item>
+    <item android:id="@+id/Contador" android:title="Contador"></item><item android:id="@+id/DatosActas" android:title="DatosActas"></item>
+    <item android:id="@+id/Observaciones" android:title="Observaciones"></item>
+    <item android:id="@+id/Sellos" android:title="Sellos"></item>
+    
+    
+    
+
+</menu>

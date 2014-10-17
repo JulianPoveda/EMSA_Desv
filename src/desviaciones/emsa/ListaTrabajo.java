@@ -166,7 +166,7 @@ public class ListaTrabajo extends Activity implements OnItemSelectedListener, On
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(resultCode == RESULT_OK && requestCode == CONFIRMACION_INICIO_ORDEN && data.getExtras().getBoolean("accion")) {
 			finish();
-			IniciarSolicitud = new Intent(this, DatosActas.class);
+			IniciarSolicitud = new Intent(this, Actas.class);
 			this.IniciarSolicitud.putExtra("Solicitud", this.SolicitudSeleccionada);
 			this.IniciarSolicitud.putExtra("NivelUsuario", this.NivelUsuario);
 			this.IniciarSolicitud.putExtra("FolderAplicacion", this.FolderAplicacion);

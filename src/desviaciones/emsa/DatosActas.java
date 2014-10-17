@@ -2,12 +2,8 @@ package desviaciones.emsa;
 
 import java.util.ArrayList;
 
-import sistema.SQLite;
-import sistema.Utilidades;
+import clases.ClassDatosActas;
 
-import clases.ClassActas;
-import clases.ClassConfiguracion;
-import clases.ClassInSolicitudes;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -22,98 +18,151 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 public class DatosActas extends Activity implements OnClickListener{
+	private ClassDatosActas				FcnDatosActas;
+	
 	private Intent new_form;
-	private ClassConfiguracion 	FcnConfig;
-	private ClassInSolicitudes 	FcnSolicitudes;
-	private Utilidades			ActasUtil;
-	private SQLite				ActasSQL;
-	private ClassActas 			FcnActas;
-	
-	//private ContentValues				_tempRegistro;
-	private ArrayList<ContentValues> 	_tempTabla;
-	
+	private ArrayList<ContentValues> 	_tempTabla;	
 	private ArrayList<String> 			strTipoEnterado= new ArrayList<String>();
 	private ArrayAdapter<String> 		AdaptadorTipoEnterado;
 	private int 						NivelUsuario = 1;
 	private String 						Solicitud;
 	private String 						FolderAplicacion = "";
 	
-	EditText	_txtOrden, _txtActa, _txtCuenta, _txtDocEnterado, _txtNomEnterado, _txtDocTestigo, _txtNomTestigo;
-	Spinner		_cmbTipoEnterado, _cmbRespuesta;
+	private String[] _strIrregularidades 	= {"...","Si","No"};
+	private String[] _strPruebaRozamiento	= {"...","No se hacen pruebas","Si","No"};
+	private String[] _strPruebaFrenado	 	= {"...","No se hacen pruebas","Si","No"};
+	private String[] _strPruebaVacio		= {"...","No se hacen pruebas","Si","No"};
+	private String[] _strFamilias 			= {"...","0","1","2","3","4","5","6","7","8","9","10"};
+	private String[] _strFotos 				= {"...","Si","No"};
+	private String[] _strElectricista		= {"...","Si","No"};
+	private String[] _strClaseMedidor		= {"...","Interno","Sin Medidor","Induccion","Electronico"};
+	private String[] _strUbicacionMedidor	= {"...","Sin Medidor","Interno","Externo"};
+	private String[] _strAplomado			= {"...","Interno","No Hay Medidor","Si","No"};
+	private String[] _strRegistrador		= {"...","Interno","Sin Medidor","Digital","Ciclometrico"};
+	
+	private ArrayAdapter<String> AdaptIrregularidades, AdaptPruebaRozamiento, AdaptPruebaFrenado, AdaptPruebaVacio, AdaptFamilias, AdaptFotos;
+	private ArrayAdapter<String> AdaptElectricista, AdaptClaseMedidor, AdaptUbicacionMedidor, AdaptAplomado, AdaptRegistrador;
+	
+	Spinner 	_cmbIrregularidades, _cmbPruebaRozamiento, _cmbPruebaFrenado, _cmbPruebaVacio, _cmbFamilias, _cmbFotos, _cmbElectricista;
+	Spinner 	_cmbClaseMedidor, _cmbUbicacionMedidor, _cmbAplomado, _cmbRegistrador;
+	EditText	_txtTelefono, _txtPorcentajeNoResidencial;
 	Button		_btnRegistrar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_actas);
+		setContentView(R.layout.activity_datos_actas);
 		
 		Bundle bundle = getIntent().getExtras();
 		this.NivelUsuario 		= bundle.getInt("NivelUsuario");
 		this.Solicitud			= bundle.getString("Solicitud");
 		this.FolderAplicacion 	= bundle.getString("FolderAplicacion");
 		
-		this.ActasUtil		= new Utilidades();
-		this.FcnConfig		= new ClassConfiguracion(this, this.FolderAplicacion);
-		this.FcnSolicitudes = new ClassInSolicitudes(this, this.FolderAplicacion);
-		this.FcnActas 		= new ClassActas(this, this.FolderAplicacion);
-		this.ActasSQL		= new SQLite(this, this.FolderAplicacion);
+		this.FcnDatosActas 		= new ClassDatosActas(this, this.FolderAplicacion);
 		
-		_txtOrden 		= (EditText) findViewById(R.id.ActaTxtOrden);
-		_txtActa 		= (EditText) findViewById(R.id.ActaTxtActa);
-		_txtCuenta 		= (EditText) findViewById(R.id.ActaTxtCuenta);
-		_txtDocEnterado = (EditText) findViewById(R.id.ActaTxtDocEnterado);
-		_txtNomEnterado = (EditText) findViewById(R.id.ActaTxtNomEnterado);
-		_txtDocTestigo 	= (EditText) findViewById(R.id.ActaTxtDocTestigo);
-		_txtNomTestigo 	= (EditText) findViewById(R.id.ActaTxtNomTestigo);
+		_cmbIrregularidades	 	= (Spinner) findViewById(R.id.DatosCmbIrregularidades);
+		_cmbPruebaRozamiento	= (Spinner) findViewById(R.id.DatosCmbPruebaRozamiento);
+		_cmbPruebaFrenado		= (Spinner) findViewById(R.id.DatosCmbPruebaFrenado);
+		_cmbPruebaVacio			= (Spinner) findViewById(R.id.DatosCmbPruebaVacio);
+		_cmbFamilias			= (Spinner) findViewById(R.id.DatosCmbFamilias);
+		_cmbFotos				= (Spinner) findViewById(R.id.DatosCmbFotos);
+		_cmbElectricista		= (Spinner) findViewById(R.id.DatosCmbElectricista);
+		_cmbClaseMedidor		= (Spinner) findViewById(R.id.DatosCmbClaseMedidor);
+		_cmbUbicacionMedidor	= (Spinner) findViewById(R.id.DatosCmbUbicacionMedidor);
+		_cmbAplomado			= (Spinner) findViewById(R.id.DatosCmbMedidorAplomado);
+		_cmbRegistrador			= (Spinner) findViewById(R.id.DatosCmbRegistrador);		
+		_txtTelefono 				= (EditText) findViewById(R.id.DatosTxtTelefono);
+		_txtPorcentajeNoResidencial = (EditText) findViewById(R.id.DatosTxtPorcentajeNoResidencial);		
+		_btnRegistrar			= (Button) findViewById(R.id.DatosBtnRegistrar);
+					
+		this.AdaptIrregularidades 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,_strIrregularidades);
+		_cmbIrregularidades.setAdapter(this.AdaptIrregularidades);
 		
-		_cmbTipoEnterado= (Spinner) findViewById(R.id.ActaCmbTipoEnterado);
-		_cmbRespuesta	= (Spinner) findViewById(R.id.ActaCmbRtaPQR);
+		this.AdaptPruebaRozamiento 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,_strPruebaRozamiento);
+		_cmbPruebaRozamiento.setAdapter(this.AdaptPruebaRozamiento);
 		
-		_btnRegistrar	= (Button) findViewById(R.id.ActaBtnRegistrar);
+		this.AdaptPruebaFrenado 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,_strPruebaFrenado);
+		_cmbPruebaFrenado.setAdapter(this.AdaptPruebaFrenado);
 		
-		this._tempTabla = this.ActasSQL.SelectData("parametros_actas", "descripcion_opcion", "combo='tipo_enterado'");
-		this.ActasUtil.ArrayContentValuesToString(strTipoEnterado, this._tempTabla, "descripcion_opcion");
-		this.AdaptadorTipoEnterado 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,strTipoEnterado);
-		this._cmbTipoEnterado.setAdapter(this.AdaptadorTipoEnterado);
+		this.AdaptPruebaVacio 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,_strPruebaVacio);
+		_cmbPruebaVacio.setAdapter(this.AdaptPruebaVacio);
 		
-		_txtOrden.setEnabled(false);
-		_txtActa.setEnabled(false);
-		_txtCuenta.setEnabled(false);
+		this.AdaptFamilias 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,_strFamilias);
+		_cmbFamilias.setAdapter(this.AdaptFamilias);
 		
-		_txtOrden.setText(this.FcnSolicitudes.getDependencia(this.Solicitud)+this.Solicitud);
-		_txtActa.setText(this.FcnSolicitudes.getDependencia(this.Solicitud)+this.Solicitud+this.FcnConfig.getEquipo()+this.FcnSolicitudes.getIdSerial(this.Solicitud));
-		_txtCuenta.setText(this.FcnSolicitudes.getCuenta(this.Solicitud));
+		this.AdaptFotos 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,_strFotos);
+		_cmbFotos.setAdapter(this.AdaptFotos);
 		
-		_txtDocEnterado.setText(this.FcnActas.getDocEnterado(this.Solicitud));
-		_txtNomEnterado.setText(this.FcnActas.getNomEnterado(this.Solicitud));
-		_txtDocTestigo.setText(this.FcnActas.getDocTestigo(this.Solicitud));
-		_txtNomTestigo.setText(this.FcnActas.getNomTestigo(this.Solicitud));
+		this.AdaptElectricista 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,_strElectricista);
+		_cmbElectricista.setAdapter(this.AdaptElectricista);
 		
-		_cmbTipoEnterado.setSelection(AdaptadorTipoEnterado.getPosition(this.FcnActas.getTipoEnterado(this.Solicitud)));	
+		this.AdaptClaseMedidor 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,_strClaseMedidor);
+		_cmbClaseMedidor.setAdapter(this.AdaptClaseMedidor);
+		
+		this.AdaptUbicacionMedidor 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,_strUbicacionMedidor);
+		_cmbUbicacionMedidor.setAdapter(this.AdaptUbicacionMedidor);
+		
+		this.AdaptAplomado 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,_strAplomado);
+		_cmbAplomado.setAdapter(this.AdaptAplomado);
+		
+		this.AdaptRegistrador 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,_strRegistrador);
+		_cmbRegistrador.setAdapter(this.AdaptRegistrador);
+		
 		
 		_btnRegistrar.setOnClickListener(this);
+		
+		_cmbIrregularidades.setSelection(this.AdaptIrregularidades.getPosition(this.FcnDatosActas.getIrregularidades(this.Solicitud)));
+		_cmbPruebaRozamiento.setSelection(this.AdaptPruebaRozamiento.getPosition(this.FcnDatosActas.getPruebaRozamiento(this.Solicitud)));
+		_cmbPruebaFrenado.setSelection(this.AdaptPruebaFrenado.getPosition(this.FcnDatosActas.getPruebaFrenado(this.Solicitud)));
+		_cmbPruebaVacio.setSelection(this.AdaptPruebaVacio.getPosition(this.FcnDatosActas.getPruebaVacio(this.Solicitud)));
+		_cmbFamilias.setSelection(this.AdaptFamilias.getPosition(this.FcnDatosActas.getFamilias(this.Solicitud)));
+		_cmbFotos.setSelection(this.AdaptFotos.getPosition(this.FcnDatosActas.getFotos(this.Solicitud)));
+		_cmbElectricista.setSelection(this.AdaptElectricista.getPosition(this.FcnDatosActas.getElectricista(this.Solicitud)));
+		_cmbClaseMedidor.setSelection(this.AdaptClaseMedidor.getPosition(this.FcnDatosActas.getClaseMedidor(this.Solicitud)));
+		_cmbUbicacionMedidor.setSelection(this.AdaptUbicacionMedidor.getPosition(this.FcnDatosActas.getUbicacionMedidor(this.Solicitud)));
+		_cmbAplomado.setSelection(this.AdaptAplomado.getPosition(this.FcnDatosActas.getAplomado(this.Solicitud)));
+		_cmbRegistrador.setSelection(this.AdaptRegistrador.getPosition(this.FcnDatosActas.getRegistrador(this.Solicitud)));
+		_txtTelefono.setText(this.FcnDatosActas.getTelefono(this.Solicitud));
+		_txtPorcentajeNoResidencial.setText(this.FcnDatosActas.getPorcentajeNoResidencial(this.Solicitud));
 	}
-	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_actas, menu);
+		getMenuInflater().inflate(R.menu.menu_datos_actas, menu);
 		return true;
 	}
-	
+
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {				
-			case R.id.Medidor:
+		switch (item.getItemId()) {	
+			case R.id.Acta:
 				finish();
-				this.new_form = new Intent(this, Contador.class);
+				this.new_form = new Intent(this, Actas.class);
 				this.new_form.putExtra("Solicitud", this.Solicitud);
 				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
 				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
 				startActivity(this.new_form);
 				return true;
 			
+			case R.id.Acometida:
+				finish();
+				this.new_form = new Intent(this, Acometida.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;
+				
+			case R.id.Adecuaciones:
+				finish();
+				this.new_form = new Intent(this, Adecuaciones.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;		
+				
 			case R.id.CensoCarga:
 				finish();
 				this.new_form = new Intent(this, CensoCarga.class);
@@ -121,11 +170,20 @@ public class DatosActas extends Activity implements OnClickListener{
 				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
 				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
 				startActivity(this.new_form);
-				return true;
+				return true;	
 				
-			case R.id.Sellos:
+			case R.id.Configuracion:
 				finish();
-				this.new_form = new Intent(this, Sellos.class);
+				this.new_form = new Intent(this, DatosActas.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;	
+				
+			case R.id.Contador:
+				finish();
+				this.new_form = new Intent(this, Contador.class);
 				this.new_form.putExtra("Solicitud", this.Solicitud);
 				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
 				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
@@ -139,26 +197,41 @@ public class DatosActas extends Activity implements OnClickListener{
 				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
 				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
 				startActivity(this.new_form);
-				return true;	
+				return true;
+				
+			case R.id.Observaciones:
+				finish();
+				this.new_form = new Intent(this, Observaciones.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;				
 				
 			default:
 				return super.onOptionsItemSelected(item);	
 		}
 	}
 
-
 	@Override
 	public void onClick(View v) {
 		switch(v.getId()){
-			case R.id.ActaBtnRegistrar:
-				this.FcnActas.setDatosActas(this.Solicitud, 
-											_txtDocEnterado.getText().toString(), 
-											_txtNomEnterado.getText().toString(), 
-											_txtDocTestigo.getText().toString(), 
-											_txtNomTestigo.getText().toString(), 
-											_cmbTipoEnterado.getSelectedItem().toString(), 
-											"nada"/*_cmbRespuesta.getSelectedItem().toString()*/);
+			case R.id.DatosBtnRegistrar:
+				this.FcnDatosActas.saveDatosActas(	this.Solicitud, 
+													_cmbIrregularidades.getSelectedItem().toString(), 
+													_cmbPruebaRozamiento.getSelectedItem().toString(),
+													_cmbPruebaFrenado.getSelectedItem().toString(),
+													_cmbPruebaVacio.getSelectedItem().toString(), 
+													_cmbFamilias.getSelectedItem().toString(), 
+													_cmbFotos.getSelectedItem().toString(), 
+													_cmbElectricista.getSelectedItem().toString(), 
+													_cmbClaseMedidor.getSelectedItem().toString(), 
+													_cmbUbicacionMedidor.getSelectedItem().toString(), 
+													_cmbAplomado.getSelectedItem().toString(), 
+													_cmbRegistrador.getSelectedItem().toString(), 
+													_txtTelefono.getText().toString(), 
+													_txtPorcentajeNoResidencial.getText().toString());
 				break;
-		}	
+		}		
 	}
 }

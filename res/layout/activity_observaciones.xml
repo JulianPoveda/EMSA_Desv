@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <Spinner
+        android:id="@+id/ObsCmbObservacion"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/ObsLblObservacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ObsCmbObservacion"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/ObsCmbObservacion"
+        android:layout_toLeftOf="@+id/ObsCmbObservacion"
+        android:gravity="right|center_vertical"
+        android:text="@string/ObsLblObservacion"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/ObsTxtObservacion"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/ObsCmbObservacion"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="textMultiLine" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/ObsBtnRegistrar"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="200dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/ObsTxtObservacion"
+        android:layout_centerHorizontal="true"
+        android:text="@string/ObsBtnRegistrar" />
+
+</RelativeLayout>

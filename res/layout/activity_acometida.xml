@@ -5,7 +5,7 @@
     tools:context="${relativePackage}.${activityClass}" >
 
     <Spinner
-        android:id="@+id/SelloCmbIngreso"
+        android:id="@+id/AcometidaCmbTipoIngreso"
         android:layout_width="200dp"
         android:layout_height="30dp"
         android:layout_alignParentRight="true"
@@ -16,105 +16,117 @@
         android:id="@+id/AcometidaLblTipoIngreso"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/ContadorCmbMarca"
+        android:layout_alignBottom="@+id/AcometidaCmbTipoIngreso"
         android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/ContadorCmbMarca"
-        android:layout_toLeftOf="@+id/ContadorCmbMarca"
+        android:layout_alignTop="@+id/AcometidaCmbTipoIngreso"
+        android:layout_toLeftOf="@+id/AcometidaCmbTipoIngreso"
         android:gravity="right|center_vertical"
         android:text="@string/AcometidaLblTipoIngreso"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <Spinner
-        android:id="@+id/ContadorCmbTipo"
+        android:id="@+id/AcometidaCmbConductor"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_alignLeft="@+id/ContadorCmbMarca"
-        android:layout_below="@+id/ContadorCmbMarca" />
-
-    <Spinner
-        android:id="@+id/CensoCmbTipo"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_alignLeft="@+id/ContadorCmbTipo"
-        android:layout_below="@+id/ContadorCmbTipo" />
-
-    <Spinner
-        android:id="@+id/CensoCmbCantidad"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_alignLeft="@+id/CensoCmbTipo"
-        android:layout_below="@+id/CensoCmbTipo" />
-
-    <Spinner
-        android:id="@+id/CensoCmbVatios"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_alignLeft="@+id/CensoCmbCantidad"
-        android:layout_below="@+id/CensoCmbCantidad" />
-
-    <Spinner
-        android:id="@+id/spinner6"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_alignLeft="@+id/CensoCmbVatios"
-        android:layout_below="@+id/CensoCmbVatios" />
+        android:layout_alignLeft="@+id/AcometidaCmbTipoIngreso"
+        android:layout_below="@+id/AcometidaCmbTipoIngreso" />
 
     <TextView
         android:id="@+id/AcometidaLblConductor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/CensoCmbTipo"
+        android:layout_alignBottom="@+id/AcometidaCmbConductor"
         android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/AcometidaLblTipoIngreso"
-        android:layout_below="@+id/AcometidaLblTipoIngreso"
+        android:layout_alignTop="@+id/AcometidaCmbConductor"
+        android:layout_toLeftOf="@+id/AcometidaCmbConductor"
         android:gravity="right|center_vertical"
         android:text="@string/AcometidaLblConductor"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Spinner
+        android:id="@+id/AcometidaCmbTipo"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignLeft="@+id/AcometidaCmbConductor"
+        android:layout_below="@+id/AcometidaCmbConductor" />
 
     <TextView
         android:id="@+id/AcometidaLblTipo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/CensoCmbCantidad"
+        android:layout_alignBottom="@+id/AcometidaCmbTipo"
         android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/CensoCmbTipo"
-        android:layout_toLeftOf="@+id/CensoCmbTipo"
+        android:layout_alignRight="@+id/AcometidaLblConductor"
+        android:layout_below="@+id/AcometidaLblConductor"
         android:gravity="right|center_vertical"
         android:text="@string/AcometidaLblTipo"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Spinner
+        android:id="@+id/AcometidaCmbCalibre"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignLeft="@+id/AcometidaCmbTipo"
+        android:layout_below="@+id/AcometidaCmbTipo" />
 
     <TextView
         android:id="@+id/AcometidaLblCalibre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/CensoCmbCantidad"
+        android:layout_alignBottom="@+id/AcometidaCmbCalibre"
         android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/CensoCmbCantidad"
-        android:layout_toLeftOf="@+id/CensoCmbCantidad"
+        android:layout_alignRight="@+id/AcometidaLblTipo"
+        android:layout_alignTop="@+id/AcometidaCmbCalibre"
         android:gravity="right|center_vertical"
         android:text="@string/AcometidaLblCalibre"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Spinner
+        android:id="@+id/AcometidaCmbClase"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignLeft="@+id/AcometidaCmbCalibre"
+        android:layout_below="@+id/AcometidaCmbCalibre" />
 
     <TextView
         android:id="@+id/AcometidaLblClase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/spinner6"
+        android:layout_alignBottom="@+id/AcometidaCmbClase"
         android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/AcometidaLblCalibre"
-        android:layout_alignTop="@+id/CensoCmbVatios"
+        android:layout_alignTop="@+id/AcometidaCmbClase"
+        android:layout_toLeftOf="@+id/AcometidaCmbClase"
         android:gravity="right|center_vertical"
         android:text="@string/AcometidaLblClase"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Spinner
+        android:id="@+id/AcometidaCmbFases"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignLeft="@+id/AcometidaCmbClase"
+        android:layout_below="@+id/AcometidaCmbClase" />
+
+    <EditText
+        android:id="@+id/AcometidaTxtLongitud"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignLeft="@+id/AcometidaCmbFases"
+        android:layout_below="@+id/AcometidaCmbFases"
+        android:ems="10"
+        android:inputType="numberDecimal" >
+
+        <requestFocus />
+    </EditText>
 
     <TextView
         android:id="@+id/AcometidaLblFases"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/spinner6"
+        android:layout_above="@+id/AcometidaTxtLongitud"
         android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/AcometidaLblClase"
-        android:layout_alignTop="@+id/spinner6"
+        android:layout_alignTop="@+id/AcometidaCmbFases"
+        android:layout_toLeftOf="@+id/AcometidaCmbFases"
         android:gravity="right|center_vertical"
         android:text="@string/AcometidaLblFases"
         android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -125,43 +137,44 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/AcometidaTxtLongitud"
         android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/AcometidaLblFases"
         android:layout_alignTop="@+id/AcometidaTxtLongitud"
-        android:layout_toLeftOf="@+id/AcometidaTxtLongitud"
         android:gravity="right|center_vertical"
         android:text="@string/AcometidaLblLongitud"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <EditText
-        android:id="@+id/AcometidaTxtLongitud"
+    <Button
+        android:id="@+id/AcometidaBtnEliminar"
         android:layout_width="120dp"
-        android:layout_height="25dp"
-        android:layout_alignLeft="@+id/spinner6"
-        android:layout_below="@+id/spinner6"
-        android:ems="10"
-        android:inputType="numberDecimal" />
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/AcometidaBtnRegistrar"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/AcometidaBtnRegistrar"
+        android:layout_marginRight="20dp"
+        android:text="@string/AcometidaBtnEliminar" />
 
     <Button
         android:id="@+id/AcometidaBtnRegistrar"
-        android:layout_width="150dp"
+        android:layout_width="120dp"
         android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="73dp"
+        android:layout_below="@+id/AcometidaTxtLongitud"
+        android:layout_marginRight="26dp"
+        android:layout_marginTop="17dp"
+        android:layout_toLeftOf="@+id/AcometidaBtnEliminar"
         android:text="@string/AcometidaBtnRegistrar" />
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/AcometidaBtnRegistrar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/AcometidaLblLongitud" >
+        android:layout_below="@+id/AcometidaBtnRegistrar" >
 
         <ListView
             android:id="@+id/AcometidaListAcometida"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent" >
+            android:layout_height="match_parent" >
         </ListView>
 
     </HorizontalScrollView>

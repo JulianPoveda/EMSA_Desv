@@ -8,5 +8,6 @@
     <string name="AcometidaLblFases">Fases</string>
     <string name="AcometidaLblLongitud">Longitud</string>
     <string name="AcometidaBtnRegistrar">Registrar</string>
+    <string name="AcometidaBtnEliminar">Eliminar</string>
     
 </resources>

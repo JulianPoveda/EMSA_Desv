@@ -1,19 +1,32 @@
 package desviaciones.emsa;
 
+import java.util.ArrayList;
+
+import sistema.Bluetooth;
+import sistema.SQLite;
+import sistema.Utilidades;
+
 import clases.ClassConfiguracion;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 public class Configuracion extends Activity implements OnClickListener{
-	private ClassConfiguracion FcnCfg;
+	private ClassConfiguracion 	FcnCfg;
+	private Utilidades 			FcnUtil;
+	private Bluetooth 			MB = new Bluetooth(this);		
 	
 	private int NivelUsuario;
 	private String FolderAplicacion;
+	
+	private ArrayAdapter<String> AdapLstImpresoras;
+	private ArrayList<String> 			_listaImpresoras = new ArrayList<String>();
 	
 	Spinner 	_impresora;
 	EditText 	_servidor, _puerto, _modulo, _web_service, _version, _equipo, _cedula, _nombre;
@@ -39,6 +52,11 @@ public class Configuracion extends Activity implements OnClickListener{
 		this.NivelUsuario 		= bundle.getInt("NivelLogged");
 		this.FolderAplicacion 	= bundle.getString("FolderAplicacion");
 		this.FcnCfg 			= new ClassConfiguracion(this,this.FolderAplicacion);
+		this.FcnUtil			= new Utilidades();
+		
+		this._listaImpresoras = this.MB.GetDeviceBluetooth();
+		AdapLstImpresoras 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,_listaImpresoras);
+		_impresora.setAdapter(AdapLstImpresoras);
 		
 		if(this.NivelUsuario == 0){
 			_servidor.setEnabled(true);
@@ -59,7 +77,7 @@ public class Configuracion extends Activity implements OnClickListener{
 			_equipo.setEnabled(false);
 			_cedula.setEnabled(false);
 			_nombre.setEnabled(false);
-			_impresora.setEnabled(false);
+			_impresora.setEnabled(true);
 		}
 		
 		_servidor.setText(FcnCfg.getServidor());
@@ -70,6 +88,8 @@ public class Configuracion extends Activity implements OnClickListener{
 		_equipo.setText(FcnCfg.getEquipo());
 		_cedula.setText(FcnCfg.getCedula());
 		_nombre.setText(FcnCfg.getTecnico());		
+		_impresora.setSelection(AdapLstImpresoras.getPosition(this.FcnCfg.getImpresora()));
+		
 		_btnGuardar.setOnClickListener(this);
 	}
 
@@ -78,6 +98,7 @@ public class Configuracion extends Activity implements OnClickListener{
 		switch(v.getId()){
 			case R.id.CfgBtnGuardar:
 				this.FcnCfg.setConfiguracion(_servidor.getText().toString(),_puerto.getText().toString(),_modulo.getText().toString(),_web_service.getText().toString(),_version.getText().toString(),_equipo.getText().toString(),_cedula.getText().toString(),_nombre.getText().toString());			
+				this.FcnCfg.setImpresora(_impresora.getSelectedItem().toString());
 				break;
 		}		
 	}

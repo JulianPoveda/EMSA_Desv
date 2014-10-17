@@ -24,15 +24,12 @@ import android.util.Log;
 public class SQLite {
 	private static Archivos ArchSQL;	
 	private static String N_BD = null; 	
-	private static final int VERSION_BD = 1;																		
+	private static final int VERSION_BD = 2;																		
 	
 	private BDHelper nHelper;
 	private Context nContexto;
 	private String Directorio;
 	private SQLiteDatabase nBD;
-	
-	private ContentValues TablasAmData = new ContentValues();
-	
 	
 	private boolean ValorRetorno;
 	
@@ -140,6 +137,20 @@ public class SQLite {
 																	"descripcion 	VARCHAR(255) NOT NULL," +
 																	"minimo			DOUBLE PRECISION NOT NULL," +
 																	"maximo			DOUBLE PRECISION NOT NULL);");
+
+			db.execSQL(	"CREATE TABLE parametros_codificacion_cometida(  id_acometida	VARCHAR(50) NOT NULL PRIMARY KEY," +
+																		"calibre 		VARCHAR(10) NOT NULL," +
+																		"tipo_acometida	VARCHAR(10) NOT NULL," +
+																		"conductor		VARCHAR(10) NOT NULL);");
+			
+			db.execSQL( "CREATE TABLE dig_acometida( solicitud 		VARCHAR(20) NOT NULL PRIMARY KEY," +
+													"tipo_ingreso 	VARCHAR(20) NOT NULL," +
+													"conductor		VARCHAR(20) NOT NULL," +
+													"tipo			VARCHAR(20) NOT NULL," +
+													"calibre		VARCHAR(20) NOT NULL," +
+													"clase 			VARCHAR(20) NOT NULL," +
+													"fases 			VARCHAR(20) NOT NULL," +
+													"longitud 		DOUBLE PRECISION NOT NULL);");
 			
 			db.execSQL( "CREATE TABLE dig_contador(  solicitud 	VARCHAR(20) NOT NULL PRIMARY KEY," +
 													"marca 		VARCHAR(30) NOT NULL," +
@@ -154,7 +165,8 @@ public class SQLite {
 													"doc_testigo	VARCHAR(30)," +
 													"nom_testigo   	VARCHAR(100)," +
 													"tipo_enterado	VARCHAR(30)," +
-													"respuesta_pqr	VARCHAR(50));");
+													"respuesta_pqr	VARCHAR(50)," +
+													"fecha_ins		TIMESTAMP NOT NULL DEFAULT current_timestamp);");
 			
 			db.execSQL("CREATE TABLE dig_censo_carga(  	 solicitud 		VARCHAR(20) NOT NULL," +
 														"id_elemento	INTEGER NOT NULL," +
@@ -177,6 +189,37 @@ public class SQLite {
 														"irregularidad	VARCHAR(255) NOT NULL," +
 														"PRIMARY KEY(solicitud,irregularidad));");
 			
+			db.execSQL("CREATE TABLE dig_observaciones(	 solicitud 			VARCHAR(20)  NOT NULL," +
+														"tipo_observacion 	VARCHAR(50)  NOT NULL," +
+														"observacion		VARCHAR(255) NOT NULL," +
+														"PRIMARY KEY(solicitud,tipo_observacion));");
+			
+			db.execSQL("CREATE TABLE dig_datos_actas(solicitud 			VARCHAR(20) NOT NULL PRIMARY KEY," +
+													"irregularidades 	VARCHAR(50)," +
+													"prueba_rozamiento	VARCHAR(50)," +
+													"prueba_frenado		VARCHAR(50)," +
+													"prueba_vacio		VARCHAR(50)," +
+													"familias			INTEGER," +
+													"fotos				VARCHAR(10)," +
+													"electricista		VARCHAR(10)," +
+													"clase_medidor		VARCHAR(50)," +
+													"ubicacion_medidor	VARCHAR(50)," +
+													"aplomado			VARCHAR(50)," +
+													"registrador		VARCHAR(50)," +
+													"telefono			VARCHAR(20)," +
+													"porcentaje_no_res	DOUBLE PRECISION);");
+			
+			db.execSQL("CREATE TABLE dig_adecuaciones(	 solicitud 			VARCHAR(20) NOT NULL PRIMARY KEY," +
+														"suspension		 	VARCHAR(50)," +
+														"tubo				VARCHAR(50)," +
+														"armario			VARCHAR(50)," +
+														"soporte			VARCHAR(50)," +
+														"tierra				VARCHAR(50)," +
+														"acometida			VARCHAR(10)," +
+														"caja				VARCHAR(10)," +
+														"medidor			VARCHAR(50)," +
+														"otros				VARCHAR(50));");
+			
 			
 			db.execSQL(	"CREATE VIEW vista_parametros_medidores AS " +
 							"SELECT marca, nombre , marca||' ('||nombre||')' AS resumen " +
@@ -188,587 +231,32 @@ public class SQLite {
 							"JOIN   parametros_elementos_censo AS b " +
 							"ON     a.id_elemento = b.codigo;");
 			
-			
-			/*db.execSQL(	"CREATE TABLE amd_tipo_enterado(id_serial INTEGER PRIMARY KEY AUTOINCREMENT,descripcion VARCHAR(255) UNIQUE NOT NULL)");
-			db.execSQL("INSERT INTO amd_tipo_enterado (descripcion) VALUES ('...')");
-			db.execSQL("INSERT INTO amd_tipo_enterado (descripcion) VALUES ('Propietario')");
-			db.execSQL("INSERT INTO amd_tipo_enterado (descripcion) VALUES ('Suscriptor')");
-			db.execSQL("INSERT INTO amd_tipo_enterado (descripcion) VALUES ('Usuario')");
-			db.execSQL("INSERT INTO amd_tipo_enterado (descripcion) VALUES ('Poseedor')");
-			db.execSQL("INSERT INTO amd_tipo_enterado (descripcion) VALUES ('Otros')");*/
-					
-			/*db.execSQL(	"CREATE TABLE amd_uso_derecho(id_serial INTEGER PRIMARY KEY AUTOINCREMENT, descripcion VARCHAR(255) UNIQUE NOT NULL)");			
-			db.execSQL("INSERT INTO amd_uso_derecho (descripcion) VALUES ('...')");
-			db.execSQL("INSERT INTO amd_uso_derecho (descripcion) VALUES ('Si')");
-			db.execSQL("INSERT INTO amd_uso_derecho (descripcion) VALUES ('No')");*/
-			
-			
-			/*db.execSQL(	"CREATE TABLE amd_ubicacion_medidor(id_serial INTEGER PRIMARY KEY AUTOINCREMENT, descripcion VARCHAR(255) UNIQUE NOT NULL)");			
-			db.execSQL("INSERT INTO amd_ubicacion_medidor (descripcion) VALUES ('...')");
-			db.execSQL("INSERT INTO amd_ubicacion_medidor (descripcion) VALUES ('Caja')");
-			db.execSQL("INSERT INTO amd_ubicacion_medidor (descripcion) VALUES ('Gabinete')");
-			db.execSQL("INSERT INTO amd_ubicacion_medidor (descripcion) VALUES ('Otro')");*/			
-			
-			
-			/*db.execSQL(	"CREATE TABLE amd_impresiones_inf(	id_orden   		VARHAR(20) PRIMARY KEY,"
-														+ " diagrama		VARCHAR(50) NOT NULL,"
-														+ " acometida		VARCHAR(20) NOT NULL,"
-														+ " ubicacion 		VARCHAR(20) NOT NULL,"
-														+ " uso_derecho 	VARCHAR(20) NOT NULL,"
-														+ " items			VARCHAR(20) NOT NULL,"
-														+ "	id_impresion	INTEGER NOT NULL DEFAULT 0);");*/
-						
-			/********************************************************************************************************/
-			
-			/*db.execSQL(	"CREATE TABLE amd_actas(	id_orden 		VARCHAR(20) PRIMARY KEY,"
-												+ " id_acta 		VARCHAR(20) UNIQUE NOT NULL,"
-												+ " id_revision 	VARCHAR(50),"
-												+ "	codigo_trabajo 	VARCHAR(20) NOT NULL,"
-												+ " nombre_enterado	VARCHAR(100) NOT NULL,"
-												+ "	cedula_enterado	VARCHAR(20) NOT NULL,"
-												+ "	evento			VARCHAR(50),"
-												+ "	tipo_enterado	VARCHAR(50) NOT NULL,"
-												+ "	fecha_revision	TIMESTAMP,"
-												+ "	usuario_ins 	VARCHAR(50) NOT NULL,"
-												+ " fecha_ins		TIMESTAMP  NOT NULL DEFAULT current_timestamp,"
-												+ " cedula_testigo	VARCHAR(20),"
-												+ " nombre_testigo  VARCHAR(100),"
-												+ " estado 			VARCHAR(2) NOT NULL)");*/
-			
-			/*db.execSQL( "CREATE TABLE amd_ordenes_trabajo(	id_orden 				VARCHAR(20) NOT NULL PRIMARY KEY,"
-														+ "	num_acta				VARCHAR(20),"
-														+ "	cuenta 					VARCHAR(20),"
-														+ "	propietario				VARCHAR(100),"
-														+ "	departamento			VARCHAR(50),"
-														+ "	municipio				VARCHAR(50),"
-														+ "	ubicacion				VARCHAR(50),"
-														+ "	direccion				VARCHAR(100),"
-														+ "	clase_servicio			VARCHAR(50),"
-														+ "	estrato					VARCHAR(50),"
-														+ "	id_nodo					VARCHAR(50) NOT NULL,"
-														+ "	ruta					VARCHAR(50) NOT NULL,"
-														+ "	estado_cuenta			VARCHAR(50) NOT NULL,"
-														+ "	fecha_atencion 			TIMESTAMP  NOT NULL DEFAULT current_timestamp,"
-														+ "	hora_ini				VARCHAR(50),"
-														+ "	hora_fin 				VARCHAR(50),"
-														+ "	pda						INTEGER NOT NULL,"
-														+ "	estado					VARCHAR(50) NOT NULL,"
-														+ "	observacion_trabajo		VARCHAR(400) NOT NULL,"
-														+ "	observacion_pad			VARCHAR(300) NOT NULL,"
-														+ "	usuario					VARCHAR(50),"
-														+ "	fecha_hora_estado		TIMESTAMP  NOT NULL DEFAULT current_timestamp,"
-														+ "	fecha_ven				TIMESTAMP  NOT NULL DEFAULT current_timestamp,"
-														+ "	tipo					VARCHAR(1),"
-														+ "	registrado				INTEGER,"
-														+ "	codigo_apertura			VARCHAR(20),"
-														+ "	solicitud				VARCHAR(100),"
-														+ "	bodega					VARCHAR(256),"
-														+ "	hora_ini_atiende		TIMESTAMP  NOT NULL DEFAULT current_timestamp,"
-														+ "	hora_fin_atiende		TIMESTAMP  NOT NULL DEFAULT current_timestamp,"
-														+ "	persona_atiende			VARCHAR(400),"
-														+ "	tel_persona_atiende		VARCHAR(20),"
-														+ "	clase_solicitud			VARCHAR(50),"
-														+ "	tipo_solicitud			VARCHAR(50),"
-														+ "	dependencia				VARCHAR(50),"
-														+ "	tipo_accion				VARCHAR(50),"
-														+ "	dependencia_asignada	VARCHAR(50),"
-														+ "	consecutivo_accion		VARCHAR(50),"
-														+ "	carga_instalada			VARCHAR(100),"
-														+ "	carga_contratada		VARCHAR(100),"
-														+ "	ciclo 					VARCHAR(100))");*/
-			
-			
-			
-			/*db.execSQL(	"CREATE TABLE amd_servicio_nuevo(	id_orden			VARCHAR(20) NOT NULL PRIMARY KEY,"
-														+ "	cuenta 				VARCHAR(20),"
-														+ "	cuenta_vecina1		VARCHAR(20),"
-														+ "	cuenta_vecina2		VARCHAR(20),"
-														+ "	nodo_transformador	VARCHAR(20),"
-														+ "	nodo_secundario		VARCHAR(20),"
-														+ "	doc1				VARCHAR(20),"
-														+ "	doc2				VARCHAR(20),"
-														+ "	doc3				VARCHAR(20),"
-														+ "	doc4				VARCHAR(20),"
-														+ "	doc5				VARCHAR(20),"
-														+ "	doc6				VARCHAR(20),"
-														+ "	doc7				VARCHAR(20));");*/
-			
-			/*********************************************************************************************************************/
-			/*******Tablas con la informacion respetiva de las anomalias generales y las aplicadas a la orden en particular*******/
-			/*********************************************************************************************************************/
-			/*db.execSQL(	"CREATE TABLE amd_irregularidades( 	id_anomalia 		VARCHAR(20) NOT NULL,"
-														+ "	id_orden			VARCHAR(20) NOT NULL,"
-														+ "	id_irregularidad	VARCHAR(20) NOT NULL,"
-														+ "	usuario_ins			VARCHAR(20) NOT NULL,"
-														+ "	fecha_ins 			TIMESTAMP  NOT NULL DEFAULT current_timestamp,"
-														+ "	PRIMARY KEY(id_anomalia, id_orden, id_irregularidad))");
-			
-			db.execSQL(	"CREATE TABLE amd_param_trabajos(	id_trabajo 				VARCHAR(20) NOT NULL PRIMARY KEY,"
-														+ "	descripcion 			VARCHAR(4000),"
-														+ "	id_trabajo_contrato		VARCHAR(20) NOT NULL,"
-														+ "	ubicacion				VARCHAR(1) NOT NULL,"
-														+ "	tipo					VARCHAR(1),"
-														+ "	unidad					VARCHAR(5))");
-			
-			db.execSQL(	"CREATE TABLE amd_param_materiales_trabajo(	cpta_id_trabajo		VARCHAR(20) NOT NULL,"
-																+ "	cpta_id_material	VARCHAR(20) NOT NULL,"
-																+ "	cantidad_proyectada	VARCHAR(5)	NOT NULL,"
-																+ "	material_requerido	VARCHAR(1)	NOT NULL,"
-																+ "	PRIMARY KEY(cpta_id_trabajo, cpta_id_material))");
-			
-			db.execSQL(	"CREATE TABLE amd_param_marca_contador(	id_marca	VARCHAR(50) NOT NULL PRIMARY KEY,"
-															+ "	nombre		VARCHAR(50) NOT NULL)");
-			
-			db.execSQL(	"CREATE TABLE amd_param_materiales(	id_material 	VARCHAR(20) NOT NULL PRIMARY KEY,"
-														+ "	descripcion		VARCHAR(200) NOT NULL,"
-														+ "	unidad			VARCHAR(50) NOT NULL,"
-														+ "	valor			numeric(8,5))");
-			
-			db.execSQL( "CREATE TABLE amd_param_sistema(codigo			VARCHAR(50) NOT NULL PRIMARY KEY,"
-													+ "	rango_inicial	VARCHAR(50),"
-													+ "	rango_final		VARCHAR(50),"
-													+ "	valor 			VARCHAR(50),"
-													+ "	tipo			VARCHAR(50) NOT NULL,"
-													+ "	estado 			VARCHAR(50) NOT NULL,"
-													+ "	descripcion		VARCHAR(100))");
-			
-			db.execSQL( "CREATE TABLE amd_medidor_encontrado(id_orden	VARCHAR(20) NOT NULL,"
-														+ "	marca		VARCHAR(50) NOT NULL,"
-														+ "	serie		VARCHAR(50),"
-														+ "	lectura 	VARCHAR(50),"
-														+ "	lectura_2	VARCHAR(50),"
-														+ "	lectura_3 	VARCHAR(50),"
-														+ "	tipo		VARCHAR(100),"
-														+ "	PRIMARY KEY(id_orden))");
-			
-			db.execSQL( "CREATE TABLE amd_cambios_contadores(	id_orden	VARCHAR(20) NOT NULL,"
-															+ "	tipo		VARCHAR(50) NOT NULL,"
-															+ "	marca		VARCHAR(50) NOT NULL,"
-															+ "	serie	 	VARCHAR(50) NOT NULL,"
-															+ "	lectura		VARCHAR(20) NOT NULL,"
-															+ "	cuenta	 	VARCHAR(10) NOT NULL,"
-															+ "	usuario_ins	VARCHAR(50) NOT NULL,"
-															+ "	fecha_ins	TIMESTAMP  NOT NULL DEFAULT current_timestamp,"
-															+ "	cobro		VARCHAR(50) NOT NULL)");
-			
-			db.execSQL(	"CREATE TABLE amd_sellos(	id_orden		VARCHAR(20) NOT NULL,"
-												+ "	estado			VARCHAR(50) NOT NULL,"
-												+ "	tipo			VARCHAR(50) NOT NULL,"
-												+ "	numero			VARCHAR(50) NOT NULL,"
-												+ "	color			VARCHAR(50) NOT NULL,"
-												+ "	irregularidad	VARCHAR(50) NOT NULL,"
-												+ "	ubicacion 		VARCHAR(50) NOT NULL,"
-												+ "	usuario_ins	 	VARCHAR(50) NOT NULL,"
-												+ "	fecha_ins 		TIMESTAMP  NOT NULL DEFAULT current_timestamp,"
-												+ "	PRIMARY KEY (id_orden,estado,tipo,numero))");
-			
-			
-			db.execSQL(	"CREATE TABLE amd_param_documentos(	id_documento	INTEGER NOT NULL PRIMARY KEY,"
-														+ "	descripcion 	VARCHAR(50) NOT NULL)");
-			
-			db.execSQL(	"CREATE TABLE amd_respuesta_pqr(	clase_solicitud					VARCHAR(50),"
-														+ "	tipo_solicitud					VARCHAR(50),"
-														+ "	dependencia						VARCHAR(50),"
-														+ "	tipo_accion						VARCHAR(50),"
-														+ "	dependencia_asignada			VARCHAR(50),"
-														+ "	recomendacion					VARCHAR(50),"
-														+ "	descripcion_tipo_recomendacion	VARCHAR(500))");
-			
-			db.execSQL(	"CREATE TABLE amd_param_incosistencias(	 	id_inconsistencia	VARCHAR(20) NOT NULL PRIMARY KEY,"
-																+ "	descripcion			VARCHAR(100) NOT NULL,"
-																+ "	tipo				VARCHAR(50) NOT NULL,"
-																+ "	aplicacion 			VARCHAR(50) NOT NULL,"
-																+ "	identificadornodo	INTEGER,"
-																+ "	identificadorpadre	INTEGER)");
-			
-			db.execSQL(	"CREATE TABLE amd_param_imp_observaciones(	id_inconsistencia	VARCHAR(20) NOT NULL,"
-																+ "	id_documento		VARCHAR(20)	NOT NULL,"
-																+ "	PRIMARY KEY(id_inconsistencia,id_documento))");
-			
-			db.execSQL(	"CREATE TABLE amd_param_cobros(	id_material_automatico	VARCHAR(50) NOT NULL PRIMARY KEY,"
-													+ "	codigo_tipo				VARCHAR(50) NOT NULL,"
-													+ "	tipo_ingreso 			VARCHAR(50) NOT NULL,"
-													+ "	codigo_retira			VARCHAR(50))");
-			
-			db.execSQL(	"CREATE TABLE amd_detalle_param_cobros(	id_material_automatico	VARCHAR(4) NOT NULL,"
-															+ "	id_material				VARCHAR(20) NOT NULL,"
-															+ "	PRIMARY KEY (id_material_automatico, id_material))");
-			
-			db.execSQL(	"CREATE TABLE amd_elementos_censo(	id_elemento		VARCHAR(20) NOT NULL PRIMARY KEY,"
-														+ "	descripcion 	VARCHAR(50) NOT NULL,"
-														+ "	capacidad_min	VARCHAR(10) NOT NULL,"
-														+ "	capacidad_max	VARCHAR(10) NOT NULL)");
-			
-			db.execSQL(	"CREATE TABLE amd_param_opciones(	id_opcion		INTEGER NOT NULL PRIMARY KEY,"
-														+ "	nombre 			VARCHAR(50) NOT NULL)");
-			
-			db.execSQL(	"CREATE TABLE amd_param_acometidas(	id_acometida 	VARCHAR(20)	NOT NULL PRIMARY KEY,"
-														+ "	calibre 		VARCHAR(50) NOT NULL,"
-														+ "	tipo_acometida	VARCHAR(50) NOT NULL,"
-														+ "	conductor		VARCHAR(50) NOT NULL)");
-			
-			db.execSQL(	"CREATE TABLE amd_param_diagrama(	id_diagrama			VARCHAR(10) NOT NULL PRIMARY KEY,"
-														+ "	descripcion			VARCHAR(100) NOT NULL,"
-														+ "	path				VARCHAR(50) NOT NULL)");
-			
-			db.execSQL(	"CREATE TABLE amd_param_trabajos_opcion(id_trabajo			VARCHAR(20) NOT NULL,"
-															+ "	id_opcion 			VARCHAR(20) NOT NULL,"
-															+ "	id_trabajo_opcion	VARCHAR(20),"
-															+ "	PRIMARY KEY(id_trabajo, id_opcion))");
-			
-			db.execSQL(	"CREATE TABLE amd_param_irregularidades(id_irregularidad	INTEGER NOT NULL PRIMARY KEY,"
-															+ "	descripcion 		VARCHAR(500),"
-															+ "	tipo				VARCHAR(50) NOT NULL)");
-			
-			db.execSQL(	"CREATE TABLE amd_param_tipo_conexion(	id_conexion		VARCHAR(5) NOT NULL PRIMARY KEY,"
-															+ "	conexion		VARCHAR(50) NOT NULL);");
-			
-			db.execSQL(	"INSERT INTO amd_param_tipo_conexion(id_conexion, conexion) VALUES('MB','MONOFASICO BIFILAR');");
-			db.execSQL(	"INSERT INTO amd_param_tipo_conexion(id_conexion, conexion) VALUES('MT','MONOFASICO TRIFILAR');");
-			db.execSQL(	"INSERT INTO amd_param_tipo_conexion(id_conexion, conexion) VALUES('T','TRIFILAR');");
-			db.execSQL(	"INSERT INTO amd_param_tipo_conexion(id_conexion, conexion) VALUES('B','BIFASICO');");
-			db.execSQL(	"INSERT INTO amd_param_tipo_conexion(id_conexion, conexion) VALUES('SD','SERVICIO DIRECTO');");
-			db.execSQL(	"INSERT INTO amd_param_tipo_conexion(id_conexion, conexion) VALUES('SN','SERVICIO NUEVO');");
-			
-			db.execSQL(	"CREATE TABLE amd_bodega_contadores(	 marca                  VARCHAR(50)," +
-																"serie                  VARCHAR(20)," +
-																"estado                 VARCHAR(50)," +
-																"lectura                VARCHAR(20)," +
-																"digitos                INTEGER," +
-																"tipo                   VARCHAR(50)," +
-																"instalado              INTEGER DEFAULT 0," +
-																"bodega                 VARCHAR(255)," +
-																"codigo_elemento        VARCHAR(40)," +
-																"PRIMARY KEY(marca,serie));");	
-			
-			
-			db.execSQL("CREATE TABLE amd_bodega_sellos(	 numero                 VARCHAR(100) NOT NULL," +
-														"tipo                   VARCHAR(100) NOT NULL," +
-														"color                  VARCHAR(100) NOT NULL," +
-														"estado                 VARCHAR(100)," +
-														"bodega                 VARCHAR(100)," +
-														"PRIMARY KEY(numero,tipo,color));");
-			
-			
-			db.execSQL(	"CREATE TABLE amd_param_titulos(codigo 			NUMERIC(9,2) NOT NULL PRIMARY KEY,"
-													+ "	descripcion		VARCHAR(200) NOT NULL)");
-
-			db.execSQL(	"CREATE TABLE amd_param_subtitulos(	codigo_sub		NUMERIC(9,2) NOT NULL PRIMARY KEY,"
-														+ "	codigo_titulo 	NUMERIC(9,2) NOT NULL,"
-														+ "	nombre 			VARCHAR(200) NOT NULL)");
-			
-			db.execSQL(	"CREATE TABLE amd_param_items(	codigo_item			NUMERIC(9,2) NOT NULL PRIMARY KEY,"
-													+ "	codigo_sub 			NUMERIC(9,2) NOT NULL,"
-													+ "	codigo_titulo		NUMERIC(9,2) NOT NULL,"
-													+ "	tipo				VARCHAR(5) NOT NULL,"
-													+ "	nombre				VARCHAR(200) NOT NULL,"
-													+ "	requerido 			VARCHAR(1),"
-													+ "	cod_inconsistencia	VARCHAR(100),"
-													+ "	numerico			VARCHAR(1))");
-			
-			db.execSQL(	"CREATE TABLE amd_param_elementos(	codigo_elemento		NUMERIC(9,2) NOT NULL PRIMARY KEY,"
-														+ "	codigo_item			NUMERIC(9,2) NOT NULL,"
-														+ "	codigo_sub			NUMERIC(9,2) NOT NULL,"
-														+ "	codigo_titulo 		NUMERIC(9,2) NOT NULL,"
-														+ "	nombre 				VARCHAR(200) NOT NULL)");
-			
-			db.execSQL(	"CREATE TABLE amd_param_titulos_trabajo(id_trabajo		VARCHAR(20) NOT NULL,"
-															+ "	codigo			VARCHAR(20) NOT NULL,"
-															+ "	requerido		VARCHAR(40) NOT NULL,"
-															+ "	PRIMARY KEY(id_trabajo, codigo))");
-			
-			db.execSQL(	"CREATE TABLE amd_param_tipo_sello(	codigo			VARCHAR(100) NOT NULL PRIMARY KEY,"
-														+ "	descripcion 	VARCHAR(100) NOT NULL)");
-			
-			db.execSQL(	"CREATE TABLE amd_param_ubicacion_sello(codigo		VARCHAR(100) NOT NULL PRIMARY KEY,"
-															+ "	descripcion VARCHAR(100) NOT NULL)");
-			
-			db.execSQL(	"CREATE TABLE amd_param_color_sello(codigo 		VARCHAR(100) NOT NULL PRIMARY KEY,"
-														+ "	descripcion VARCHAR(100) NOT NULL)");
-			
-			
-			
-			/////////////////////////////////////////continuacion de las tablas que se tomaron fotos
-			
-			db.execSQL(	"CREATE TABLE amd_param_acometidas_tipo(tipo 			VARCHAR(20) NOT NULL PRIMARY KEY,"
-															+ "	sigla_tipo		VARCHAR(1) UNIQUE NOT NULL)");
-			
-			db.execSQL(	"INSERT INTO amd_param_acometidas_tipo(tipo,sigla_tipo) VALUES ('Alambre','A')");
-			db.execSQL(	"INSERT INTO amd_param_acometidas_tipo(tipo,sigla_tipo) VALUES ('Cable','C')");
-			db.execSQL(	"INSERT INTO amd_param_acometidas_tipo(tipo,sigla_tipo) VALUES ('Concentrico','N')");
-			
-					
-			db.execSQL(	"CREATE TABLE amd_param_acometidas_conductor(	conductor			VARCHAR(20) NOT NULL PRIMARY KEY,"
-																	+ "	sigla_conductor 	VARCHAR(1) UNIQUE NOT NULL)");
-			
-			db.execSQL("CREATE TABLE amd_param_estado_contador (	id_cobro		VARCHAR(10) NOT NULL PRIMARY KEY,"
-																+ "	descripcion	VARCHAR(50) NOT NULL);");
-
-			db.execSQL("INSERT INTO amd_param_estado_contador(id_cobro,descripcion) VALUES('R','ENCONTRADO');");
-			db.execSQL("INSERT INTO amd_param_estado_contador(id_cobro,descripcion) VALUES('P','PROVISIONAL');");
-			db.execSQL("INSERT INTO amd_param_estado_contador(id_cobro,descripcion) VALUES('D','INSTALADO');");
-			db.execSQL("INSERT INTO amd_param_estado_contador(id_cobro,descripcion) VALUES('DP','INSTALADO PROPIETARIO');");
-			db.execSQL("INSERT INTO amd_param_estado_contador(id_cobro,descripcion) VALUES('SD','SERVICIO DIRECTO');");
-			
-			db.execSQL("CREATE TABLE amd_param_tipo_contador(	id_tipo			VARCHAR(10) NOT NULL PRIMARY KEY,"
-															+ "	descripcion		VARCHAR(50) NOT NULL);");
-			
-			db.execSQL("INSERT INTO amd_param_tipo_contador(id_tipo,descripcion) VALUES('MB','MONOFASICO BIFILAR');");
-			db.execSQL("INSERT INTO amd_param_tipo_contador(id_tipo,descripcion) VALUES('MT','MONOFASICO TRIFILAR');");
-			db.execSQL("INSERT INTO amd_param_tipo_contador(id_tipo,descripcion) VALUES('T','TRIFILAR');");
-			db.execSQL("INSERT INTO amd_param_tipo_contador(id_tipo,descripcion) VALUES('B','BIFASICO');");
-			db.execSQL("INSERT INTO amd_param_tipo_contador(id_tipo,descripcion) VALUES('SD','SERVICIO DIRECTO');");	
-			
-			db.execSQL(	"INSERT INTO amd_param_acometidas_conductor(conductor,sigla_conductor) VALUES('Aluminio','A')");
-			db.execSQL(	"INSERT INTO amd_param_acometidas_conductor(conductor,sigla_conductor) VALUES('Cobre','C')");
-			
-			
-			db.execSQL(	"CREATE TABLE amd_param_censo_carga(estado_carga		VARCHAR(20) NOT NULL PRIMARY KEY,"
-														+ "	sigla_estado_carga 	VARCHAR(1) UNIQUE NOT NULL)");
-
-			db.execSQL(	"INSERT INTO amd_param_censo_carga(estado_carga,sigla_estado_carga) VALUES('Registrada','R')");
-			db.execSQL(	"INSERT INTO amd_param_censo_carga(estado_carga,sigla_estado_carga) VALUES('Directa','D')");
-			
-			
-			db.execSQL(	"CREATE TABLE amd_acometida(id_orden		VARCHAR(20) NOT NULL,"
-												+ "	tipo_ingreso	VARCHAR(20) NOT NULL,"
-												+ "	id_acometida	VARCHAR(20) NOT NULL,"
-												+ "	longitud		NUMERIC(8,2) NOT NULL,"
-												+ "	usuario_ins		VARCHAR(50) NOT NULL,"
-												+ "	fecha_ins		TIMESTAMP NOT NULL DEFAULT current_timestamp,"
-												+ "	fase			VARCHAR(20) NOT NULL,"
-												+ "	clase 			VARCHAR(20) NOT NULL,"
-												+ "	PRIMARY KEY(id_orden, tipo_ingreso, id_acometida))");
-			
-			db.execSQL(	"CREATE TABLE amd_pct_error(id_orden 		VARCHAR(20) NOT NULL,"
-												+ "	tipo_carga		VARCHAR(50) NOT NULL,"
-												+ "	voltaje 		NUMERIC(8,3) NOT NULL,"
-												+ "	corriente		NUMERIC(8,3) NOT NULL,"
-												+ "	tiempo			NUMERIC(8,3) NOT NULL,"
-												+ "	vueltas			INTEGER NOT NULL,"
-												+ "	total			NUMERIC(8,3) NOT NULL,"
-												+ "	usuario_ins		VARCHAR(50) NOT NULL,"
-												+ "	fecha_ins		TIMESTAMP NOT NULL DEFAULT current_timestamp,"
-												+ "	rev				NUMERIC(8,3),"
-												+ "	fp				NUMERIC(8,3),"
-												+ "	fase			VARCHAR(10) NOT NULL,"
-												+ "	PRIMARY KEY(id_orden,tipo_carga,fase))");
-			
-			
-			db.execSQL(	"CREATE TABLE amd_param_trabajos_orden(	id_revision 		VARCHAR(20) NOT NULL,"
-															+ "	id_orden			VARCHAR(20) NOT NULL,"
-															+ "	id_trabajo			VARCHAR(20) NOT NULL,"
-															+ "	cuenta				VARCHAR(20) NOT NULL,"
-															+ "	nodo				VARCHAR(20) NOT NULL,"
-															+ "	estado 				VARCHAR(1) NOT NULL,"
-															+ "	fecha_ins			TIMESTAMP NOT NULL DEFAULT current_timestamp,"
-															+ "	usuario_ins			VARCHAR(50) NOT NULL,"
-															+ "	cantidad			NUMERIC(8,5) NOT NULL,"
-															+ "	PRIMARY KEY (id_revision, id_orden, id_trabajo))");
-			
-			db.execSQL("CREATE TABLE amd_censo(	id_orden 			VARCHAR(50) NOT NULL PRIMARY KEY," +
-											"	total_censo 		DOUBLE PRECISION NOT NULL DEFAULT 0," +
-											"	carga_registrada 	DOUBLE PRECISION NOT NULL DEFAULT 0," +
-											"	carga_directa 		DOUBLE PRECISION NOT NULL DEFAULT 0," +
-											"	usuario_ins			VARCHAR(50)," +
-											"	fecha_ins 			TIMESTAMP  NOT NULL DEFAULT current_timestamp," +
-											"	carga_ndefinida	DOUBLE PRECISION NOT NULL DEFAULT 0);");
-			
-			db.execSQL(	"CREATE TABLE amd_censo_carga(	id_orden		VARCHAR(20) NOT NULL,"
-													+ "	id_elemento		VARCHAR(20) NOT NULL,"
-													+ "	capacidad		NUMERIC(10,2) NOT NULL,"
-													+ "	cantidad		INTEGER NOT NULL,"
-													+ "	usuario_ins		VARCHAR(50) NOT NULL,"
-													+ "	fecha_ins		TIMESTAMP NOT NULL DEFAULT current_timestamp,"
-													+ "	tipo_carga		VARCHAR(1),"
-													+ "	PRIMARY KEY(id_orden,id_elemento,tipo_carga))");
-			
-						
-			db.execSQL(	"CREATE TABLE amd_inconsistencias(	id_inconsistencia	VARCHAR(20) UNIQUE NOT NULL,"
-														+ "	id_orden			VARCHAR(20) NOT NULL,"
-														+ "	id_nodo				VARCHAR(20),"
-														+ "	valor 				VARCHAR(4000),"
-														+ "	fecha_ins			TIMESTAMP NOT NULL DEFAULT current_timestamp,"
-														+ "	usuario_ins 		VARCHAR(50) NOT NULL,"
-														+ "	cod_inconsistencia	VARCHAR(50) NOT NULL,"
-														+ "	cuenta				VARCHAR(20),"
-														+ "	tipo				VARCHAR(5),"
-														+ "	trabajo				VARCHAR(20),"
-														+ "	PRIMARY KEY (id_orden, cod_inconsistencia))");
-			
-							
-			db.execSQL(	"CREATE TABLE amd_contadores_clientes(	 cuenta                 VARCHAR(20) NOT NULL," +
-																"marca                  VARCHAR(50)," +
-																"serie                  VARCHAR(50)," +
-																"estado                 VARCHAR(50)," +
-																"digitos                VARCHAR(50)," +
-																"tipo                   VARCHAR(50)," +
-																"provisional            VARCHAR(10)," +
-																"lectura                VARCHAR(20)," +
-																"con_contador           VARCHAR(10)," +
-																"lectura_prom           VARCHAR(20)," +
-																"factor_multiplicacion  VARCHAR(20)," +
-																"suma_lecturas          VARCHAR(20)," +
-																"meses_sumas            VARCHAR(10)," +
-																"PRIMARY KEY(cuenta,marca,serie));");	
-			
-			
-			db.execSQL(	"CREATE TABLE amd_datos_tranfor(	id_orden	VARCHAR(50) NOT NULL PRIMARY KEY,"
-														+ "	numero		VARCHAR(50),"
-														+ "	marca		VARCHAR(50),"
-														+ "	kva			VARCHAR(50),"
-														+ "	propietario	VARCHAR(50),"
-														+ "	anno		VARCHAR(50),"
-														+ "	voltaje1 	VARCHAR(50),"
-														+ "	voltaje2	VARCHAR(50),"
-														+ "	circuito	VARCHAR(50));");
-			
-			
-			db.execSQL(	"CREATE TABLE amd_contador_cliente_orden(	 cuenta                 VARCHAR(20) NOT NULL," +
-																	"marca                  VARCHAR(50)," +
-																	"serie                  VARCHAR(50)," +
-																	"estado                 VARCHAR(50)," +
-																	"lectura                VARCHAR(20)," +
-																	"digitos                INTEGER," +
-																	"con_contador           VARCHAR(10)," +
-																	"tipo                   VARCHAR(50)," +
-																	"lectura_prom           VARCHAR(20)," +
-																	"factor_multiplicacion  INTEGER," +
-																	"provisional            VARCHAR(10)," +
-																	"suma_lecturas          VARCHAR(20)," +
-																	"meses_sumas_lecturas    VARCHAR(10)," +
-																	"desinstalado           INTEGER DEFAULT 0," +
-																	"PRIMARY KEY(cuenta,marca,serie));");	
-			
-			
-			db.execSQL("CREATE TABLE amd_nodo(	 id_nodo                VARCHAR(50)," +
-												"direccion              VARCHAR(50)," +
-												"ubicacion              VARCHAR(50)," +
-												"municipio              VARCHAR(50)," +
-												"mapa                   VARCHAR(50)," +
-												"fecha_ven              VARCHAR(20)," +
-												"progreso               VARCHAR(50)," +
-												"estado                 VARCHAR(50)," +
-												"observacion            VARCHAR(200)," +
-												"tipo                   VARCHAR(50)," +
-												"PRIMARY KEY(id_nodo));");
-			
-			
-			db.execSQL("CREATE TABLE amd_clientes_nodo(	 cuenta                 VARCHAR(20) NOT NULL," +
-														"direccion              VARCHAR(100)," +
-														"propietario            VARCHAR(100)," +
-														"servicio               VARCHAR(50)," +
-														"ubicacion              VARCHAR(50)," +
-														"estrato                VARCHAR(50)," +
-														"ruta                   VARCHAR(50)," +
-														"nodo                   VARCHAR(50) NOT NULL," +
-														"estado                 VARCHAR(50)," +
-														"id_nodo_sec            VARCHAR(20)," +
-														"registrado             INTEGER NOT NULL DEFAULT 0," +
-														"PRIMARY KEY(cuenta));");
-			
-			db.execSQL("CREATE TABLE amd_borrar_orden(id_orden VARCHAR(20) NOT NULL, PRIMARY KEY(id_orden));");
-			
-			
-			db.execSQL("CREATE TABLE amd_nodos_sec(	 id_nodo_prim           VARCHAR(20) NOT NULL," +
-													"id_nodo_sec            VARCHAR(20) NOT NULL," +
-													"id_orden               VARCHAR(20) NOT NULL," +
-													"registrado             INTEGER NOT NULL DEFAULT 0," +
-													"usuario_ins            VARCHAR(50)," +
-													"fecha_ins              VARCHAR(20)," +
-													"nuevo                  INTEGER DEFAULT 0," +
-													"ubicacion              VARCHAR(20)," +
-													"PRIMARY KEY(id_nodo_prim, id_nodo_sec,id_orden));");
-			
-			
-			db.execSQL("CREATE TABLE amd_tramos_red(	 id_serial              INTEGER PRIMARY KEY AUTOINCREMENT," +
-														"id_nodo                VARCHAR(20)," +
-														"id_orden               VARCHAR(20)," +
-														"nodo_ini               VARCHAR(20)," +
-														"nodo_fin               VARCHAR(20)," +
-														"accion                 VARCHAR(20)," +
-														"registrado             INTEGER DEFAULT 0);");
-			
-			
-			db.execSQL("CREATE TABLE amd_materiales_trabajo_orden( 	id_orden 		VARCHAR(20) NOT NULL,"
-																+ "	id_trabajo		VARCHAR(20) NOT NULL,"
-																+ "	id_material		VARCHAR(20) NOT NULL,"
-																+ "	cantidad		DOUBLE NOT NULL DEFAULT 0,"
-																+ "	cuotas			INTEGER NOT NULL DEFAULT 12,"
-																+ "	automatico		INTEGER NOT NULL DEFAULT 0,"
-																+ "	usuario_ins 	VARCHAR(50),"
-																+ "	fecha_ins 		TIMESTAMP DEFAULT current_timestamp,"
-																+ "PRIMARY KEY (id_orden,id_material));");
-			
-			
-			db.execSQL("CREATE TABLE amd_materiales_provisionales(	 id_orden               VARCHAR(100)," +
-																	"elemento               VARCHAR(100)," +
-																	"marca                  VARCHAR(100)," +
-																	"serie                  VARCHAR(100)," +
-																	"id_agrupador           VARCHAR(100)," +
-																	"cuenta                 VARCHAR(100)," +
-																	"proceso                VARCHAR(100)," +
-																	"estado                 VARCHAR(100)," +
-																	"usuario_ins            VARCHAR(100)," +
-																	"fecha_ins              VARCHAR(100)," +
-																	"valor                  VARCHAR(100)," +
-																	"cantidad               VARCHAR(100),"
-																  + "PRIMARY KEY(id_orden,elemento));");
-			
-			db.execSQL("CREATE TABLE amd_material_usuario( id_orden 		VARCHAR(20) NOT NULL,"
-														+ "material		VARCHAR(100) NOT NULL,"
-														+ "cantidad		VARCHAR(50) NOT NULL,"
-														+ "estado		VARCHAR(50) NOT NULL,"
-														+ "disposicion	VARCHAR(50) NOT NULL,"
-														+ "PRIMARY KEY(id_orden,material, estado));");
-			
-			
-			db.execSQL("CREATE TABLE amd_sellos_contador(	 id_serial              INTEGER PRIMARY KEY AUTOINCREMENT," +
-															"marca                  VARCHAR(100)," +
-															"serie                  VARCHAR(100)," +
-															"numero                 VARCHAR(100));");
-			
-			
-			db.execSQL("CREATE TABLE amd_consumos_orden(	 id_orden               VARCHAR(20) NOT NULL," +
-															"cuenta                 VARCHAR(20) NOT NULL," +
-															"anomes                 VARCHAR(20) NOT NULL," +
-															"marca                  VARCHAR(40)," +
-															"serie                  VARCHAR(40)," +
-															"consumo                VARCHAR(40)," +
-															"lectura_anterior       VARCHAR(40)," +
-															"lectura_tomada         VARCHAR(40)," +
-															"observacion_lectura    VARCHAR(100)," +
-															"medidor                VARCHAR(20)," +
-															"PRIMARY KEY(id_orden,cuenta,anomes));");
-			
-			db.execSQL("CREATE TABLE amd_pruebas(	id_orden 		VARCHAR(50) NOT NULL PRIMARY KEY,"
-												+ "	p_conexion		VARCHAR(50) NOT NULL,"
-												+ "	p_continuidad	VARCHAR(50) NOT NULL,"
-												+ "	p_puentes		VARCHAR(50) NOT NULL,"
-												+ "	p_integrador	VARCHAR(50) NOT NULL,"
-												+ "	p_vacio			VARCHAR(50) NOT NULL,"
-												+ "	p_frenado		VARCHAR(50) NOT NULL,"
-												+ "	p_retirado		VARCHAR(50) NOT NULL,"
-												+ "	rozamiento		VARCHAR(50) NOT NULL,"
-												+ "	aplomado 		VARCHAR(50) NOT NULL);");
-			
-			
-			db.execSQL("CREATE TABLE amd_prueba_integracion(	id_orden 	VARCHAR(50) NOT NULL PRIMARY KEY,"
-															+ "	lect_ini	VARCHAR(20) NOT NULL,"
-															+ "	lect_final	VARCHAR(20) NOT NULL,"
-															+ "	giros		VARCHAR(20) NOT NULL);");
-			
-			
-			db.execSQL("CREATE TABLE amd_observacion_materiales(id_orden VARCHAR(20) NOT NULL PRIMARY KEY,"
-															+ "	observacion VARCHAR(500) NOT NULL);");*/
+			db.execSQL(	"CREATE VIEW vista_in_ordenes_trabajo AS " +
+							"SELECT 	a.id_serial,a.solicitud,a.dependencia,a.pda,a.cuenta,a.municipio,b.municipio AS nombre_municipio,a.suscriptor," +
+							"			a.direccion,a.clase_servicio,a.estrato,a.nodo,a.marca,a.serie,a.carga_contratada,a.estado " +
+							"FROM		in_ordenes_trabajo as a " +
+							"JOIN 		parametros_municipios as b " +
+							"ON 		a.municipio = b.id_municipio;");
+			
+			db.execSQL("CREATE VIEW vista_dig_actas  AS " +
+						"	SELECT 	a.solicitud, a.doc_enterado, a.nom_enterado, a.doc_testigo, a.nom_testigo, a.tipo_enterado, a.respuesta_pqr, " +
+						"			strftime('%d',a.fecha_ins) as dia, strftime('%m',a.fecha_ins) as mes, strftime('%Y',a.fecha_ins) as anno," +
+						"			strftime('%H:%M:%S',a.fecha_ins) as hora, b.suscriptor " +
+						"	FROM 	dig_actas as a " +
+						"	JOIN 	in_ordenes_trabajo as b " +
+						"	ON 		a.solicitud = b.solicitud;");
+			
+			db.execSQL(	"CREATE TRIGGER tg_fecha_revision AFTER INSERT ON dig_actas FOR EACH ROW BEGIN " +
+					"	UPDATE dig_actas SET fecha_ins=datetime('now','localtime') WHERE solicitud = NEW.solicitud;" +
+					"END;");
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			db.execSQL("UPDATE db_parametros SET valor = '1.6' WHERE item = 'version'");
+			db.execSQL("UPDATE amd_configuracion SET valor = '1.1' WHERE item = 'version'");
 			
-			db.execSQL(	"CREATE TRIGGER tg_fecha_revision AFTER INSERT ON amd_actas FOR EACH ROW BEGIN " +
-						"	UPDATE amd_actas SET fecha_revision=datetime('now','localtime') WHERE id_orden = NEW.id_orden;" +
+			db.execSQL(	"CREATE TRIGGER tg_fecha_revision AFTER INSERT ON dig_actas FOR EACH ROW BEGIN " +
+						"	UPDATE dig_actas SET fecha_ins=datetime('now','localtime') WHERE solicitud = NEW.solicitud;" +
 						"END;");
 		}
 	}
@@ -790,21 +278,6 @@ public class SQLite {
 		this.nContexto = c;
 		this.Directorio = CurrentDirectory;
 		SQLite.N_BD = this.Directorio + File.separator + "BdDesviaciones_Lecturas";
-		
-		this.TablasAmData.put("SGD_CONTADORES_FRONTERA_EXP", "amd_contadores_clientes");
-		this.TablasAmData.put("SGD_CONTADORES_INSTALADOS_EXP", "amd_contador_cliente_orden");
-		this.TablasAmData.put("SGD_CONTADORES_NUEVOS_EXP", "amd_bodega_contadores");
-		this.TablasAmData.put("SGD_NODOS_EXP", "amd_nodo");
-		this.TablasAmData.put("SGD_CUENTA_FRONTERA_EXP", "amd_clientes_nodo");
-		this.TablasAmData.put("SGD_ORDENES_TRABAJO_EXP", "amd_ordenes_trabajo");
-		this.TablasAmData.put("SGD_BORRAR_ORDENES_EXP", "amd_borrar_orden");
-		this.TablasAmData.put("SGD_NODOS_SEC_EXP", "amd_nodos_sec");
-		this.TablasAmData.put("SGD_TRAMOS_RED_EXP", "amd_tramos_red");
-		this.TablasAmData.put("SGD_ELEMENTOS_PROV_EXP", "amd_materiales_provisionales");
-		this.TablasAmData.put("SGD_BODEGA_SELLOS_EXP", "amd_bodega_sellos");
-		this.TablasAmData.put("SGD_SELLOS_CONTADOR_EXP", "amd_sellos_contador");
-		this.TablasAmData.put("SGD_CONSUMOS_ORDEN_EXP", "amd_consumos_orden");
-		
 		ArchSQL = new Archivos(this.nContexto, this.Directorio, 10);
 		if(!ArchSQL.ExistFolderOrFile(this.Directorio)){		
 			ArchSQL.MakeDirectory();

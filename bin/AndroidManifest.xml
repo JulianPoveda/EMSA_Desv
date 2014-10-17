@@ -25,20 +25,22 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".Loggin"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Configuracion"
-            android:label="@string/title_activity_configuracion" >
+            android:label="@string/title_activity_configuracion" 
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".ListaTrabajo"
-            android:label="@string/title_activity_lista_trabajo" >
+            android:label="@string/title_activity_lista_trabajo" 
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="dialogos.DialogoInformacion"
@@ -51,28 +53,49 @@
             android:theme="@android:style/Theme.Dialog" >
         </activity>
         <activity
-            android:name=".DatosActas"
-            android:label="@string/title_activity_datos_actas" >
+            android:name=".Actas"
+            android:label="@string/title_activity_datos_actas" 
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".Acometida"
-            android:label="@string/title_activity_acometida" >
+            android:label="@string/title_activity_acometida" 
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".Sellos"
-            android:label="@string/title_activity_sellos" >
+            android:label="@string/title_activity_sellos" 
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".CensoCarga"
-            android:label="@string/title_activity_censo_carga" >
+            android:label="@string/title_activity_censo_carga" 
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".Contador"
-            android:label="@string/title_activity_contador" >
+            android:label="@string/title_activity_contador" 
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".Irregularidades"
-            android:label="@string/title_activity_irregularidades" >
+            android:label="@string/title_activity_irregularidades" 
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".Observaciones"
+            android:label="@string/title_activity_observaciones" 
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".DatosActas"
+            android:label="@string/title_activity_adecuaciones" 
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".Adecuaciones"
+            android:label="@string/title_activity_adecuaciones" 
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

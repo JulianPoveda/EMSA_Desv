@@ -81,6 +81,12 @@ public class ClassParametros {
 				this._tempRegistro.put("minimo",this.LineasSQL[3]);
 				this._tempRegistro.put("maximo",this.LineasSQL[4]);
 				this.ParametrosSQL.InsertRegistro("parametros_elementos_censo", this._tempRegistro);
+			}else if(this.LineasSQL[0].equals("Cod_Acometida")){
+				this._tempRegistro.put("id_acometida",this.LineasSQL[1]);
+				this._tempRegistro.put("calibre",this.LineasSQL[2]);
+				this._tempRegistro.put("tipo_acometida",this.LineasSQL[3]);
+				this._tempRegistro.put("conductor",this.LineasSQL[4]);
+				this.ParametrosSQL.InsertRegistro("parametros_codificacion_cometida", this._tempRegistro);
 			}			
 		}
 	}

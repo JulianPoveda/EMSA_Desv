@@ -2,6 +2,8 @@ package desviaciones.emsa;
 
 import java.io.File;
 
+import sistema.FormatosActas;
+
 import ws_connect.DownLoadParametros;
 import ws_connect.DownLoadTrabajo;
 
@@ -23,6 +25,7 @@ public class Loggin extends Activity implements OnClickListener{
 	private Intent k;
 	private ClassUsuario		FcnUsuario;
 	private ClassConfiguracion 	FcnCfg;
+	private FormatosActas		FormatoImp;
 
 	private String 	FolderAplicacion;
 	private int 	NivelUsuario;
@@ -41,6 +44,8 @@ public class Loggin extends Activity implements OnClickListener{
 		this.FcnCfg				= new ClassConfiguracion(this ,this.FolderAplicacion);
 		this.FcnUsuario 		= new ClassUsuario(this, this.FolderAplicacion);
 		this.UsuarioLogged 		= false;
+		
+		this.FormatoImp		= new FormatosActas(this, this.FolderAplicacion, false);
 		
 		_lblPDA			= (TextView) findViewById(R.id.LogginLblCodigo);
 		_lblVersion 	= (TextView) findViewById(R.id.LogginLblVersion);
@@ -103,7 +108,15 @@ public class Loggin extends Activity implements OnClickListener{
 	 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {				
+		switch (item.getItemId()) {	
+			case R.id.Salir:
+				finish();
+				return true;
+				
+			case R.id.ImpresionPrueba:
+				this.FormatoImp.FormatoPrueba();
+				return true;
+		
 			case R.id.Configuracion:
 				this.k = new Intent(this, Configuracion.class);
 				this.k.putExtra("NivelLogged", this.NivelUsuario);

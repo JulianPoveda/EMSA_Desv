@@ -2,6 +2,10 @@ package desviaciones.emsa;
 
 import java.util.ArrayList;
 
+import clases.ClassCensoCarga;
+import clases.ClassInSolicitudes;
+import clases.ClassIrregularidades;
+
 import sistema.SQLite;
 import sistema.Utilidades;
 
@@ -9,6 +13,7 @@ import adaptadores.AdaptadorFiveItems;
 import adaptadores.DetalleFiveItems;
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,8 +30,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class CensoCarga extends Activity implements OnClickListener, OnItemSelectedListener, OnItemClickListener{
+	private Intent new_form;
+
 	private SQLite 						CensoSQL;
 	private Utilidades					CensoUtil;
+	private ClassInSolicitudes			FcnSolicitudes;
+	private ClassCensoCarga				FcnCensoCarga;
+	private ClassIrregularidades		FcnIrregularidades;
 	
 	private ContentValues				_tempRegistro;
 	private ArrayList<ContentValues> 	_tempTabla;
@@ -68,8 +78,11 @@ public class CensoCarga extends Activity implements OnClickListener, OnItemSelec
 		this.Solicitud			= bundle.getString("Solicitud");
 		this.FolderAplicacion 	= bundle.getString("FolderAplicacion");
 		
-		this.CensoSQL 	= new SQLite(this, this.FolderAplicacion);
-		this.CensoUtil	= new Utilidades();
+		this.FcnIrregularidades	= new ClassIrregularidades(this, this.FolderAplicacion);
+		this.FcnCensoCarga		= new ClassCensoCarga(this, this.FolderAplicacion);
+		this.FcnSolicitudes		= new ClassInSolicitudes(this, this.FolderAplicacion);
+		this.CensoSQL 			= new SQLite(this, this.FolderAplicacion);
+		this.CensoUtil			= new Utilidades();
 		
 		_lblCensoCarga		= (TextView) findViewById(R.id.CensoLblTotalCensoCarga);
 		_lblCargaRegistrada	= (TextView) findViewById(R.id.CensoLblTotalCargaRegistrada);
@@ -115,6 +128,94 @@ public class CensoCarga extends Activity implements OnClickListener, OnItemSelec
 	}
 
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_censo_carga, menu);
+		return true;
+	}
+	
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {	
+			case R.id.Acta:
+				finish();
+				this.new_form = new Intent(this, Actas.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;
+				
+			case R.id.Acometida:
+				finish();
+				this.new_form = new Intent(this, Acometida.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;	
+				
+			case R.id.Adecuaciones:
+				finish();
+				this.new_form = new Intent(this, Adecuaciones.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;		
+				
+			case R.id.Contador:
+				finish();
+				this.new_form = new Intent(this, Contador.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;	
+				
+			case R.id.DatosActas:
+				finish();
+				this.new_form = new Intent(this, DatosActas.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;	
+				
+			case R.id.Irregularidades:
+				finish();
+				this.new_form = new Intent(this, Irregularidades.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;		
+						
+			case R.id.Observaciones:
+				finish();
+				this.new_form = new Intent(this, Observaciones.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;	
+				
+			case R.id.Sellos:
+				finish();
+				this.new_form = new Intent(this, Sellos.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;
+				
+			default:
+				return super.onOptionsItemSelected(item);	
+		}
+	}
+	
+	
+	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 		switch(parent.getId()){
 			case R.id.CensoCmbElemento:
@@ -151,12 +252,23 @@ public class CensoCarga extends Activity implements OnClickListener, OnItemSelec
 					this._tempRegistro.put("carga", this._cmbCarga.getSelectedItem().toString().substring(0,1));
 					this._tempRegistro.put("servicio", this._cmbTipo.getSelectedItem().toString().substring(0,1));				
 					this.CensoSQL.InsertRegistro("dig_censo_carga", this._tempRegistro);
+					if(this.FcnSolicitudes.getCargaContratada(this.Solicitud)<this.FcnCensoCarga.getTotalCenso(this.Solicitud)){
+						this.FcnIrregularidades.registrarIrregularidadById(this.Solicitud, "59");
+					}else{
+						this.FcnIrregularidades.eliminarIrregularidadById(this.Solicitud, "59");
+					}				
 					this.CargarElementosRegistrados();
+					
 				}
 				break;
 				
 			case R.id.CensoBtnEliminar:
 				this.CensoSQL.DeleteRegistro("dig_censo_carga", "id_elemento="+this.ElementoSelect+" AND carga='"+this.CargaSelect+"' AND servicio='"+this.TipoSelect+"'");
+				if(this.FcnSolicitudes.getCargaContratada(this.Solicitud)<this.FcnCensoCarga.getTotalCenso(this.Solicitud)){
+					this.FcnIrregularidades.registrarIrregularidadById(this.Solicitud, "59");
+				}else{
+					this.FcnIrregularidades.eliminarIrregularidadById(this.Solicitud, "59");
+				}
 				this.CargarElementosRegistrados();
 				this.CalcularSumatorias();
 				break;
@@ -175,12 +287,13 @@ public class CensoCarga extends Activity implements OnClickListener, OnItemSelec
 		this.CalcularSumatorias();
 	}
 	
+	
 	private void CalcularSumatorias(){
-		_lblCensoCarga.setText("Total Censo Carga: "+ this.CensoSQL.DoubleSelectShieldWhere("dig_censo_carga", "sum(cantidad*vatios) as sumatoria", "solicitud='"+this.Solicitud+"'"));
-		_lblCargaRegistrada.setText("Total Carga Registrada: "+ this.CensoSQL.DoubleSelectShieldWhere("dig_censo_carga", "sum(cantidad*vatios) as sumatoria", "solicitud='"+this.Solicitud+"' AND carga='R'"));
-		_lblCargaDirecta.setText("Total Carga Directa: "+ this.CensoSQL.DoubleSelectShieldWhere("dig_censo_carga", "sum(cantidad*vatios) as sumatoria", "solicitud='"+this.Solicitud+"' AND carga='D'"));
-		_lblCargaComercial.setText("Total Carga Comercial: "+ this.CensoSQL.DoubleSelectShieldWhere("dig_censo_carga", "sum(cantidad*vatios) as sumatoria", "solicitud='"+this.Solicitud+"' AND servicio='N'"));
-		_lblCargaResidencial.setText("Total Carga Residencial: "+ this.CensoSQL.DoubleSelectShieldWhere("dig_censo_carga", "sum(cantidad*vatios) as sumatoria", "solicitud='"+this.Solicitud+"' AND servicio='R'"));
+		_lblCensoCarga.setText("Total Censo Carga: "+ this.FcnCensoCarga.getTotalCenso(this.Solicitud));
+		_lblCargaRegistrada.setText("Total Carga Registrada: "+ this.FcnCensoCarga.getTotalCensoRegistrada(this.Solicitud));
+		_lblCargaDirecta.setText("Total Carga Directa: "+ this.FcnCensoCarga.getTotalCensoDirecta(this.Solicitud));
+		_lblCargaComercial.setText("Total Carga Comercial: "+ this.FcnCensoCarga.getTotalCensoNoResidencial(this.Solicitud));
+		_lblCargaResidencial.setText("Total Carga Residencial: "+this.FcnCensoCarga.getTotalCensoResidencial(this.Solicitud));
 		
 	}
 

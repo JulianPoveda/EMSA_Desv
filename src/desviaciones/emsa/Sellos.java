@@ -5,13 +5,11 @@ import java.util.ArrayList;
 import clases.ClassSellos;
 
 import sistema.SQLite;
-import sistema.Utilidades;
-import adaptadores.AdaptadorFiveItems;
 import adaptadores.AdaptadorSixItems;
-import adaptadores.DetalleFiveItems;
 import adaptadores.DetalleSixItems;
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +25,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class Sellos extends Activity implements OnClickListener, OnItemSelectedListener, OnItemClickListener{
+	private Intent 			new_form;
 	private	SQLite			SellosSQL;
 	private ClassSellos		FcnSellos;
 	
@@ -113,6 +112,94 @@ public class Sellos extends Activity implements OnClickListener, OnItemSelectedL
 		_btnEliminar.setOnClickListener(this);
 	}
 	
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_sellos, menu);
+		return true;
+	}
+
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {	
+			case R.id.Acta:
+				finish();
+				this.new_form = new Intent(this, Actas.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;
+			
+			case R.id.Acometida:
+				finish();
+				this.new_form = new Intent(this, Acometida.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;
+				
+			case R.id.Adecuaciones:
+				finish();
+				this.new_form = new Intent(this, Adecuaciones.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;		
+				
+			case R.id.CensoCarga:
+				finish();
+				this.new_form = new Intent(this, CensoCarga.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;	
+				
+						
+			case R.id.Contador:
+				finish();
+				this.new_form = new Intent(this, Contador.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;
+				
+			case R.id.DatosActas:
+				finish();
+				this.new_form = new Intent(this, DatosActas.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;	
+			
+			case R.id.Irregularidades:
+				finish();
+				this.new_form = new Intent(this, Irregularidades.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;
+				
+			case R.id.Observaciones:
+				finish();
+				this.new_form = new Intent(this, Observaciones.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;				
+				
+			default:
+				return super.onOptionsItemSelected(item);	
+		}
+	}
 	
 	private void CargarSellosRegistrados(){
 		ArrayTablaSellos.clear();

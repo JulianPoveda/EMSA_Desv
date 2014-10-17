@@ -113,6 +113,42 @@ public class Contador extends Activity implements OnClickListener{
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {				
+			case R.id.Acta:
+				finish();
+				this.new_form = new Intent(this, Actas.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;
+			
+			case R.id.Acometida:
+				finish();
+				this.new_form = new Intent(this, Acometida.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;
+				
+			case R.id.Adecuaciones:
+				finish();
+				this.new_form = new Intent(this, Adecuaciones.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;		
+				
+			case R.id.CensoCarga:
+				finish();
+				this.new_form = new Intent(this, CensoCarga.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;
+				
 			case R.id.DatosActas:
 				finish();
 				this.new_form = new Intent(this, DatosActas.class);
@@ -120,7 +156,34 @@ public class Contador extends Activity implements OnClickListener{
 				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
 				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
 				startActivity(this.new_form);
+				return true;	
+				
+			case R.id.Irregularidades:
+				finish();
+				this.new_form = new Intent(this, Irregularidades.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
 				return true;
+				
+			case R.id.Observaciones:
+				finish();
+				this.new_form = new Intent(this, Observaciones.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;
+				
+			case R.id.Sellos:
+				finish();
+				this.new_form = new Intent(this, Sellos.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;	
 				
 			default:
 				return super.onOptionsItemSelected(item);	

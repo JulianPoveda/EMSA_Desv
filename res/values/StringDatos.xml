@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="DatosCmbIrregularidades">Irregularidades</string>
+    <string name="DatosCmbPruebaRozamiento">Prueba Rozamiento</string>
+    <string name="DatosCmbPruebaFrenado">Prueba Medidor Frenado</string>
+    <string name="DatosCmbPruebaVacio">Prueba de Giro en Vacio</string>
+    <string name="DatosCmbFamilias">Familias</string>
+    <string name="DatosCmbFotos">Fotos</string>
+    <string name="DatosCmbElectricista">Asistio Electricista</string>
+    <string name="DatosCmbClaseMedidor">Medidor Elect/Inducc</string>
+    <string name="DatosCmbUbicacionMedidor">Medidor Interno/Externo</string>
+    <string name="DatosCmbMedidorAplomado">Medidor Aplomado</string>
+    <string name="DatosCmbregistrador">Registrador</string>
+    <string name="DatosTxtTelefono">Telefono</string>
+    <string name="DatosTxtPorcentajeNoResidencial">% No Residencial</string>
+    <string name="DatosBtnRegistrar">Registrar</string>
+    
+</resources>
