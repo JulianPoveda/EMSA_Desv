@@ -13,17 +13,18 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-public class ListaTrabajo extends Activity implements OnItemSelectedListener, OnItemClickListener{
+public class ListaTrabajo extends Activity implements OnItemSelectedListener{
 	private static int 			CONFIRMACION_INFORMACION 	= 1;
 	private static int 			CONFIRMACION_INICIO_ORDEN	= 2;
 	private static int 			CONFIRMACION_CERRAR_ORDEN	= 3;
@@ -75,76 +76,57 @@ public class ListaTrabajo extends Activity implements OnItemSelectedListener, On
 		_lstSolicitudes.setAdapter(AdaptadorSolicitudes);
 		
 		_cmbNodos.setOnItemSelectedListener(this);
-		_lstSolicitudes.setOnItemClickListener(this);
+		//_lstSolicitudes.setOnItemClickListener(this);
+		
+		registerForContextMenu(this._lstSolicitudes);
 	}
 
-	
-	public void CargarOrdenesTrabajo(){
-		ArraySolicitudes.clear();
-		if(_cmbNodos.getSelectedItem().toString().equals("Todos")){
-			_tempTabla = FcnSQL.SelectData("in_ordenes_trabajo", "solicitud,dependencia,cuenta,suscriptor,direccion,nodo,marca,serie", "solicitud IS NOT NULL ORDER BY solicitud");
-			for(int i=0;i<_tempTabla.size();i++){
-				_tempRegistro = _tempTabla.get(i);
-				ArraySolicitudes.add(new DetalleEightItems(_tempRegistro.getAsString("solicitud"),_tempRegistro.getAsString("dependencia"),_tempRegistro.getAsString("cuenta"),_tempRegistro.getAsString("suscriptor"),_tempRegistro.getAsString("direccion"),_tempRegistro.getAsString("nodo"),_tempRegistro.getAsString("marca"),_tempRegistro.getAsString("serie")));
-			}
-		}else{
-			_tempTabla = FcnSQL.SelectData("in_ordenes_trabajo", "solicitud,dependencia,cuenta,suscriptor,direccion,nodo,marca,serie", "nodo='"+_cmbNodos.getSelectedItem().toString()+"' ORDER BY solicitud");
-			for(int i=0;i<_tempTabla.size();i++){
-				_tempRegistro = _tempTabla.get(i);
-				ArraySolicitudes.add(new DetalleEightItems(_tempRegistro.getAsString("solicitud"),_tempRegistro.getAsString("dependencia"),_tempRegistro.getAsString("cuenta"),_tempRegistro.getAsString("suscriptor"),_tempRegistro.getAsString("direccion"),_tempRegistro.getAsString("nodo"),_tempRegistro.getAsString("marca"),_tempRegistro.getAsString("serie")));
-			}
+	/**Funciones para el control del menu contextual del listview que muestra las ordenes de trabajo**/
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+		this.SolicitudSeleccionada = ArraySolicitudes.get(info.position).getItem1();		
+		switch(v.getId()){
+			case R.id.TrabajoLstSolicitudes:
+				menu.setHeaderTitle("Solicitud " +ArraySolicitudes.get(info.position).getItem1());
+			    super.onCreateContextMenu(menu, v, menuInfo);
+			    MenuInflater inflater = getMenuInflater();
+			    inflater.inflate(R.menu.menu_solicitudes, menu);
+			    break;				
 		}
-		AdaptadorSolicitudes.notifyDataSetChanged();
+	  
+		/*if (v.getId() == R.id.TrabajoLstSolicitudes) {
+	    AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+	    this.SolicitudSeleccionada = ArraySolicitudes.get(info.position).getItem1();
+	    menu.setHeaderTitle("Solicitud " +ArraySolicitudes.get(info.position).getItem1());
+	    super.onCreateContextMenu(menu, v, menuInfo);
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.menu_solicitudes, menu);
+	  }*/
 	}
 	
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_solicitudes, menu);
-		return true;
-	}
-	
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {				
+	public boolean onContextItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {				
 			case R.id.IniciarSolicitud:
-				if(this.SolicitudSeleccionada.isEmpty()){
-					this.DialogInformacion.putExtra("informacion", "No ha seleccionado una solicitud.");
-					startActivityForResult(this.DialogInformacion, this.CONFIRMACION_INFORMACION);
+				if(this.FcnInSolicitudes.IniciarSolicitud(this.SolicitudSeleccionada)){
+					this.DialogConfirmacion.putExtra("informacion", "Desea Iniciar La Orden "+ this.SolicitudSeleccionada);
+					startActivityForResult(DialogConfirmacion, this.CONFIRMACION_INICIO_ORDEN);
 				}else{
-					if(this.FcnInSolicitudes.IniciarSolicitud(this.SolicitudSeleccionada)){
-						this.DialogConfirmacion.putExtra("informacion", "Desea Iniciar La Orden "+ this.SolicitudSeleccionada);
-						startActivityForResult(DialogConfirmacion, this.CONFIRMACION_INICIO_ORDEN);
-					}else{
-						DialogInformacion.putExtra("informacion", "No se puede iniciar la actividad, comprobar:\n->Que no exista otra orden abierta\n->Que la orden seleccionada no este en estado 'TERMINADA'");
-						startActivityForResult(DialogInformacion, CONFIRMACION_INFORMACION);
-					}				
-				}
-				
-				/***********************Validacion de si existe una solicitud previamente abierta*****************/
-				/*if(FcnSolicitudes.IniciarOrden(_txtOrden.getText().toString())){
-					DialogConfirmacion.putExtra("informacion", "Desea Iniciar La Orden "+ _txtOrden.getText().toString());
-					startActivityForResult(DialogConfirmacion, CONFIRMACION_INICIO_ORDEN);
-				}else{
-					DialogInformacion.putExtra("informacion", "No se puede iniciar la actividad, comprobar:\n->Que no exista otra orden abierta\n->Que la orden seleccionada no este en estado 'TERMINADA'");
+					DialogInformacion.putExtra("informacion", "No se puede iniciar la actividad, comprobar:\n->Que no exista otra solicitud abierta\n->Que la solicitud seleccionada no este en estado 'TERMINADA'");
 					startActivityForResult(DialogInformacion, CONFIRMACION_INFORMACION);
-				}*/
+				}					
 				return true;
 			
 			
 			case R.id.TerminarSolicitud:
-				/*if(!_txtOrden.getText().toString().isEmpty()){
-					if(FcnSolicitudes.getEstadoOrden(_txtOrden.getText().toString()).equals("E")){
-						DialogConfirmacion.putExtra("informacion", "Desea Cerrar La Orden "+_txtOrden.getText().toString());
-						startActivityForResult(DialogConfirmacion, CONFIRMACION_CERRAR_ORDEN);	
-					}
-				}else{
-					DialogInformacion.putExtra("informacion","No ha seleccionado una orden para cerrar.");
-					startActivityForResult(DialogInformacion, CONFIRMACION_INFORMACION);
-				}*/
+				if(this.FcnInSolicitudes.getEstadoSolicitud(this.SolicitudSeleccionada).equals("E")){
+					DialogConfirmacion.putExtra("informacion", "Desea Cerrar La Solicitud "+this.SolicitudSeleccionada);
+					startActivityForResult(DialogConfirmacion, CONFIRMACION_CERRAR_ORDEN);	
+				}
 				return true;
 			
-			case R.id.AbrirSolicitud:
+			/*case R.id.AbrirSolicitud:
 				/*if(FcnSolicitudes.IniciarAperturaOrden(_txtOrden.getText().toString())){
 					DialogApertura.putExtra("titulo","INGRESE EL CODIGO DE APERTURA");
 					DialogApertura.putExtra("lbl1", "Codigo:");
@@ -154,31 +136,52 @@ public class ListaTrabajo extends Activity implements OnItemSelectedListener, On
 					DialogInformacion.putExtra("informacion", "No es posible abrir la orden "+_txtOrden.getText().toString()+", verifique que:\n->Este en estado terminada.\n->No exista otra orden abierta.");
 					startActivityForResult(DialogInformacion, CONFIRMACION_INFORMACION);
 				}*/
-				return true;
+				
 			
 				
 			default:
-				return super.onOptionsItemSelected(item);
-		}
+	            return super.onContextItemSelected(item);        
+	    }
 	}
 	
+
+	public void CargarOrdenesTrabajo(){
+		ArraySolicitudes.clear();
+		if(_cmbNodos.getSelectedItem().toString().equals("Todos")){
+			_tempTabla = FcnSQL.SelectData("in_ordenes_trabajo", "solicitud,dependencia,cuenta,suscriptor,direccion,nodo,marca,serie,estado", "solicitud IS NOT NULL ORDER BY solicitud");
+			for(int i=0;i<_tempTabla.size();i++){
+				_tempRegistro = _tempTabla.get(i);
+				ArraySolicitudes.add(new DetalleEightItems(_tempRegistro.getAsString("solicitud"),_tempRegistro.getAsString("dependencia"),_tempRegistro.getAsString("cuenta"),_tempRegistro.getAsString("suscriptor"),_tempRegistro.getAsString("direccion"),_tempRegistro.getAsString("nodo"),_tempRegistro.getAsString("marca"),_tempRegistro.getAsString("serie"),_tempRegistro.getAsString("estado")));
+			}
+		}else{
+			_tempTabla = FcnSQL.SelectData("in_ordenes_trabajo", "solicitud,dependencia,cuenta,suscriptor,direccion,nodo,marca,serie,estado", "nodo='"+_cmbNodos.getSelectedItem().toString()+"' ORDER BY solicitud");
+			for(int i=0;i<_tempTabla.size();i++){
+				_tempRegistro = _tempTabla.get(i);
+				ArraySolicitudes.add(new DetalleEightItems(_tempRegistro.getAsString("solicitud"),_tempRegistro.getAsString("dependencia"),_tempRegistro.getAsString("cuenta"),_tempRegistro.getAsString("suscriptor"),_tempRegistro.getAsString("direccion"),_tempRegistro.getAsString("nodo"),_tempRegistro.getAsString("marca"),_tempRegistro.getAsString("serie"),_tempRegistro.getAsString("estado")));
+			}
+		}
+		AdaptadorSolicitudes.notifyDataSetChanged();
+	}
+	
+		
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(resultCode == RESULT_OK && requestCode == CONFIRMACION_INICIO_ORDEN && data.getExtras().getBoolean("accion")) {
+			this.FcnInSolicitudes.setEstadoSolicitud(this.SolicitudSeleccionada, "E");
 			finish();
 			IniciarSolicitud = new Intent(this, Actas.class);
 			this.IniciarSolicitud.putExtra("Solicitud", this.SolicitudSeleccionada);
 			this.IniciarSolicitud.putExtra("NivelUsuario", this.NivelUsuario);
 			this.IniciarSolicitud.putExtra("FolderAplicacion", this.FolderAplicacion);
 			startActivity(IniciarSolicitud);
-		}/*else if(resultCode == RESULT_OK && requestCode == CONFIRMACION_CERRAR_ORDEN){
-			if(data.getExtras().getBoolean("accion")){
-				_tempRegistro.clear();
-				_tempRegistro.put("estado","T");
-				SolicitudesSQL.UpdateRegistro("amd_ordenes_trabajo", _tempRegistro, "id_orden='"+_txtOrden.getText().toString()+"'");	
-				CargarOrdenesTrabajo();
-			}			
-		}else if(resultCode == RESULT_OK && requestCode == CONFIRMACION_COD_APERTURA){
+		}else if(resultCode == RESULT_OK && requestCode == CONFIRMACION_CERRAR_ORDEN && data.getExtras().getBoolean("accion")){
+			_tempRegistro.clear();
+			_tempRegistro.put("estado","T");
+			this.FcnInSolicitudes.setEstadoSolicitud(this.SolicitudSeleccionada, "T");
+			CargarOrdenesTrabajo();			
+		}
+		
+		/*else if(resultCode == RESULT_OK && requestCode == CONFIRMACION_COD_APERTURA){
 			if(data.getExtras().getBoolean("response")){
 				if(FcnSolicitudes.verificarCodigoApertura(_txtOrden.getText().toString(),data.getExtras().getString("txt1"))){
 					_tempRegistro.clear();
@@ -195,12 +198,6 @@ public class ListaTrabajo extends Activity implements OnItemSelectedListener, On
 	
 	
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		this.SolicitudSeleccionada = this.ArraySolicitudes.get(position).getItem1();		
-	}
-
-
-	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 		switch(parent.getId()){
 			case R.id.TrabajoCmbNodos:
@@ -208,7 +205,7 @@ public class ListaTrabajo extends Activity implements OnItemSelectedListener, On
 				break;
 		}		
 	}
-
+	
 
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {

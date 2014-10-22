@@ -7,7 +7,7 @@
     <TextView
         android:id="@+id/item1"
         android:layout_width="80dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/Item1"
         android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -15,7 +15,7 @@
     <TextView
         android:id="@+id/item2"
         android:layout_width="80dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/Item2"
         android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -23,7 +23,7 @@
     <TextView
         android:id="@+id/item3"
         android:layout_width="80dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/Item3"
         android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -31,7 +31,7 @@
     <TextView
         android:id="@+id/item4"
         android:layout_width="80dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/Item4"
         android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -39,7 +39,7 @@
     <TextView
         android:id="@+id/item5"
         android:layout_width="80dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/Item5"
         android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -47,7 +47,7 @@
     <TextView
         android:id="@+id/item6"
         android:layout_width="80dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/Item6"
         android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -55,7 +55,7 @@
     <TextView
         android:id="@+id/item7"
         android:layout_width="80dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/Item7"
         android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -63,7 +63,7 @@
     <TextView
         android:id="@+id/item8"
         android:layout_width="80dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/Item8"
         android:textAppearance="?android:attr/textAppearanceSmall" />

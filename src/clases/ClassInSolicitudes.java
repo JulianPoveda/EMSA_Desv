@@ -29,7 +29,20 @@ public class ClassInSolicitudes {
 		for(int i=0;i<_informacion.size();i++){
 			this._tempRegistro.clear();
 			this.LineasSQL = _informacion.get(i).toString().split("\\|");
-			if(this.LineasSQL[0].equals("T")){
+			if(this.LineasSQL[0].equals("D")){
+				this.InSolicitudesSQL.DeleteRegistro("in_ordenes_trabajo", "solicitud='"+this.LineasSQL[1]+"'");
+				this.InSolicitudesSQL.DeleteRegistro("in_sellos", "solicitud='"+this.LineasSQL[1]+"'");
+				this.InSolicitudesSQL.DeleteRegistro("in_consumos", "solicitud='"+this.LineasSQL[1]+"'");
+				this.InSolicitudesSQL.DeleteRegistro("dig_acometida", "solicitud='"+this.LineasSQL[1]+"'");
+				this.InSolicitudesSQL.DeleteRegistro("dig_contador", "solicitud='"+this.LineasSQL[1]+"'");
+				this.InSolicitudesSQL.DeleteRegistro("dig_actas", "solicitud='"+this.LineasSQL[1]+"'");
+				this.InSolicitudesSQL.DeleteRegistro("dig_censo_carga", "solicitud='"+this.LineasSQL[1]+"'");
+				this.InSolicitudesSQL.DeleteRegistro("dig_sellos", "solicitud='"+this.LineasSQL[1]+"'");
+				this.InSolicitudesSQL.DeleteRegistro("dig_irregularidades", "solicitud='"+this.LineasSQL[1]+"'");
+				this.InSolicitudesSQL.DeleteRegistro("dig_observaciones", "solicitud='"+this.LineasSQL[1]+"'");
+				this.InSolicitudesSQL.DeleteRegistro("dig_datos_actas", "solicitud='"+this.LineasSQL[1]+"'");
+				this.InSolicitudesSQL.DeleteRegistro("dig_adecuaciones", "solicitud='"+this.LineasSQL[1]+"'");				
+			}else if(this.LineasSQL[0].equals("T")){
 				this._tempRegistro.put("id_serial", 		this.LineasSQL[1]);
 				this._tempRegistro.put("solicitud", 		this.LineasSQL[2]);
 				this._tempRegistro.put("dependencia", 		this.LineasSQL[3]);
@@ -106,6 +119,24 @@ public class ClassInSolicitudes {
 	}
 		
 	public boolean IniciarSolicitud(String _solicitud){
-		return true;
+		boolean _retorno = false;
+		if(this.InSolicitudesSQL.ExistRegistros("in_ordenes_trabajo", "estado = 'E' AND solicitud<>'"+_solicitud+"'")){
+			_retorno = false;
+		}else if(this.InSolicitudesSQL.ExistRegistros("in_ordenes_trabajo", "estado = 'T' AND solicitud = '"+_solicitud+"'")){
+			_retorno = false;
+		}else{
+			_retorno = true;
+		}
+		return _retorno;
+	}
+	
+	public void setEstadoSolicitud(String _solicitud, String _estado){
+		this._tempRegistro.clear();
+		this._tempRegistro.put("estado", _estado);
+		this.InSolicitudesSQL.UpdateRegistro("in_ordenes_trabajo", this._tempRegistro, "solicitud='"+_solicitud+"'");
+	}
+	
+	public String getEstadoSolicitud(String _solicitud){
+		return this.InSolicitudesSQL.StrSelectShieldWhere("in_ordenes_trabajo", "estado", "solicitud='"+_solicitud+"'");
 	}
 }

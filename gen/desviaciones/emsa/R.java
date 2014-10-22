@@ -18,7 +18,7 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int AbrirSolicitud=0x7f0800d6;
+        public static final int AbrirSolicitud=0x7f0800d5;
         public static final int Acometida=0x7f0800c4;
         public static final int AcometidaBtnEliminar=0x7f08000e;
         public static final int AcometidaBtnRegistrar=0x7f08000f;
@@ -143,7 +143,7 @@ public final class R {
         public static final int ImpresionOriginal=0x7f0800c7;
         public static final int ImpresionPrueba=0x7f0800ca;
         public static final int ImpresionUsuario=0x7f0800c8;
-        public static final int IniciarSolicitud=0x7f0800d5;
+        public static final int IniciarSolicitud=0x7f0800d6;
         public static final int IrregBtnAgregar=0x7f080083;
         public static final int IrregBtnEliminar=0x7f080084;
         public static final int IrregCmbIrregularidades=0x7f080082;
