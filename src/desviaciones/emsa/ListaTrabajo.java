@@ -4,9 +4,12 @@ import java.util.ArrayList;
 
 
 import clases.ClassInSolicitudes;
+import dialogos.DialogoConfirmacion;
 import dialogos.DialogoInformacion;
+import dialogos.DialogoSingleTxt;
 
 import sistema.SQLite;
+import ws_connect.JsonConnection;
 import adaptadores.AdaptadorEightItems;
 import adaptadores.DetalleEightItems;
 import android.app.Activity;
@@ -33,6 +36,7 @@ public class ListaTrabajo extends Activity implements OnItemSelectedListener{
 	private Intent 				IniciarSolicitud;
 	private Intent 				DialogInformacion; 
 	private Intent 				DialogConfirmacion; 
+	private Intent 				DialogApertura;
 	private SQLite				FcnSQL;				
 	private ClassInSolicitudes	FcnInSolicitudes;	
 	
@@ -64,6 +68,7 @@ public class ListaTrabajo extends Activity implements OnItemSelectedListener{
 		
 		this.DialogInformacion	= new Intent(this,DialogoInformacion.class);
 		this.DialogConfirmacion = new Intent(this,DialogoConfirmacion.class);
+		this.DialogApertura 	= new Intent(this,DialogoSingleTxt.class);
 		
 		this._cmbNodos 			= (Spinner) findViewById(R.id.TrabajoCmbNodos);
 		this._lstSolicitudes 	= (ListView) findViewById(R.id.TrabajoLstSolicitudes);
@@ -94,16 +99,8 @@ public class ListaTrabajo extends Activity implements OnItemSelectedListener{
 			    inflater.inflate(R.menu.menu_solicitudes, menu);
 			    break;				
 		}
-	  
-		/*if (v.getId() == R.id.TrabajoLstSolicitudes) {
-	    AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
-	    this.SolicitudSeleccionada = ArraySolicitudes.get(info.position).getItem1();
-	    menu.setHeaderTitle("Solicitud " +ArraySolicitudes.get(info.position).getItem1());
-	    super.onCreateContextMenu(menu, v, menuInfo);
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.menu_solicitudes, menu);
-	  }*/
 	}
+	
 	
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
@@ -111,7 +108,7 @@ public class ListaTrabajo extends Activity implements OnItemSelectedListener{
 			case R.id.IniciarSolicitud:
 				if(this.FcnInSolicitudes.IniciarSolicitud(this.SolicitudSeleccionada)){
 					this.DialogConfirmacion.putExtra("informacion", "Desea Iniciar La Orden "+ this.SolicitudSeleccionada);
-					startActivityForResult(DialogConfirmacion, this.CONFIRMACION_INICIO_ORDEN);
+					startActivityForResult(DialogConfirmacion, CONFIRMACION_INICIO_ORDEN);
 				}else{
 					DialogInformacion.putExtra("informacion", "No se puede iniciar la actividad, comprobar:\n->Que no exista otra solicitud abierta\n->Que la solicitud seleccionada no este en estado 'TERMINADA'");
 					startActivityForResult(DialogInformacion, CONFIRMACION_INFORMACION);
@@ -123,21 +120,32 @@ public class ListaTrabajo extends Activity implements OnItemSelectedListener{
 				if(this.FcnInSolicitudes.getEstadoSolicitud(this.SolicitudSeleccionada).equals("E")){
 					DialogConfirmacion.putExtra("informacion", "Desea Cerrar La Solicitud "+this.SolicitudSeleccionada);
 					startActivityForResult(DialogConfirmacion, CONFIRMACION_CERRAR_ORDEN);	
+				}else{
+					DialogInformacion.putExtra("informacion", "No se puede dar por terminada la actividad ya que no esta en estado EJECUCION.");
+					startActivityForResult(DialogInformacion, CONFIRMACION_INFORMACION);
 				}
 				return true;
 			
-			/*case R.id.AbrirSolicitud:
-				/*if(FcnSolicitudes.IniciarAperturaOrden(_txtOrden.getText().toString())){
+			case R.id.AbrirEnLinea:
+				if(this.FcnInSolicitudes.AbrirSolicitud(this.SolicitudSeleccionada)){
+					new JsonConnection(this, this.FolderAplicacion).execute(this.SolicitudSeleccionada+"");
+				}else{
+					DialogInformacion.putExtra("informacion", "No es posible abrir la orden "+ this.SolicitudSeleccionada+", verifique que:\n->Este en estado terminada.\n->No exista otra orden abierta.");
+					startActivityForResult(DialogInformacion, CONFIRMACION_INFORMACION);
+				}
+				return true;
+				
+			case R.id.AbrirSolicitud:
+				if(this.FcnInSolicitudes.AbrirSolicitud(this.SolicitudSeleccionada)){
 					DialogApertura.putExtra("titulo","INGRESE EL CODIGO DE APERTURA");
 					DialogApertura.putExtra("lbl1", "Codigo:");
 					DialogApertura.putExtra("txt1", "");
 					startActivityForResult(DialogApertura, CONFIRMACION_COD_APERTURA);
 				}else{
-					DialogInformacion.putExtra("informacion", "No es posible abrir la orden "+_txtOrden.getText().toString()+", verifique que:\n->Este en estado terminada.\n->No exista otra orden abierta.");
+					DialogInformacion.putExtra("informacion", "No es posible abrir la orden "+ this.SolicitudSeleccionada+", verifique que:\n->Este en estado terminada.\n->No exista otra orden abierta.");
 					startActivityForResult(DialogInformacion, CONFIRMACION_INFORMACION);
-				}*/
-				
-			
+				}	
+				return true;
 				
 			default:
 	            return super.onContextItemSelected(item);        
@@ -179,21 +187,15 @@ public class ListaTrabajo extends Activity implements OnItemSelectedListener{
 			_tempRegistro.put("estado","T");
 			this.FcnInSolicitudes.setEstadoSolicitud(this.SolicitudSeleccionada, "T");
 			CargarOrdenesTrabajo();			
+		}else if(resultCode == RESULT_OK && requestCode == CONFIRMACION_COD_APERTURA && data.getExtras().getBoolean("accion")){
+			if(this.FcnInSolicitudes.VerificarCodigoApertura(this.SolicitudSeleccionada,data.getExtras().getString("txt1"))){
+				this.FcnInSolicitudes.setEstadoSolicitud(this.SolicitudSeleccionada, "E");
+				CargarOrdenesTrabajo();
+			}else{
+				DialogInformacion.putExtra("informacion", "Codigo De Apertura Erroneo");
+				startActivityForResult(DialogInformacion, CONFIRMACION_INFORMACION);
+			}
 		}
-		
-		/*else if(resultCode == RESULT_OK && requestCode == CONFIRMACION_COD_APERTURA){
-			if(data.getExtras().getBoolean("response")){
-				if(FcnSolicitudes.verificarCodigoApertura(_txtOrden.getText().toString(),data.getExtras().getString("txt1"))){
-					_tempRegistro.clear();
-					_tempRegistro.put("estado","E");
-					SolicitudesSQL.UpdateRegistro("amd_ordenes_trabajo", _tempRegistro, "id_orden='"+_txtOrden.getText().toString()+"'");	
-					CargarOrdenesTrabajo();
-				}else{
-					DialogInformacion.putExtra("informacion", "Codigo De Apertura Erroneo");
-					startActivityForResult(DialogInformacion, CONFIRMACION_INFORMACION);
-				}
-			}			
-		}*/
     }
 	
 	

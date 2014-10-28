@@ -9,10 +9,8 @@ import android.content.Context;
 public class ClassCensoCarga {
 	private SQLite	CensoSQL;
 	private Context _ctxCenso;
-	private String 	_folderAplicacion;
-	
+	private String 	_folderAplicacion;	
 	private ArrayList<ContentValues> _tempTabla = new ArrayList<ContentValues>();
-	private double _subtotal;
 	
 	
 	

@@ -1,5 +1,9 @@
 package sistema;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -19,6 +23,7 @@ public class Utilidades {
 		}
 		return _strRetorno;
 	}
+	
 	
 	public boolean validacionCuenta(String _cuenta){
 		boolean _retorno = false;
@@ -100,7 +105,6 @@ public class Utilidades {
 	}
 	
 	
-	
 	private String modulo10_3(String _numero){
 		String _retorno = "";
 		int 	Factor_peso = 3;
@@ -125,7 +129,6 @@ public class Utilidades {
 		}
 		return _retorno;
 	}
-	
 	
 	
 	public static boolean isNetworkAvailable(Activity activity) {
@@ -159,7 +162,6 @@ public class Utilidades {
 	}
 	
 	
-	
 	public ArrayList<String> getRangeAdapter(int _minimo, int _maximo, int _incremento){
 		ArrayList<String> _rango = new ArrayList<String>();
 		for(int i = _minimo; i<= _maximo;i+=_incremento){
@@ -169,17 +171,19 @@ public class Utilidades {
 	}
 	
 	
-	
-	public void ArrayContentValuesToString(ArrayList<String> _strInformacion, ArrayList<ContentValues> _informacion, String _campo){
+	public void ArrayContentValuesToString(ArrayList<String> _strInformacion, ArrayList<ContentValues> _informacion, String _campo, boolean addEmpty){
 		_strInformacion.clear();
+		if(addEmpty){
+			_strInformacion.add("");
+		}
 		ContentValues _registro = new ContentValues();
-		
 		for(int i=0; i<_informacion.size();i++){
 			_registro.clear();
 			_registro = _informacion.get(i);
 			_strInformacion.add(_registro.getAsString(_campo).toString());
 		}
 	}
+	
 	
 	public void ArrayContentValuesToString(ArrayList<String> _strInformacion, ArrayList<ContentValues> _informacion, String _campo, String _split, int _item){
 		String _tempStr[];
@@ -193,6 +197,7 @@ public class Utilidades {
 			_strInformacion.add(_tempStr[_item]);
 		}
 	}
+	
 	
 	public ArrayList<ContentValues> ArrContentFromJSON(String Cadena){
 		ArrayList<ContentValues> Query = new ArrayList<ContentValues>();
@@ -248,6 +253,7 @@ public class Utilidades {
 		return _retorno;
 	}
 	
+	
 	public String RemoveStringIntoArrayString(String _aguja, String _pajar, String _separador){
 		String _retorno = "";
 		try{
@@ -261,5 +267,29 @@ public class Utilidades {
 			
 		}
 		return _retorno;
+	}
+	
+	
+	public  String getStringFromInputStream(InputStream is) {
+		BufferedReader br = null;
+		StringBuilder sb = new StringBuilder();
+		String line;
+		try {
+			br = new BufferedReader(new InputStreamReader(is));
+			while ((line = br.readLine()) != null) {
+				sb.append(line);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return sb.toString();
 	}
 }

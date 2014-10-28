@@ -7,7 +7,7 @@
     <Spinner
         android:id="@+id/SellosCmbTipoIngreso"
         android:layout_width="200dp"
-        android:layout_height="25dp"
+        android:layout_height="40dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp" />
@@ -15,7 +15,7 @@
     <Spinner
         android:id="@+id/SellosCmbTipoSello"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="40dp"
         android:layout_alignLeft="@+id/SellosCmbTipoIngreso"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/SellosCmbTipoIngreso" />
@@ -23,14 +23,14 @@
     <Spinner
         android:id="@+id/SellosCmbUbicacion"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="40dp"
         android:layout_alignLeft="@+id/SellosCmbTipoSello"
         android:layout_below="@+id/SellosCmbTipoSello" />
 
     <Spinner
         android:id="@+id/SellosCmbColor"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="40dp"
         android:layout_alignLeft="@+id/SellosCmbUbicacion"
         android:layout_below="@+id/SellosCmbUbicacion" />
 
@@ -50,7 +50,7 @@
     <Spinner
         android:id="@+id/SellosCmbIrregularidad"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="40dp"
         android:layout_alignLeft="@+id/SellosTxtSerie"
         android:layout_below="@+id/SellosTxtSerie" />
 
@@ -64,7 +64,7 @@
         android:layout_toLeftOf="@+id/SellosCmbTipoIngreso"
         android:gravity="right|center_vertical"
         android:text="@string/SellosLblTipoIngreso"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/SellosLblTipoSello"
@@ -76,7 +76,7 @@
         android:layout_toLeftOf="@+id/SellosCmbTipoSello"
         android:gravity="right|center_vertical"
         android:text="@string/SellosLblTipoSello"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/SellosLblUbicacion"
@@ -88,7 +88,7 @@
         android:layout_alignTop="@+id/SellosCmbUbicacion"
         android:gravity="right|center_vertical"
         android:text="@string/SellosLblUbicacion"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/SellosLblColor"
@@ -100,7 +100,7 @@
         android:layout_toLeftOf="@+id/SellosCmbColor"
         android:gravity="right|center_vertical"
         android:text="@string/SellosLblColor"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/SellosLblSerie"
@@ -112,7 +112,7 @@
         android:layout_toLeftOf="@+id/SellosTxtSerie"
         android:gravity="right|center_vertical"
         android:text="@string/SellosLblSerie"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/SellosLblrregularidad"
@@ -124,12 +124,12 @@
         android:layout_toLeftOf="@+id/SellosCmbIrregularidad"
         android:gravity="right|center_vertical"
         android:text="@string/SellosLblIrregularidad"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView1"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/SellosLblrregularidad" >

@@ -7,7 +7,7 @@
     <Spinner
         android:id="@+id/ObsCmbObservacion"
         android:layout_width="200dp"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="16dp" />
@@ -22,7 +22,7 @@
         android:layout_toLeftOf="@+id/ObsCmbObservacion"
         android:gravity="right|center_vertical"
         android:text="@string/ObsLblObservacion"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
         android:id="@+id/ObsTxtObservacion"

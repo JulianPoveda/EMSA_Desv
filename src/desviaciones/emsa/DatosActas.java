@@ -1,11 +1,9 @@
 package desviaciones.emsa;
 
-import java.util.ArrayList;
 
 import clases.ClassDatosActas;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,9 +19,6 @@ public class DatosActas extends Activity implements OnClickListener{
 	private ClassDatosActas				FcnDatosActas;
 	
 	private Intent new_form;
-	private ArrayList<ContentValues> 	_tempTabla;	
-	private ArrayList<String> 			strTipoEnterado= new ArrayList<String>();
-	private ArrayAdapter<String> 		AdaptadorTipoEnterado;
 	private int 						NivelUsuario = 1;
 	private String 						Solicitud;
 	private String 						FolderAplicacion = "";

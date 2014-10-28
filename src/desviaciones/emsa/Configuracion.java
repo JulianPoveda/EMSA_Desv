@@ -3,12 +3,10 @@ package desviaciones.emsa;
 import java.util.ArrayList;
 
 import sistema.Bluetooth;
-import sistema.SQLite;
-import sistema.Utilidades;
+
 
 import clases.ClassConfiguracion;
 import android.app.Activity;
-import android.content.ContentValues;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,7 +17,6 @@ import android.widget.Spinner;
 
 public class Configuracion extends Activity implements OnClickListener{
 	private ClassConfiguracion 	FcnCfg;
-	private Utilidades 			FcnUtil;
 	private Bluetooth 			MB = new Bluetooth(this);		
 	
 	private int NivelUsuario;
@@ -52,7 +49,6 @@ public class Configuracion extends Activity implements OnClickListener{
 		this.NivelUsuario 		= bundle.getInt("NivelLogged");
 		this.FolderAplicacion 	= bundle.getString("FolderAplicacion");
 		this.FcnCfg 			= new ClassConfiguracion(this,this.FolderAplicacion);
-		this.FcnUtil			= new Utilidades();
 		
 		this._listaImpresoras = this.MB.GetDeviceBluetooth();
 		AdapLstImpresoras 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,_listaImpresoras);

@@ -7,7 +7,6 @@ import clases.ClassAcometida;
 import sistema.SQLite;
 import sistema.Utilidades;
 
-import adaptadores.AdaptadorFiveItems;
 import adaptadores.AdaptadorSevenItems;
 import adaptadores.DetalleSevenItems;
 import android.app.Activity;
@@ -94,33 +93,33 @@ public class Acometida extends Activity implements OnClickListener, OnItemSelect
 		
 		
 		this._tempTabla = this.AcometidaSQL.SelectData("parametros_acometida", "descripcion_opcion", "combo='tipo_ingreso'");
-		this.AcometidaUtil.ArrayContentValuesToString(_strTipoIngreso, this._tempTabla, "descripcion_opcion");
+		this.AcometidaUtil.ArrayContentValuesToString(_strTipoIngreso, this._tempTabla, "descripcion_opcion",false);
 		AdaptadorTipoIngreso= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,_strTipoIngreso);
 		_cmbTipoIngreso.setAdapter(AdaptadorTipoIngreso);
 		
 		this._tempTabla = this.AcometidaSQL.SelectData("parametros_acometida", "descripcion_opcion", "combo='conductor'");
-		this.AcometidaUtil.ArrayContentValuesToString(_strConductor, this._tempTabla, "descripcion_opcion");
+		this.AcometidaUtil.ArrayContentValuesToString(_strConductor, this._tempTabla, "descripcion_opcion",false);
 		AdaptadorConductor	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,_strConductor);
 		_cmbConductor.setAdapter(AdaptadorConductor);		
 		
 		this._tempTabla = this.AcometidaSQL.SelectData("parametros_acometida", "descripcion_opcion", "combo='tipo'");
-		this.AcometidaUtil.ArrayContentValuesToString(_strTipo, this._tempTabla, "descripcion_opcion");
+		this.AcometidaUtil.ArrayContentValuesToString(_strTipo, this._tempTabla, "descripcion_opcion",false);
 		AdaptadorTipo	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,_strTipo);
 		_cmbTipo.setAdapter(AdaptadorTipo);	
 		
 		this._tempTabla = this.AcometidaSQL.SelectData("parametros_acometida", "descripcion_opcion", "combo='clase'");
-		this.AcometidaUtil.ArrayContentValuesToString(_strClase, this._tempTabla, "descripcion_opcion");
+		this.AcometidaUtil.ArrayContentValuesToString(_strClase, this._tempTabla, "descripcion_opcion",false);
 		AdaptadorClase 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,_strClase);
 		_cmbClase.setAdapter(AdaptadorClase);
 		
 		this._tempTabla = this.AcometidaSQL.SelectData("parametros_acometida", "descripcion_opcion", "combo='fases'");
-		this.AcometidaUtil.ArrayContentValuesToString(_strFases, this._tempTabla, "descripcion_opcion");
+		this.AcometidaUtil.ArrayContentValuesToString(_strFases, this._tempTabla, "descripcion_opcion",false);
 		AdaptadorFases 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,_strFases);
 		_cmbFases.setAdapter(AdaptadorFases);
 		
 		//Adaptador para el combo del calibre del material segun el tipo  y el conductor
 		this._tempTabla= AcometidaSQL.SelectData("parametros_codificacion_cometida", "calibre", "conductor='"+this._conductor+"' AND tipo_acometida='"+this._tipo+"'");
-		AcometidaUtil.ArrayContentValuesToString(_strCalibre, this._tempTabla, "calibre");		
+		AcometidaUtil.ArrayContentValuesToString(_strCalibre, this._tempTabla, "calibre",false);		
 		AdaptadorCalibreAcometida= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,_strCalibre);
 		_cmbCalibre.setAdapter(AdaptadorCalibreAcometida);
 		
@@ -224,7 +223,7 @@ public class Acometida extends Activity implements OnClickListener, OnItemSelect
 	
 	private void MostrarOpcionCalibreAcometida(){
 		this._tempTabla = AcometidaSQL.SelectData("parametros_codificacion_cometida", "calibre", "conductor='"+this._conductor+"' AND tipo_acometida='"+this._tipo+"' ORDER BY calibre ASC");
-    	AcometidaUtil.ArrayContentValuesToString(_strCalibre, this._tempTabla, "calibre");		
+    	AcometidaUtil.ArrayContentValuesToString(_strCalibre, this._tempTabla, "calibre",false);		
     	AdaptadorCalibreAcometida.notifyDataSetChanged();
     }
 

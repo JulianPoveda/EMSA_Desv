@@ -31,35 +31,35 @@ public class ClassSellos {
 	public ArrayList<String> getTipoIngreso(){
 		ArrayList<String> _retorno = new ArrayList<String>();
 		this._tempTabla = this.SellosSQL.SelectData("parametros_sellos", "descripcion_opcion", "combo='tipo_ingreso'");
-		this.SellosUtil.ArrayContentValuesToString(_retorno, this._tempTabla,"descripcion_opcion");
+		this.SellosUtil.ArrayContentValuesToString(_retorno, this._tempTabla,"descripcion_opcion",false);
 		return _retorno;
 	}
 	
 	public ArrayList<String> getTipoSello(){
 		ArrayList<String> _retorno = new ArrayList<String>();
 		this._tempTabla = this.SellosSQL.SelectData("parametros_sellos", "descripcion_opcion", "combo='tipo_sello'");
-		this.SellosUtil.ArrayContentValuesToString(_retorno, this._tempTabla,"descripcion_opcion");
+		this.SellosUtil.ArrayContentValuesToString(_retorno, this._tempTabla,"descripcion_opcion",false);
 		return _retorno;
 	}
 	
 	public ArrayList<String> getUbicacion(){
 		ArrayList<String> _retorno = new ArrayList<String>();
 		this._tempTabla = this.SellosSQL.SelectData("parametros_sellos", "descripcion_opcion", "combo='ubicacion'");
-		this.SellosUtil.ArrayContentValuesToString(_retorno, this._tempTabla,"descripcion_opcion");
+		this.SellosUtil.ArrayContentValuesToString(_retorno, this._tempTabla,"descripcion_opcion",false);
 		return _retorno;
 	}
 	
 	public ArrayList<String> getColor(){
 		ArrayList<String> _retorno = new ArrayList<String>();
 		this._tempTabla = this.SellosSQL.SelectData("parametros_sellos", "descripcion_opcion", "combo='color'");
-		this.SellosUtil.ArrayContentValuesToString(_retorno, this._tempTabla,"descripcion_opcion");
+		this.SellosUtil.ArrayContentValuesToString(_retorno, this._tempTabla,"descripcion_opcion",false);
 		return _retorno;
 	}
 	
 	public ArrayList<String> getIrregularidad(){
 		ArrayList<String> _retorno = new ArrayList<String>();
 		this._tempTabla = this.SellosSQL.SelectData("parametros_sellos", "descripcion_opcion", "combo='irregularidad'");
-		this.SellosUtil.ArrayContentValuesToString(_retorno, this._tempTabla,"descripcion_opcion");
+		this.SellosUtil.ArrayContentValuesToString(_retorno, this._tempTabla,"descripcion_opcion",false);
 		return _retorno;
 	}
 	

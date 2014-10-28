@@ -81,6 +81,8 @@ public class SQLite {
 														" marca				VARCHAR(20) NOT NULL," +
 														" serie				VARCHAR(50) NOT NULL," +
 														" carga_contratada	INTEGER," +
+														" cod_apertura		VARCHAR(10) NOT NULL," +
+														" tipo_accion		INTEGER," +
 														" estado			VARCHAR(1) NOT NULL DEFAULT 'P');");
 			
 			db.execSQL(	"CREATE TABLE in_sellos( id_serial 	INTEGER NOT NULL," +
@@ -143,6 +145,13 @@ public class SQLite {
 																		"tipo_acometida	VARCHAR(10) NOT NULL," +
 																		"conductor		VARCHAR(10) NOT NULL);");
 			
+			db.execSQL( "CREATE TABLE parametros_respuesta_pqr(	 dependencia 				INTEGER NOT NULL," +
+																"tipo_accion 				INTEGER NOT NULL," +
+																"descripcion_tipo_solicitud VARCHAR(255) NOT NULL," +
+																"id_respuesta				INTEGER NOT NULL," +
+																"respuesta 					VARCHAR(255)," +
+																"PRIMARY KEY(dependencia,tipo_accion,id_respuesta));");
+			
 			db.execSQL( "CREATE TABLE dig_acometida( solicitud 		VARCHAR(20) NOT NULL PRIMARY KEY," +
 													"tipo_ingreso 	VARCHAR(20) NOT NULL," +
 													"conductor		VARCHAR(20) NOT NULL," +
@@ -157,6 +166,7 @@ public class SQLite {
 													"serie		VARCHAR(30)," +
 													"lectura1	DOUBLE PRECISION," +
 													"lectura2   DOUBLE PRECISION," +
+													"lectura3   DOUBLE PRECISION," +
 													"tipo 		VARCHAR(30));");
 			
 			db.execSQL( "CREATE TABLE dig_actas(     solicitud 		VARCHAR(20) NOT NULL PRIMARY KEY," +

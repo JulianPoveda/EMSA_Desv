@@ -106,7 +106,7 @@ public class CensoCarga extends Activity implements OnClickListener, OnItemSelec
 		this._cmbCantidad.setAdapter(this.AdaptadorCantidad);
 		
 		this._tempTabla = this.CensoSQL.SelectData("parametros_elementos_censo", "descripcion", "codigo IS NOT NULL ORDER BY descripcion");
-		this.CensoUtil.ArrayContentValuesToString(strElementos, this._tempTabla, "descripcion");
+		this.CensoUtil.ArrayContentValuesToString(strElementos, this._tempTabla, "descripcion",false);
 		this.AdaptadorElementos 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,strElementos);
 		this._cmbElementos.setAdapter(this.AdaptadorElementos);
 		

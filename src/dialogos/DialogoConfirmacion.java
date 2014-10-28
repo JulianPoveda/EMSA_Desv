@@ -1,5 +1,6 @@
-package desviaciones.emsa;
+package dialogos;
 
+import desviaciones.emsa.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

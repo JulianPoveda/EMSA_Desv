@@ -7,7 +7,7 @@
     <Spinner
         android:id="@+id/DatosCmbIrregularidades"
         android:layout_width="150dp"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="8dp" />
@@ -27,7 +27,7 @@
     <Spinner
         android:id="@+id/DatosCmbPruebaRozamiento"
         android:layout_width="150dp"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
         android:layout_alignLeft="@+id/DatosCmbIrregularidades"
         android:layout_below="@+id/DatosCmbIrregularidades" />
 
@@ -46,42 +46,42 @@
     <Spinner
         android:id="@+id/DatosCmbPruebaFrenado"
         android:layout_width="150dp"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
         android:layout_alignLeft="@+id/DatosCmbPruebaRozamiento"
         android:layout_below="@+id/DatosCmbPruebaRozamiento" />
 
     <Spinner
         android:id="@+id/DatosCmbPruebaVacio"
         android:layout_width="150dp"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
         android:layout_alignLeft="@+id/DatosCmbPruebaFrenado"
         android:layout_below="@+id/DatosCmbPruebaFrenado" />
 
     <Spinner
         android:id="@+id/DatosCmbFamilias"
         android:layout_width="150dp"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
         android:layout_alignLeft="@+id/DatosCmbPruebaVacio"
         android:layout_below="@+id/DatosCmbPruebaVacio" />
 
     <Spinner
         android:id="@+id/DatosCmbFotos"
         android:layout_width="150dp"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
         android:layout_alignLeft="@+id/DatosCmbFamilias"
         android:layout_below="@+id/DatosCmbFamilias" />
 
     <Spinner
         android:id="@+id/DatosCmbElectricista"
         android:layout_width="150dp"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
         android:layout_alignLeft="@+id/DatosCmbFotos"
         android:layout_below="@+id/DatosCmbFotos" />
 
     <Spinner
         android:id="@+id/DatosCmbClaseMedidor"
         android:layout_width="150dp"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
         android:layout_alignLeft="@+id/DatosCmbElectricista"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/DatosCmbElectricista" />
@@ -89,21 +89,21 @@
     <Spinner
         android:id="@+id/DatosCmbUbicacionMedidor"
         android:layout_width="150dp"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
         android:layout_alignLeft="@+id/DatosCmbClaseMedidor"
         android:layout_below="@+id/DatosCmbClaseMedidor" />
 
     <Spinner
         android:id="@+id/DatosCmbMedidorAplomado"
         android:layout_width="150dp"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
         android:layout_alignLeft="@+id/DatosCmbUbicacionMedidor"
         android:layout_below="@+id/DatosCmbUbicacionMedidor" />
 
     <Spinner
         android:id="@+id/DatosCmbRegistrador"
         android:layout_width="150dp"
-        android:layout_height="25dp"
+        android:layout_height="30dp"
         android:layout_alignLeft="@+id/DatosCmbMedidorAplomado"
         android:layout_below="@+id/DatosCmbMedidorAplomado" />
 
@@ -269,7 +269,6 @@
         android:layout_height="35dp"
         android:layout_below="@+id/DatosTxtPorcentajeNoResidencial"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
         android:text="@string/DatosBtnRegistrar" />
 
 </RelativeLayout>

@@ -87,6 +87,13 @@ public class ClassParametros {
 				this._tempRegistro.put("tipo_acometida",this.LineasSQL[3]);
 				this._tempRegistro.put("conductor",this.LineasSQL[4]);
 				this.ParametrosSQL.InsertRegistro("parametros_codificacion_cometida", this._tempRegistro);
+			}else if(this.LineasSQL[0].equals("RTA_PQR")){
+				this._tempRegistro.put("dependencia",this.LineasSQL[1]);
+				this._tempRegistro.put("tipo_accion",this.LineasSQL[2]);
+				this._tempRegistro.put("descripcion_tipo_solicitud",this.LineasSQL[3]);
+				this._tempRegistro.put("id_respuesta",this.LineasSQL[4]);
+				this._tempRegistro.put("respuesta",this.LineasSQL[5]);
+				this.ParametrosSQL.InsertRegistro("parametros_respuesta_pqr", this._tempRegistro);
 			}			
 		}
 	}

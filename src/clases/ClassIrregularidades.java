@@ -30,14 +30,14 @@ public class ClassIrregularidades {
 	public ArrayList<String> getIrregularidades(){
 		ArrayList<String> _retorno = new ArrayList<String>();
 		this._tempTabla = this.IrregSQL.SelectData("parametros_irregularidades", "descripcion", "id_irregularidad IS NOT NULL");
-		this.IrregUtil.ArrayContentValuesToString(_retorno, this._tempTabla, "descripcion");
+		this.IrregUtil.ArrayContentValuesToString(_retorno, this._tempTabla, "descripcion",false);
 		return _retorno;
 	}
 	
 	public ArrayList<String> getIrregularidadesRegistradas(String _solicitud){
 		ArrayList<String> _retorno = new ArrayList<String>();
 		this._tempTabla = this.IrregSQL.SelectData("dig_irregularidades", "irregularidad", "solicitud='"+_solicitud+"'");
-		this.IrregUtil.ArrayContentValuesToString(_retorno, this._tempTabla, "irregularidad");
+		this.IrregUtil.ArrayContentValuesToString(_retorno, this._tempTabla, "irregularidad",false);
 		return _retorno;
 	}
 	

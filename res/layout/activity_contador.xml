@@ -7,7 +7,7 @@
     <Spinner
         android:id="@+id/ContadorCmbMarca"
         android:layout_width="200dp"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp" />
@@ -22,19 +22,19 @@
         android:layout_toLeftOf="@+id/ContadorCmbMarca"
         android:gravity="right|center_vertical"
         android:text="@string/ContadorLblMarca"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Spinner
         android:id="@+id/ContadorCmbTipo"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_alignLeft="@+id/ContadorCmbMarca"
         android:layout_below="@+id/ContadorCmbMarca" />
 
     <EditText
         android:id="@+id/ContadorTxtSerie"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_alignLeft="@+id/ContadorCmbTipo"
         android:layout_below="@+id/ContadorCmbTipo"
         android:ems="10"
@@ -46,7 +46,7 @@
     <EditText
         android:id="@+id/ContadorTxtLectura1"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_alignLeft="@+id/ContadorTxtSerie"
         android:layout_below="@+id/ContadorTxtSerie"
         android:ems="10"
@@ -55,7 +55,7 @@
     <EditText
         android:id="@+id/ContadorTxtLectura2"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_alignLeft="@+id/ContadorTxtLectura1"
         android:layout_below="@+id/ContadorTxtLectura1"
         android:ems="10"
@@ -71,7 +71,7 @@
         android:layout_below="@+id/ContadorLblMarca"
         android:gravity="right|center_vertical"
         android:text="@string/ContadorLblTipo"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/ContadorLblSerie"
@@ -83,7 +83,7 @@
         android:layout_toLeftOf="@+id/ContadorTxtSerie"
         android:gravity="right|center_vertical"
         android:text="@string/ContadorLblSerie"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/ContadorLblLectura1"
@@ -95,7 +95,7 @@
         android:layout_below="@+id/ContadorLblSerie"
         android:gravity="right|center_vertical"
         android:text="@string/ContadorLblLectura1"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/ContadorLblLectura2"
@@ -107,7 +107,7 @@
         android:layout_alignTop="@+id/ContadorTxtLectura2"
         android:gravity="right|center_vertical"
         android:text="@string/ContadorLblLectura2"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView1"

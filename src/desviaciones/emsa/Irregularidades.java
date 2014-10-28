@@ -4,9 +4,7 @@ import java.util.ArrayList;
 
 import clases.ClassIrregularidades;
 
-import adaptadores.DetalleSixItems;
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,8 +23,6 @@ public class Irregularidades extends Activity implements OnClickListener, OnItem
 	private Intent new_form;
 	private ClassIrregularidades 		FcnIrreg;
 	
-	private ContentValues				_tempRegistro;
-	private ArrayList<ContentValues> 	_tempTabla;
 	private String	Solicitud;
 	private String 	FolderAplicacion;
 	private int 	NivelUsuario = 1;	

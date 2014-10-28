@@ -1,7 +1,5 @@
 package clases;
 
-import java.util.ArrayList;
-
 import sistema.SQLite;
 import android.content.ContentValues;
 import android.content.Context;
@@ -12,7 +10,6 @@ public class ClassAcometida {
 	private String	_folderAplicacion;
 	
 	private ContentValues				_tempRegistro	= new ContentValues();
-	private ArrayList<ContentValues> 	_tempTabla		= new ArrayList<ContentValues>();
 	
 
 	public ClassAcometida(Context _ctx, String _folder){

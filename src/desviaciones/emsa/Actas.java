@@ -36,7 +36,9 @@ public class Actas extends Activity implements OnClickListener{
 	private ArrayList<ContentValues> 	_tempTabla;
 	
 	private ArrayList<String> 			strTipoEnterado= new ArrayList<String>();
+	private ArrayList<String> 			strRespuestaPQR= new ArrayList<String>();
 	private ArrayAdapter<String> 		AdaptadorTipoEnterado;
+	private ArrayAdapter<String> 		AdaptadorRTAPQR;
 	private int 						NivelUsuario = 1;
 	private String 						Solicitud;
 	private String 						FolderAplicacion = "";
@@ -76,9 +78,14 @@ public class Actas extends Activity implements OnClickListener{
 		_btnRegistrar	= (Button) findViewById(R.id.ActaBtnRegistrar);
 		
 		this._tempTabla = this.ActasSQL.SelectData("parametros_actas", "descripcion_opcion", "combo='tipo_enterado'");
-		this.ActasUtil.ArrayContentValuesToString(strTipoEnterado, this._tempTabla, "descripcion_opcion");
+		this.ActasUtil.ArrayContentValuesToString(strTipoEnterado, this._tempTabla, "descripcion_opcion",false);
 		this.AdaptadorTipoEnterado 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,strTipoEnterado);
 		this._cmbTipoEnterado.setAdapter(this.AdaptadorTipoEnterado);
+		
+		this._tempTabla = this.ActasSQL.SelectData("parametros_respuesta_pqr", "id_respuesta||'-'||respuesta as respuesta", "dependencia='"+this.FcnSolicitudes.getDependencia(this.Solicitud)+"' AND tipo_accion='"+this.FcnSolicitudes.getTipoAccion(this.Solicitud)+"'");
+		this.ActasUtil.ArrayContentValuesToString(strRespuestaPQR, this._tempTabla, "respuesta",true);
+		this.AdaptadorRTAPQR 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,strRespuestaPQR);
+		this._cmbRespuesta.setAdapter(this.AdaptadorRTAPQR);
 		
 		_txtOrden.setEnabled(false);
 		_txtActa.setEnabled(false);
@@ -181,6 +188,14 @@ public class Actas extends Activity implements OnClickListener{
 				startActivity(this.new_form);
 				return true;
 				
+			case R.id.Volver:
+				finish();
+				this.new_form = new Intent(this, ListaTrabajo.class);
+				this.new_form.putExtra("NivelLogged", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;
+				
 			case R.id.ImpresionOriginal:
 				this.FormatoImp.FormatoDesviacion(this.Solicitud, "", 1);
 				return true;
@@ -209,7 +224,7 @@ public class Actas extends Activity implements OnClickListener{
 											_txtDocTestigo.getText().toString(), 
 											_txtNomTestigo.getText().toString(), 
 											_cmbTipoEnterado.getSelectedItem().toString(), 
-											"nada"/*_cmbRespuesta.getSelectedItem().toString()*/);
+											_cmbRespuesta.getSelectedItem().toString());
 				break;
 		}	
 	}

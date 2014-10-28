@@ -76,7 +76,7 @@ public class Contador extends Activity implements OnClickListener{
 		_lstContador 	= (ListView) findViewById(R.id.ContadorLstContador);
 		
 		this._tempTabla = this.ContadorSQL.SelectData("vista_parametros_medidores", "resumen", "marca IS NOT NULL");
-		this.ContadorUtil.ArrayContentValuesToString(StringMarcaMedidores, this._tempTabla, "resumen");
+		this.ContadorUtil.ArrayContentValuesToString(StringMarcaMedidores, this._tempTabla, "resumen",false);
 		this.AdaptadorMarcaMedidor 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,StringMarcaMedidores);
 		this._cmbMarcaMedidor.setAdapter(this.AdaptadorMarcaMedidor);
 		

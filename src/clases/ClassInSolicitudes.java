@@ -30,18 +30,7 @@ public class ClassInSolicitudes {
 			this._tempRegistro.clear();
 			this.LineasSQL = _informacion.get(i).toString().split("\\|");
 			if(this.LineasSQL[0].equals("D")){
-				this.InSolicitudesSQL.DeleteRegistro("in_ordenes_trabajo", "solicitud='"+this.LineasSQL[1]+"'");
-				this.InSolicitudesSQL.DeleteRegistro("in_sellos", "solicitud='"+this.LineasSQL[1]+"'");
-				this.InSolicitudesSQL.DeleteRegistro("in_consumos", "solicitud='"+this.LineasSQL[1]+"'");
-				this.InSolicitudesSQL.DeleteRegistro("dig_acometida", "solicitud='"+this.LineasSQL[1]+"'");
-				this.InSolicitudesSQL.DeleteRegistro("dig_contador", "solicitud='"+this.LineasSQL[1]+"'");
-				this.InSolicitudesSQL.DeleteRegistro("dig_actas", "solicitud='"+this.LineasSQL[1]+"'");
-				this.InSolicitudesSQL.DeleteRegistro("dig_censo_carga", "solicitud='"+this.LineasSQL[1]+"'");
-				this.InSolicitudesSQL.DeleteRegistro("dig_sellos", "solicitud='"+this.LineasSQL[1]+"'");
-				this.InSolicitudesSQL.DeleteRegistro("dig_irregularidades", "solicitud='"+this.LineasSQL[1]+"'");
-				this.InSolicitudesSQL.DeleteRegistro("dig_observaciones", "solicitud='"+this.LineasSQL[1]+"'");
-				this.InSolicitudesSQL.DeleteRegistro("dig_datos_actas", "solicitud='"+this.LineasSQL[1]+"'");
-				this.InSolicitudesSQL.DeleteRegistro("dig_adecuaciones", "solicitud='"+this.LineasSQL[1]+"'");				
+				this.BorrarRegistroBySolicitud(this.LineasSQL[1]);		
 			}else if(this.LineasSQL[0].equals("T")){
 				this._tempRegistro.put("id_serial", 		this.LineasSQL[1]);
 				this._tempRegistro.put("solicitud", 		this.LineasSQL[2]);
@@ -57,6 +46,7 @@ public class ClassInSolicitudes {
 				this._tempRegistro.put("marca", 			this.LineasSQL[12]);
 				this._tempRegistro.put("serie", 			this.LineasSQL[13]);
 				this._tempRegistro.put("carga_contratada", 	this.LineasSQL[14]);
+				this._tempRegistro.put("cod_apertura", 		this.LineasSQL[15]);
 				this.InSolicitudesSQL.InsertRegistro("in_ordenes_trabajo", this._tempRegistro);
 			}else if(this.LineasSQL[0].equals("S")){
 				this._tempRegistro.put("id_serial",	this.LineasSQL[1]);
@@ -95,10 +85,37 @@ public class ClassInSolicitudes {
 	}
 	
 	
-	/*public String getNumeroActa(String _solicitud){
-		this._tempRegistro = this.InSolicitudesSQL.SelectDataRegistro("in_ordenes_trabajo","id_serial,dependencia,solicitud","solicitud='"+_solicitud+"'");
-		return this._tempRegistro.getAsString("dependencia")+this._tempRegistro.getAsString("solicitud")+ formatoIdEquipo.format(this.InSolicitudesSQL.IntSelectShieldWhere("amd_configuracion", "valor", "item='equipo'")) + formatoIdSerial.format(this._tempRegistro.getAsDouble("id_serial"));
-	}*/
+	public void BorrarRegistroBySolicitud(String _solicitud){
+		this.InSolicitudesSQL.DeleteRegistro("in_ordenes_trabajo", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("in_sellos", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("in_consumos", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("dig_acometida", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("dig_contador", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("dig_actas", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("dig_censo_carga", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("dig_sellos", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("dig_irregularidades", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("dig_observaciones", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("dig_datos_actas", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("dig_adecuaciones", "solicitud='"+_solicitud+"'");	
+	}
+	
+	public void BorrarRegistroByIdSolicitud(String _id_solicitud){
+		String _solicitud = this.InSolicitudesSQL.StrSelectShieldWhere("in_ordenes_trabajo", "solicitud", "id_serial='"+_id_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("in_ordenes_trabajo", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("in_sellos", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("in_consumos", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("dig_acometida", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("dig_contador", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("dig_actas", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("dig_censo_carga", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("dig_sellos", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("dig_irregularidades", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("dig_observaciones", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("dig_datos_actas", "solicitud='"+_solicitud+"'");
+		this.InSolicitudesSQL.DeleteRegistro("dig_adecuaciones", "solicitud='"+_solicitud+"'");	
+	}
+	
 	
 	public String getCuenta(String _solicitud){
 		return this.InSolicitudesSQL.StrSelectShieldWhere("in_ordenes_trabajo", "cuenta", "solicitud='"+_solicitud+"'");
@@ -107,6 +124,10 @@ public class ClassInSolicitudes {
 	
 	public String getDependencia(String _solicitud){
 		return this.InSolicitudesSQL.StrSelectShieldWhere("in_ordenes_trabajo", "dependencia", "solicitud='"+_solicitud+"'");
+	}
+	
+	public String getTipoAccion(String _solicitud){
+		return this.InSolicitudesSQL.StrSelectShieldWhere("in_ordenes_trabajo", "tipo_accion", "solicitud='"+_solicitud+"'");
 	}
 	
 	
@@ -128,6 +149,22 @@ public class ClassInSolicitudes {
 			_retorno = true;
 		}
 		return _retorno;
+	}
+	
+	public boolean AbrirSolicitud(String _solicitud){
+		boolean _retorno = false;
+		if(this.InSolicitudesSQL.ExistRegistros("in_ordenes_trabajo", "estado = 'E' AND solicitud<>'"+_solicitud+"'")){
+			_retorno = false;
+		}else if(this.InSolicitudesSQL.ExistRegistros("in_ordenes_trabajo", "estado IN ('P','E') AND solicitud = '"+_solicitud+"'")){
+			_retorno = false;
+		}else{
+			_retorno = true;
+		}
+		return _retorno;
+	}
+	
+	public boolean VerificarCodigoApertura(String _solicitud, String _codigo){
+		return this.InSolicitudesSQL.ExistRegistros("in_ordenes_trabajo", "solicitud='"+_solicitud+"' AND cod_apertura='"+_codigo+"'");		
 	}
 	
 	public void setEstadoSolicitud(String _solicitud, String _estado){

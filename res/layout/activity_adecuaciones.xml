@@ -7,7 +7,7 @@
     <Spinner
         android:id="@+id/AdecCmbSuspension"
         android:layout_width="120dp"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="16dp" />
@@ -15,42 +15,42 @@
     <Spinner
         android:id="@+id/AdecCmbTubo"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_alignLeft="@+id/AdecCmbSuspension"
         android:layout_below="@+id/AdecCmbSuspension" />
 
     <Spinner
         android:id="@+id/AdecCmbArmario"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_alignLeft="@+id/AdecCmbTubo"
         android:layout_below="@+id/AdecCmbTubo" />
 
     <Spinner
         android:id="@+id/AdecCmbSoporte"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_alignLeft="@+id/AdecCmbArmario"
         android:layout_below="@+id/AdecCmbArmario" />
 
     <Spinner
         android:id="@+id/AdecCmbTierra"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_alignLeft="@+id/AdecCmbSoporte"
         android:layout_below="@+id/AdecCmbSoporte" />
 
     <Spinner
         android:id="@+id/AdecCmbAcometida"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_alignLeft="@+id/AdecCmbTierra"
         android:layout_below="@+id/AdecCmbTierra" />
 
     <Spinner
         android:id="@+id/AdecCmbCaja"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_alignLeft="@+id/AdecCmbAcometida"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/AdecCmbAcometida" />
@@ -58,17 +58,18 @@
     <Spinner
         android:id="@+id/AdecCmbMedidor"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_alignLeft="@+id/AdecCmbCaja"
         android:layout_below="@+id/AdecCmbCaja" />
 
     <EditText
         android:id="@+id/AdecTxtOtros"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_alignLeft="@+id/AdecCmbMedidor"
         android:layout_below="@+id/AdecCmbMedidor"
-        android:ems="10" >
+        android:ems="10"
+        android:inputType="text" >
 
         <requestFocus />
     </EditText>
@@ -83,7 +84,7 @@
         android:layout_toLeftOf="@+id/AdecCmbSuspension"
         android:gravity="right|center_vertical"
         android:text="@string/AdecLblSuspension"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/textView2"
@@ -95,7 +96,7 @@
         android:layout_toLeftOf="@+id/AdecCmbTubo"
         android:gravity="right|center_vertical"
         android:text="@string/AdecLblTubo"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/textView3"
@@ -107,7 +108,7 @@
         android:layout_alignTop="@+id/AdecCmbArmario"
         android:gravity="right|center_vertical"
         android:text="@string/AdecLblArmario"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/textView4"
@@ -119,7 +120,7 @@
         android:layout_toLeftOf="@+id/AdecCmbSoporte"
         android:gravity="right|center_vertical"
         android:text="@string/AdecLblSoporte"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/textView5"
@@ -131,7 +132,7 @@
         android:layout_alignTop="@+id/AdecCmbTierra"
         android:gravity="right|center_vertical"
         android:text="@string/AdecLblTierra"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/textView6"
@@ -143,7 +144,7 @@
         android:layout_toLeftOf="@+id/AdecCmbAcometida"
         android:gravity="right|center_vertical"
         android:text="@string/AdecLblAcometida"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/textView7"
@@ -155,7 +156,7 @@
         android:layout_alignTop="@+id/AdecCmbCaja"
         android:gravity="right|center_vertical"
         android:text="@string/AdecLblCaja"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/textView8"
@@ -167,7 +168,7 @@
         android:layout_alignTop="@+id/AdecCmbMedidor"
         android:gravity="right|center_vertical"
         android:text="@string/AdeclblMedidor"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/textView9"
@@ -179,7 +180,7 @@
         android:layout_alignTop="@+id/AdecTxtOtros"
         android:gravity="right|center_vertical"
         android:text="@string/AdecLblOtros"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button
         android:id="@+id/AdecBtnRegistrar"
@@ -188,7 +189,6 @@
         android:layout_height="35dp"
         android:layout_below="@+id/AdecTxtOtros"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp"
         android:text="@string/AdecBtnRegistrar" />
 
 </RelativeLayout>
