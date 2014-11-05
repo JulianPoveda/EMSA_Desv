@@ -77,17 +77,15 @@ public class Bluetooth {
 	//Funcion para realizar el intento de impresion
 	public void IntentPrint(String Impresora, String txtvalue){
 		try{
-			byte[] buffer = txtvalue.getBytes("UTF-8");
+			byte[] buffer = txtvalue.getBytes("US-ASCII");
 			InitPrinter(Impresora);
 			for(int i=0;i<=buffer.length-1;i++){
-				mmOutputStream.write(buffer[i]);
-				if((i%512)==0){
-					Thread.sleep(100);
-				}
+				mmOutputStream.write(buffer[i]); 
 			}
 			mmOutputStream.close();
 			mmSocket.close();
 		}catch(Exception ex){
+			Toast.makeText(this.context, "Exception "+ex.toString(), Toast.LENGTH_LONG).show();
 		}
 	} 
 	
@@ -110,10 +108,10 @@ public class Bluetooth {
 					bluetooth.cancelDiscovery();
 					if(mmDevice.getBondState()==12){	//Condicion para saber si esta apareada la impresora
 						try{
-							mmSocket.connect();
-							if(mmSocket.isConnected()){
-								mmOutputStream = mmSocket.getOutputStream();
+							if(!mmSocket.isConnected()){
+								mmSocket.connect();
 							}
+							mmOutputStream = mmSocket.getOutputStream();
 						}catch(Exception e){
 							Toast.makeText(this.context, "Error al conectarse a la impresora.", Toast.LENGTH_LONG).show();
 						}

@@ -30,10 +30,10 @@ public class DatosActas extends Activity implements OnClickListener{
 	private String[] _strFamilias 			= {"...","0","1","2","3","4","5","6","7","8","9","10"};
 	private String[] _strFotos 				= {"...","Si","No"};
 	private String[] _strElectricista		= {"...","Si","No"};
-	private String[] _strClaseMedidor		= {"...","Interno","Sin Medidor","Induccion","Electronico"};
-	private String[] _strUbicacionMedidor	= {"...","Sin Medidor","Interno","Externo"};
-	private String[] _strAplomado			= {"...","Interno","No Hay Medidor","Si","No"};
-	private String[] _strRegistrador		= {"...","Interno","Sin Medidor","Digital","Ciclometrico"};
+	private String[] _strClaseMedidor		= {"...","No Valido","Interno","Sin Medidor","Induccion","Electronico"};
+	private String[] _strUbicacionMedidor	= {"...","No Valido","Sin Medidor","Interno","Externo"};
+	private String[] _strAplomado			= {"...","No Valido","Interno","No Hay Medidor","Si","No"};
+	private String[] _strRegistrador		= {"...","No Valido","Interno","Sin Medidor","Digital","Ciclometrico"};
 	
 	private ArrayAdapter<String> AdaptIrregularidades, AdaptPruebaRozamiento, AdaptPruebaFrenado, AdaptPruebaVacio, AdaptFamilias, AdaptFotos;
 	private ArrayAdapter<String> AdaptElectricista, AdaptClaseMedidor, AdaptUbicacionMedidor, AdaptAplomado, AdaptRegistrador;

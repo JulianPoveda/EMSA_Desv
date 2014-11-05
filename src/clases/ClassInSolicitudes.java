@@ -47,6 +47,7 @@ public class ClassInSolicitudes {
 				this._tempRegistro.put("serie", 			this.LineasSQL[13]);
 				this._tempRegistro.put("carga_contratada", 	this.LineasSQL[14]);
 				this._tempRegistro.put("cod_apertura", 		this.LineasSQL[15]);
+				this._tempRegistro.put("tipo_accion", 		this.LineasSQL[16]);
 				this.InSolicitudesSQL.InsertRegistro("in_ordenes_trabajo", this._tempRegistro);
 			}else if(this.LineasSQL[0].equals("S")){
 				this._tempRegistro.put("id_serial",	this.LineasSQL[1]);

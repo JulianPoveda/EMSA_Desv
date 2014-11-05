@@ -119,21 +119,26 @@ public class FormatosActas {
 		FcnZebra.WrSubTitulo("DATOS DEL SUSCRIPTOR Y EQUIPO DE MEDIDA",0,1,1);		
 		FcnZebra.WrSubTitulo("MEDIDOR",10,0,1);
 		this._infRegistro1 = this.ImpSQL.SelectDataRegistro("dig_contador", "marca,serie,lectura1,lectura2,tipo", "solicitud='"+_solicitud+"'");
-		FcnZebra.WrLabel("Marca:    ", this._infRegistro1.getAsString("marca"),20,0,1);
-		FcnZebra.WrLabel("Serie:    ", this._infRegistro1.getAsString("serie"),20,0,1); 
-		FcnZebra.WrLabel("Lectura1: ", this._infRegistro1.getAsString("lectura1"),20,0,1);
-		FcnZebra.WrLabel("Lectura2: ", this._infRegistro1.getAsString("lectura2"),20,0,1);
-		FcnZebra.WrLabel("tipo:     ", this._infRegistro1.getAsString("tipo"),20,0,1);
+		if(this._infRegistro1.size()>0){
+			FcnZebra.WrLabel("Marca:    ", this._infRegistro1.getAsString("marca"),20,0,1);
+			FcnZebra.WrLabel("Serie:    ", this._infRegistro1.getAsString("serie"),20,0,1); 
+			FcnZebra.WrLabel("Lectura1: ", this._infRegistro1.getAsString("lectura1"),20,0,1);
+			FcnZebra.WrLabel("Lectura2: ", this._infRegistro1.getAsString("lectura2"),20,0,1);
+			FcnZebra.WrLabel("tipo:     ", this._infRegistro1.getAsString("tipo"),20,0,1);
+		}
 		
 		
 		FcnZebra.WrSubTitulo("ACOMETIDAS",10,1,1);
 		this._infRegistro1 = this.ImpSQL.SelectDataRegistro("dig_acometida", "tipo_ingreso,conductor,tipo,calibre,clase,fases,longitud", "solicitud='"+_solicitud+"'");
-		FcnZebra.WrLabel("", this._infRegistro1.getAsString("tipo_ingreso"),20,0,1);
-		FcnZebra.WrLabel("Tipo:    ", 	this._infRegistro1.getAsString("tipo"),30,0,0); 
-		FcnZebra.WrLabel("Calibre: ", 	this._infRegistro1.getAsString("calibre"),320,0,1);
-		FcnZebra.WrLabel("Longitud: ", 	this._infRegistro1.getAsString("longitud"),30,0,0);
-		FcnZebra.WrLabel("Fases: ", 	this._infRegistro1.getAsString("fases"),320,0,1);
-		FcnZebra.WrLabel("Clase:     ", this._infRegistro1.getAsString("clase"),30,0,1);
+		if(this._infRegistro1.size()>0){
+			FcnZebra.WrLabel("", this._infRegistro1.getAsString("tipo_ingreso"),20,0,1);
+			FcnZebra.WrLabel("Tipo:    ", 	this._infRegistro1.getAsString("tipo"),30,0,0); 
+			FcnZebra.WrLabel("Calibre: ", 	this._infRegistro1.getAsString("calibre"),320,0,1);
+			FcnZebra.WrLabel("Longitud: ", 	this._infRegistro1.getAsString("longitud"),30,0,0);
+			FcnZebra.WrLabel("Fases: ", 	this._infRegistro1.getAsString("fases"),320,0,1);
+			FcnZebra.WrLabel("Clase:     ", this._infRegistro1.getAsString("clase"),30,0,1);
+		}
+		
 		
 		FcnZebra.WrSubTitulo("SELLOS",10,1,0);
 		this._infTabla = this.ImpSQL.SelectData("dig_sellos", "serie,tipo_sello,ubicacion", "solicitud='"+_solicitud+"' AND tipo_ingreso='Retirado'");
@@ -225,7 +230,7 @@ public class FormatosActas {
 		/**Datos Acta  y adecuaciones a realizar**/
 		FcnZebra.WrLabel("DATOS ACTA", "",10,1,1);
 		this._infRegistro1 = this.ImpSQL.SelectDataRegistro("dig_datos_actas", "irregularidades,prueba_rozamiento,prueba_frenado,prueba_vacio,familias,fotos,electricista,clase_medidor,ubicacion_medidor,aplomado,registrador,telefono,porcentaje_no_res", "solicitud='"+_solicitud+"'");
-		FcnZebra.WrLabel("Kw no residencial:      ",this.FcnCensoCarga.getTotalCensoNoResidencial(_solicitud)+"",20,0,1);
+		FcnZebra.WrLabel("Kw no residencial:      ",(this.FcnCensoCarga.getTotalCensoNoResidencial(_solicitud)/1000)+"",20,0,1);
 		FcnZebra.WrLabel("% no residencial:       ",this._infRegistro1.getAsString("porcentaje_no_res"),20,0,1);
 		FcnZebra.WrLabel("Medidor_aplomado:       ",this._infRegistro1.getAsString("aplomado"),20,0,1);
 		FcnZebra.WrLabel("Medidor int/ext:        ",this._infRegistro1.getAsString("ubicacion_medidor"),20,0,1);
@@ -235,7 +240,6 @@ public class FormatosActas {
 		FcnZebra.WrLabel("Telefono:               ",this._infRegistro1.getAsString("telefono"),20,0,1);
 		FcnZebra.WrLabel("Familias:               ",this._infRegistro1.getAsString("familias"),20,0,1);
 		FcnZebra.WrLabel("Fotos:                  ",this._infRegistro1.getAsString("fotos"),20,0,1);
-		FcnZebra.WrLabel("Telefono:               ",this._infRegistro1.getAsString("telefono"),20,0,1);
 		FcnZebra.WrLabel("Prueba Giro en Vacio:   ",this._infRegistro1.getAsString("prueba_vacio"),20,0,1);
 		FcnZebra.WrLabel("Prueba Medidor Se Frena:",this._infRegistro1.getAsString("prueba_frenado"),20,0,1);
 		FcnZebra.WrLabel("Irregularidades:        ",this._infRegistro1.getAsString("irregularidades"),20,0,1);
@@ -252,6 +256,7 @@ public class FormatosActas {
 		FcnZebra.WrLabel("Cambiar o instalartubo de acometida:   ",this._infRegistro1.getAsString("tubo"),20,0,1);
 		FcnZebra.WrLabel("Suspension:                            ",this._infRegistro1.getAsString("suspension"),20,0,1);
 		FcnZebra.WrLabel("Cambiar o instalar caja:               ",this._infRegistro1.getAsString("caja"),20,0,1);
+		FcnZebra.WrLabel("Otros:     ",this._infRegistro1.getAsString("otros"),20,0,1);
 		
 		/**Irregularidades**/
 		this._infTabla = this.ImpSQL.SelectData("dig_irregularidades", "irregularidad", "solicitud='"+_solicitud+"'");
