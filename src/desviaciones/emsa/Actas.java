@@ -58,7 +58,7 @@ public class Actas extends Activity implements OnClickListener{
 		this.FolderAplicacion 	= bundle.getString("FolderAplicacion");
 		
 		this.ActasUtil		= new Utilidades();
-		this.FormatoImp		= new FormatosActas(this, this.FolderAplicacion, false);
+		this.FormatoImp		= new FormatosActas(this, this.FolderAplicacion, true);
 		this.FcnConfig		= new ClassConfiguracion(this, this.FolderAplicacion);
 		this.FcnSolicitudes = new ClassInSolicitudes(this, this.FolderAplicacion);
 		this.FcnActas 		= new ClassActas(this, this.FolderAplicacion);
@@ -197,15 +197,15 @@ public class Actas extends Activity implements OnClickListener{
 				return true;
 				
 			case R.id.ImpresionOriginal:
-				this.FormatoImp.FormatoDesviacion(this.Solicitud, "", 1);
+				this.FormatoImp.FormatoDesviacion(this.Solicitud, "Original", 1);
 				return true;
 				
 			case R.id.ImpresionUsuario:
-				this.FormatoImp.FormatoDesviacion(this.Solicitud, "", 2);
+				this.FormatoImp.FormatoDesviacion(this.Solicitud, "Usuario", 2);
 				return true;
 			
 			case R.id.ImpresionArchivo:
-				this.FormatoImp.FormatoDesviacion(this.Solicitud, "", 3);
+				this.FormatoImp.FormatoDesviacion(this.Solicitud, "Archivo", 3);
 				return true;
 				
 			default:

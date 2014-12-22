@@ -302,12 +302,14 @@ public class FormatosActas {
 			if(!this.ImpArchivos.ExistFolderOrFile(this._folderAplicacion+File.separator+_solicitud)){
 				this.ImpArchivos.MakeDirectory(_solicitud);
 			}
-			int num_impresion = ImpSQL.IntSelectShieldWhere("amd_impresiones_inf", "id_impresion", "id_orden='"+_solicitud+"'")+1;
-			this.ImpArchivos.DoFile(_solicitud, _tipoImpresion+"_"+_copiaImpresion+"_"+num_impresion,FcnZebra.getInfArchivo());
+			int num_impresion = ImpSQL.CountRegistrosWhere("dig_impresiones_inf", "solicitud='"+_solicitud+"'")+1;
+			this.ImpArchivos.DoFile(_solicitud, _tipoImpresion+"_"+num_impresion,FcnZebra.getInfArchivo());
 			
 			this._infRegistro1.clear();
+			this._infRegistro1.put("solicitud", _solicitud);
 			this._infRegistro1.put("id_impresion", num_impresion);
-			this.ImpSQL.UpdateRegistro("amd_impresiones_inf", this._infRegistro1, "id_orden='"+_solicitud+"'");
+			this._infRegistro1.put("nombre_archivo", _tipoImpresion+"_"+num_impresion+".txt");
+			this.ImpSQL.InsertRegistro("dig_impresiones_inf", this._infRegistro1);
 		}
 		MnBt.IntentPrint(this.Impresora,FcnZebra.getDoLabel());
 		FcnZebra.resetEtiqueta();

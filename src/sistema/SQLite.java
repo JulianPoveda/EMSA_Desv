@@ -24,7 +24,7 @@ import android.util.Log;
 public class SQLite {
 	private static Archivos ArchSQL;	
 	private static String N_BD = null; 	
-	private static final int VERSION_BD = 2;																		
+	private static final int VERSION_BD = 3;																		
 	
 	private BDHelper nHelper;
 	private Context nContexto;
@@ -178,6 +178,12 @@ public class SQLite {
 													"respuesta_pqr	VARCHAR(50)," +
 													"fecha_ins		TIMESTAMP NOT NULL DEFAULT current_timestamp);");
 			
+			db.execSQL( "CREATE TABLE dig_impresiones_inf(   solicitud 		VARCHAR(20) NOT NULL," +
+															"id_impresion 	INTEGER NOT NULL," +
+															"nombre_archivo	VARCHAR(100)," +
+															"fecha_imp		TIMESTAMP NOT NULL DEFAULT current_timestamp," +
+															"PRIMARY KEY(solicitud, id_impresion));");
+			
 			db.execSQL("CREATE TABLE dig_censo_carga(  	 solicitud 		VARCHAR(20) NOT NULL," +
 														"id_elemento	INTEGER NOT NULL," +
 														"cantidad		INTEGER NOT NULL," +
@@ -230,7 +236,6 @@ public class SQLite {
 														"medidor			VARCHAR(50)," +
 														"otros				VARCHAR(50));");
 			
-			
 			db.execSQL(	"CREATE VIEW vista_parametros_medidores AS " +
 							"SELECT marca, nombre , marca||' ('||nombre||')' AS resumen " +
 							"FROM parametros_medidores;");
@@ -257,16 +262,24 @@ public class SQLite {
 						"	ON 		a.solicitud = b.solicitud;");
 			
 			db.execSQL(	"CREATE TRIGGER tg_fecha_revision AFTER INSERT ON dig_actas FOR EACH ROW BEGIN " +
-					"	UPDATE dig_actas SET fecha_ins=datetime('now','localtime') WHERE solicitud = NEW.solicitud;" +
-					"END;");
+						"	UPDATE dig_actas SET fecha_ins=datetime('now','localtime') WHERE solicitud = NEW.solicitud;" +
+						"END;");
+			
+			db.execSQL(	"CREATE TRIGGER tg_fecha_impresion AFTER INSERT ON dig_impresiones_inf FOR EACH ROW BEGIN " +
+						"	UPDATE dig_impresiones_inf SET fecha_imp=datetime('now','localtime') WHERE solicitud = NEW.solicitud AND id_impresion = NEW.id_impresion;" +
+						"END;");
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			db.execSQL("UPDATE amd_configuracion SET valor = '1.1' WHERE item = 'version'");
 			
-			db.execSQL(	"CREATE TRIGGER tg_fecha_revision AFTER INSERT ON dig_actas FOR EACH ROW BEGIN " +
+			/*db.execSQL(	"CREATE TRIGGER tg_fecha_revision AFTER INSERT ON dig_actas FOR EACH ROW BEGIN " +
 						"	UPDATE dig_actas SET fecha_ins=datetime('now','localtime') WHERE solicitud = NEW.solicitud;" +
+						"END;");*/
+			
+			db.execSQL(	"CREATE TRIGGER tg_fecha_impresion AFTER INSERT ON dig_impresiones_inf FOR EACH ROW BEGIN " +
+						"	UPDATE dig_impresiones_inf SET fecha_imp=datetime('now','localtime') WHERE solicitud = NEW.solicitud AND id_impresion = NEW.id_impresion;" +
 						"END;");
 		}
 	}
