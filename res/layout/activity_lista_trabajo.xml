@@ -26,9 +26,7 @@
             android:scrollbars="horizontal|vertical"
             android:choiceMode="singleChoice" 
         	android:listSelector="@android:color/darker_gray" >
-
         </ListView>
-
     </HorizontalScrollView>
 
 </RelativeLayout>

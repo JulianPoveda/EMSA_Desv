@@ -4,6 +4,10 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+//import ws_connect.DownLoadParametros;
+import ws_connect.UpLoadActaImpresa;
+//import zebra_printer.Label;
+
 import clases.ClassCensoCarga;
 import clases.ClassConfiguracion;
 import clases.ClassInSolicitudes;
@@ -25,6 +29,7 @@ public class FormatosActas {
 	private Archivos 			ImpArchivos;
 	private Bluetooth 			MnBt;
 	private SQLite 				ImpSQL;
+	//private Label				FcnZebra;
 	private Zebra_QL420plus		FcnZebra;
 	
 	private String Impresora = null;
@@ -102,7 +107,7 @@ public class FormatosActas {
 		FcnZebra.JustInformation("A los "+this._infRegistro1.getAsString("dia")+" dias del mes "+this._infRegistro1.getAsString("mes")+" de "+this._infRegistro1.getAsString("anno")+", siendo las "+this._infRegistro1.getAsString("hora")+", se hacen presentes en el inmueble de: "+this._infRegistro1.getAsString("suscriptor")+" los representantes de EMSA E.S.P. "+this._nombreTecnico+" con Cod/C.C: "+this._cedulaTecnico+" y en presencia del senor(a): "+this._infRegistro1.getAsString("nom_enterado")+" con cedula "+this._infRegistro1.getAsString("doc_enterado")+" en calidad de "+this._infRegistro1.getAsString("tipo_enterado")+", con el fin de efectuar una revision de los equipos de medida e instalaciones electricas del inmueble con el codigo indicado. Habiendose identificado los empleados/contratistas informan al usuario que de acuerdo al contrato de servicios publicos con condiciones uniformes vigente su derecho a solicitar asesoria y/o participacion de un tecnico particular, o de cualquier persona para que sirva de testigo en el proceso de revision. Sin embargo, si transcurre un plazo de 15 minutos sin hacerse presente se hara la revision sin su presencia, el cliente/usuario hace uso de su derecho Si( ) No( ). Transcurridos 15 minutos , procede a hacer la revision, con los siguientes resultados:", 10, 2, 1);
 		
 		/***************************************************************Datos del suscriptor****************************************************/
-		FcnZebra.WrSubTitulo("DATOS GENERALES DEL SUSCRIPTOR",0,1,1);
+		FcnZebra.WrSubTitulo("DATOS GENERALES DEL SUSCRIPTOR",10,1,1);
 		this._infRegistro1 = this.ImpSQL.SelectDataRegistro("vista_in_ordenes_trabajo", "suscriptor,direccion,cuenta,clase_servicio,nombre_municipio,estrato,nodo,marca,serie,carga_contratada", "solicitud='"+_solicitud+"'");
 		FcnZebra.WrLabel("SUSCRIPTOR: ", this._infRegistro1.getAsString("suscriptor"),10,0,1);
 		FcnZebra.WrLabel("DIRECCION: ", this._infRegistro1.getAsString("direccion"),10,0,1); 
@@ -116,7 +121,7 @@ public class FormatosActas {
 		FcnZebra.WrLabel("CARGA CONTRATADA: ",this._infRegistro1.getAsString("carga_contratada"),10,0,1);
 		
 		/**************************************************Datos del suscriptor y equipo de medida********************************************/
-		FcnZebra.WrSubTitulo("DATOS DEL SUSCRIPTOR Y EQUIPO DE MEDIDA",0,1,1);		
+		FcnZebra.WrSubTitulo("DATOS DEL SUSCRIPTOR Y EQUIPO DE MEDIDA",10,1,1);		
 		FcnZebra.WrSubTitulo("MEDIDOR",10,0,1);
 		this._infRegistro1 = this.ImpSQL.SelectDataRegistro("dig_contador", "marca,serie,lectura1,lectura2,tipo", "solicitud='"+_solicitud+"'");
 		if(this._infRegistro1.size()>0){
@@ -302,16 +307,17 @@ public class FormatosActas {
 			if(!this.ImpArchivos.ExistFolderOrFile(this._folderAplicacion+File.separator+_solicitud)){
 				this.ImpArchivos.MakeDirectory(_solicitud);
 			}
-			int num_impresion = ImpSQL.CountRegistrosWhere("dig_impresiones_inf", "solicitud='"+_solicitud+"'")+1;
+			int num_impresion = ImpSQL.IntSelectShieldWhere("dig_impresiones_inf", "max(id_impresion)","solicitud='"+_solicitud+"'")+1;
 			this.ImpArchivos.DoFile(_solicitud, _tipoImpresion+"_"+num_impresion,FcnZebra.getInfArchivo());
 			
 			this._infRegistro1.clear();
 			this._infRegistro1.put("solicitud", _solicitud);
 			this._infRegistro1.put("id_impresion", num_impresion);
-			this._infRegistro1.put("nombre_archivo", _tipoImpresion+"_"+num_impresion+".txt");
+			this._infRegistro1.put("nombre_archivo", _tipoImpresion+"_"+num_impresion);
 			this.ImpSQL.InsertRegistro("dig_impresiones_inf", this._infRegistro1);
 		}
 		MnBt.IntentPrint(this.Impresora,FcnZebra.getDoLabel());
 		FcnZebra.resetEtiqueta();
+		new UpLoadActaImpresa(this.context, this._folderAplicacion).execute();
 	}
 }

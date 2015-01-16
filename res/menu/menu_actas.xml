@@ -10,7 +10,8 @@
             
         </menu>
     </item>
-    <item android:id="@+id/Volver" android:title="Volver"></item>
+    <item android:id="@+id/VerConsumos" android:title="Ver Consumos"></item><item android:id="@+id/Volver" android:title="Volver"></item>
+    
     
     
     

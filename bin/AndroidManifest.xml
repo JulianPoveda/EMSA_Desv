@@ -103,6 +103,11 @@
             android:label="@string/title_activity_dialog_single_txt"
             android:theme="@android:style/Theme.Dialog" >
         </activity>
+        <activity
+            android:name=".ListaConsumos"
+            android:label="@string/title_activity_lista_consumos" 
+            android:theme="@android:style/Theme.Dialog">
+        </activity>
     </application>
 
 </manifest>

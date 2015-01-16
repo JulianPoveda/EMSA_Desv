@@ -6,6 +6,7 @@ import sistema.FormatosActas;
 
 import ws_connect.DownLoadParametros;
 import ws_connect.DownLoadTrabajo;
+import ws_connect.UpLoadActaImpresa;
 import ws_connect.UpLoadTrabajo;
 
 import clases.ClassConfiguracion;
@@ -136,7 +137,11 @@ public class Loggin extends Activity implements OnClickListener{
 			case R.id.OrdenesRealizadas:
 				new UpLoadTrabajo(this, this.FolderAplicacion).execute(this.FcnCfg.getEquipo()+"");
 				return true;
-					
+			
+			case R.id.ActasImpresas:
+				new UpLoadActaImpresa(this, this.FolderAplicacion).execute();	
+				return true;
+				
 			case R.id.OrdenesTrabajo:
 				this.k = new Intent(this, ListaTrabajo.class);
 				this.k.putExtra("NivelLogged", this.NivelUsuario);

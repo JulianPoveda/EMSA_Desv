@@ -100,8 +100,7 @@ public class Actas extends Activity implements OnClickListener{
 		_txtDocTestigo.setText(this.FcnActas.getDocTestigo(this.Solicitud));
 		_txtNomTestigo.setText(this.FcnActas.getNomTestigo(this.Solicitud));
 		
-		_cmbTipoEnterado.setSelection(AdaptadorTipoEnterado.getPosition(this.FcnActas.getTipoEnterado(this.Solicitud)));	
-		
+		_cmbTipoEnterado.setSelection(AdaptadorTipoEnterado.getPosition(this.FcnActas.getTipoEnterado(this.Solicitud)));			
 		_btnRegistrar.setOnClickListener(this);
 	}
 	
@@ -187,6 +186,14 @@ public class Actas extends Activity implements OnClickListener{
 				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
 				startActivity(this.new_form);
 				return true;
+			
+			case R.id.VerConsumos:
+				this.new_form = new Intent(this, ListaConsumos.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;
+				
 				
 			case R.id.Volver:
 				finish();

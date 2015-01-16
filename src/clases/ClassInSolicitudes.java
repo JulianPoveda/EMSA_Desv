@@ -10,8 +10,8 @@ import android.content.Context;
 public class ClassInSolicitudes {
 	private SQLite 	InSolicitudesSQL;
 	
-	private ArrayList<ContentValues>_tempTabla = new ArrayList<ContentValues>();
-	private ContentValues			_tempRegistro = new ContentValues();
+	private ArrayList<ContentValues>_tempTabla 		= new ArrayList<ContentValues>();
+	private ContentValues			_tempRegistro 	= new ContentValues();
 	private Context 				_ctxInSolicitudes;
 	private String 					_folderAplicacion;	
 	private String 					LineasSQL[];
@@ -61,14 +61,15 @@ public class ClassInSolicitudes {
 			}else if(this.LineasSQL[0].equals("C")){
 				this._tempRegistro.put("id_serial", 		this.LineasSQL[1]);
 				this._tempRegistro.put("solicitud", 		this.LineasSQL[2]);
-				this._tempRegistro.put("cuenta", 			this.LineasSQL[3]);
-				this._tempRegistro.put("marca", 			this.LineasSQL[4]);
-				this._tempRegistro.put("serie", 			this.LineasSQL[5]);
-				this._tempRegistro.put("fecha_tomada", 		this.LineasSQL[6]);
-				this._tempRegistro.put("fecha_anterior", 	this.LineasSQL[7]);
-				this._tempRegistro.put("lectura_tomada", 	this.LineasSQL[8]);
-				this._tempRegistro.put("lectura_anterior",	this.LineasSQL[9]);
-				this._tempRegistro.put("consumo", 			this.LineasSQL[10]);
+				this._tempRegistro.put("periodo", 			this.LineasSQL[3]);
+				this._tempRegistro.put("cuenta", 			this.LineasSQL[4]);
+				this._tempRegistro.put("marca", 			this.LineasSQL[5]);
+				this._tempRegistro.put("serie", 			this.LineasSQL[6]);
+				this._tempRegistro.put("fecha_tomada", 		this.LineasSQL[7]);
+				this._tempRegistro.put("fecha_anterior", 	this.LineasSQL[8]);
+				this._tempRegistro.put("lectura_tomada", 	this.LineasSQL[9]);
+				this._tempRegistro.put("lectura_anterior",	this.LineasSQL[10]);
+				this._tempRegistro.put("consumo", 			this.LineasSQL[11]);
 				this.InSolicitudesSQL.InsertRegistro("in_consumos", this._tempRegistro);
 			}
 		}		

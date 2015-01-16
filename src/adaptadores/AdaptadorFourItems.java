@@ -12,15 +12,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class AdaptadorFiveItems extends BaseAdapter{
+public class AdaptadorFourItems extends BaseAdapter{
 	protected Activity activity;
-	protected ArrayList<DetalleFiveItems> items;
+	protected ArrayList<DetalleFourItems> items;
 	
-	public AdaptadorFiveItems(Activity activity, ArrayList<DetalleFiveItems> items){
+	public AdaptadorFourItems(Activity activity, ArrayList<DetalleFourItems> items){
 		this.activity = activity;
 		this.items = items;
 	}
-	
+
 	@Override
 	public int getCount() {
 		return items.size();
@@ -41,22 +41,19 @@ public class AdaptadorFiveItems extends BaseAdapter{
 		View v = convertView;
 		if(convertView == null){
 			LayoutInflater inf = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			v = inf.inflate(R.layout.five_items_horizontal, null);
+			v = inf.inflate(R.layout.four_items_horizontal, null);
 		}
 				
-		DetalleFiveItems Item = items.get(position);		
-		TextView item1 = (TextView) v.findViewById(R.id.fiveItem1);
-		TextView item2 = (TextView) v.findViewById(R.id.fiveItem2);
-		TextView item3 = (TextView) v.findViewById(R.id.fiveItem3);
-		TextView item4 = (TextView) v.findViewById(R.id.fiveItem4);
-		TextView item5 = (TextView) v.findViewById(R.id.fiveItem5);
+		DetalleFourItems Item = items.get(position);		
+		TextView item1 = (TextView) v.findViewById(R.id.fourItem1);
+		TextView item2 = (TextView) v.findViewById(R.id.fourItem2);
+		TextView item3 = (TextView) v.findViewById(R.id.fourItem3);
+		TextView item4 = (TextView) v.findViewById(R.id.fourItem4);
 		
 		item1.setText(Item.getItem1());
 		item2.setText(Item.getItem2());
 		item3.setText(Item.getItem3());
-		item4.setText(Item.getItem4());
-		item5.setText(Item.getItem5());
-		
+		item4.setText(Item.getItem4());		
 		return v;
 	}
 }

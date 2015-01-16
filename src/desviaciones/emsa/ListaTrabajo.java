@@ -80,9 +80,8 @@ public class ListaTrabajo extends Activity implements OnItemSelectedListener{
 		AdaptadorSolicitudes = new AdaptadorEightItems(this,ArraySolicitudes);
 		_lstSolicitudes.setAdapter(AdaptadorSolicitudes);
 		
-		_cmbNodos.setOnItemSelectedListener(this);
-		//_lstSolicitudes.setOnItemClickListener(this);
 		
+		_cmbNodos.setOnItemSelectedListener(this);
 		registerForContextMenu(this._lstSolicitudes);
 	}
 
