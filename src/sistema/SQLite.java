@@ -273,7 +273,7 @@ public class SQLite {
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			db.execSQL("UPDATE amd_configuracion SET valor = '2.0' WHERE item = 'version'");
+			db.execSQL("UPDATE amd_configuracion SET valor = '2.1' WHERE item = 'version'");
 			
 			db.execSQL(	"CREATE TRIGGER tg_fecha_impresion AFTER INSERT ON dig_impresiones_inf FOR EACH ROW BEGIN " +
 						"	UPDATE dig_impresiones_inf SET fecha_imp=datetime('now','localtime') WHERE solicitud = NEW.solicitud AND id_impresion = NEW.id_impresion;" +
