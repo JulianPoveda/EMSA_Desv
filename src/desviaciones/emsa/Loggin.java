@@ -7,7 +7,6 @@ import sistema.FormatosActas;
 import ws_connect.DownLoadParametros;
 import ws_connect.DownLoadTrabajo;
 import ws_connect.UpLoadActaImpresa;
-import ws_connect.UpLoadTrabajo;
 
 import clases.ClassConfiguracion;
 import clases.ClassUsuario;
@@ -81,7 +80,6 @@ public class Loggin extends Activity implements OnClickListener{
 			 menu.findItem(R.id.TrabajoRed).setEnabled(true);
 			 menu.findItem(R.id.Descargue).setEnabled(true);
 			 menu.findItem(R.id.OrdenesRealizadas).setEnabled(true);
-			 menu.findItem(R.id.OrdenesPendientes).setEnabled(true);
 			 menu.findItem(R.id.Configuracion).setEnabled(true);
 			 _txtUsuario.setEnabled(false);
 			 _txtContrasena.setEnabled(false);
@@ -97,7 +95,6 @@ public class Loggin extends Activity implements OnClickListener{
 			 menu.findItem(R.id.TrabajoRed).setEnabled(false);
 			 menu.findItem(R.id.Descargue).setEnabled(false);
 			 menu.findItem(R.id.OrdenesRealizadas).setEnabled(false);
-			 menu.findItem(R.id.OrdenesPendientes).setEnabled(false);
 			 menu.findItem(R.id.Configuracion).setEnabled(false);
 			 _txtUsuario.setEnabled(true);
 			 _txtContrasena.setEnabled(true);
@@ -135,7 +132,10 @@ public class Loggin extends Activity implements OnClickListener{
 				return true;
 				
 			case R.id.OrdenesRealizadas:
-				new UpLoadTrabajo(this, this.FolderAplicacion).execute(this.FcnCfg.getEquipo()+"");
+				this.k = new Intent(this, FormDescarga.class);
+				this.k.putExtra("NivelLogged", this.NivelUsuario);
+				this.k.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.k);
 				return true;
 			
 			case R.id.ActasImpresas:

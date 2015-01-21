@@ -17,5 +17,7 @@
     <string name="title_activity_adecuaciones">Adecuaciones</string>
     <string name="title_activity_dialog_single_txt">DialogSingleTxt</string>
     <string name="title_activity_lista_consumos">Lista Consumos</string>
+    <string name="title_activity_form_descarga">Descarga Trabajo</string>
+    <string name="Chk_Item1">Chk</string>
 
 </resources>

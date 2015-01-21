@@ -16,6 +16,7 @@ import android.content.ContentValues;
 import android.content.Context;
 	
 public class FormatosActas {
+	//Variables para el manejo de la API para impresoras zebra
 	private Context 					context;
 	private String 						_folderAplicacion;
 	private ArrayList<ContentValues> 	_infTabla		= new ArrayList<ContentValues>();
@@ -27,7 +28,7 @@ public class FormatosActas {
 	private ClassConfiguracion 	FcnConfig;
 	private ClassInSolicitudes	FcnSolicitudes;
 	private Archivos 			ImpArchivos;
-	private Bluetooth 			MnBt;
+	//private Bluetooth 			MnBt;
 	private SQLite 				ImpSQL;
 	//private Label				FcnZebra;
 	private Zebra_QL420plus		FcnZebra;
@@ -50,7 +51,7 @@ public class FormatosActas {
 		this.ImpArchivos	= new Archivos(this.context,this._folderAplicacion, 10);
 		this.Impresora 		= ImpSQL.StrSelectShieldWhere("amd_configuracion", "valor", "item='impresora'");
 	    
-		MnBt 	= new Bluetooth(this.context);
+		//MnBt 	= new Bluetooth(this.context);
 		ImpSQL 	= new SQLite(this.context, this._folderAplicacion);
 		FcnZebra= new Zebra_QL420plus(600, 40, 5, 5, 100, _copiaSistema);
 	}
@@ -66,13 +67,16 @@ public class FormatosActas {
 		FcnZebra.DrawImage("LOGOEMSA.PCX", 30, 25);
 		FcnZebra.WrTitulo("ACTA DE REVISION RUTINARIA DE FACTURACION Y SERVICIO AL CLIENTE", 0, 2);
 		
+		FcnZebra.WrLabel("Ò—·ÈÌÛ˙¡…Õ”⁄", "xxxxxxxxxxxxxxx", 150, 0, 1);
+		
 		FcnZebra.WrLabel("N.          ", "xxxxxxxxxxxxxxx", 150, 0, 1);
 		FcnZebra.WrLabel("Solicitud:  ", "---------------", 150, 0, 1);
 		FcnZebra.WrLabel("Codigo:     ", "123456789", 150, 0, 1);
 		FcnZebra.WrLabel("", "Villavicencio", 200, 0, 1);
 		FcnZebra.WrLabel("Contratista:", "SYPELC LTDA.", 150, 0, 1.2);
 		
-		MnBt.IntentPrint(this.Impresora,FcnZebra.getDoLabel());
+		//MnBt.IntentPrint(this.Impresora,FcnZebra.getDoLabel());
+		FcnZebra.printLabel(this.Impresora);
 		FcnZebra.resetEtiqueta();
 	}
 	
@@ -316,7 +320,23 @@ public class FormatosActas {
 			this._infRegistro1.put("nombre_archivo", _tipoImpresion+"_"+num_impresion);
 			this.ImpSQL.InsertRegistro("dig_impresiones_inf", this._infRegistro1);
 		}
-		MnBt.IntentPrint(this.Impresora,FcnZebra.getDoLabel());
+		FcnZebra.printLabel(this.Impresora);
+		
+		/*MnBt.IntentPrint(this.Impresora,FcnZebra.getDoLabel());*/
+		/*printerConnection = new BluetoothConnection(this.Impresora);
+		try {
+            printerConnection.open();
+        } catch (ConnectionException e) {
+        	try {
+				printerConnection.close();
+			} catch (ConnectionException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+        	//disconnect();
+        }*/
+		//ZebraPrinter printer = null;
+		
 		FcnZebra.resetEtiqueta();
 		new UpLoadActaImpresa(this.context, this._folderAplicacion).execute();
 	}

@@ -12,8 +12,7 @@
     </item>
     <item android:id="@+id/Descargue" android:title="Descargue">
         <menu>
-            <item android:id="@+id/OrdenesRealizadas" android:title="Ordenes Ejecutadas"/>
-            <item android:id="@+id/OrdenesPendientes" android:title="Ordenes Sin Ejecutar"/>
+            <item android:id="@+id/OrdenesRealizadas" android:title="Solicitudes"/>
             <item android:id="@+id/ActasImpresas" android:title="Actas Impresas"/>
         </menu>
     </item>

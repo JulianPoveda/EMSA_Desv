@@ -13,7 +13,7 @@
         android:layout_marginTop="8dp" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/two_items_lbl1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/DatosCmbIrregularidades"
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/DatosCmbPruebaRozamiento"
         android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/textView1"
+        android:layout_alignRight="@+id/two_items_lbl1"
         android:layout_alignTop="@+id/DatosCmbPruebaRozamiento"
         android:gravity="right|center_vertical"
         android:text="@string/DatosCmbPruebaRozamiento"

@@ -1,6 +1,18 @@
 package sistema;
 
+import com.zebra.sdk.comm.BluetoothConnection;
+import com.zebra.sdk.comm.Connection;
+import com.zebra.sdk.comm.ConnectionException;
+import com.zebra.sdk.printer.ZebraPrinter;
+import com.zebra.sdk.printer.ZebraPrinterFactory;
+import com.zebra.sdk.printer.ZebraPrinterLanguageUnknownException;
+
 public class Zebra_QL420plus {
+	//Variables para uso de la nueva API de zebra
+	private Connection printerConnection;
+	private ZebraPrinter printer;
+	
+	
 	private boolean _copiaArchivo;
 	
 	private String _infImpresora;
@@ -49,12 +61,96 @@ public class Zebra_QL420plus {
 		this._lineaFinal 	= this._margenInferior;
 	}
 	
+	/*************************************************Funciones para el manejo de impresion*******************************/
+	private ZebraPrinter Zebra_Connect(String _bluetooth) {
+		ZebraPrinter printer= null;
+		printerConnection 	= new BluetoothConnection(_bluetooth);        
+        try {
+            printerConnection.open();
+        } catch (ConnectionException e) {
+            DemoSleeper.sleep(100);
+            this.Zebra_Disconnect();
+        }      
+
+        if (printerConnection.isConnected()) {
+            try {
+                printer = ZebraPrinterFactory.getInstance(printerConnection);
+                //PrinterLanguage pl = printer.getPrinterControlLanguage();
+            } catch (ConnectionException e) {
+                printer = null;
+                DemoSleeper.sleep(100);
+                this.Zebra_Disconnect();
+            } catch (ZebraPrinterLanguageUnknownException e) {
+                printer = null;
+                DemoSleeper.sleep(100);
+                this.Zebra_Disconnect();
+            }
+        }
+        return printer;
+    }
+	
+	
+	
+	private void Zebra_Disconnect() {
+        try {
+            if (printerConnection != null) {
+                printerConnection.close();
+            }
+        } catch (ConnectionException e) {
+        } finally {
+        }
+    }
+	
+	
+	public void printLabel(String _bluetooth) {
+        printer = this.Zebra_Connect(_bluetooth);
+        if (printer != null) {
+        	try {
+                byte[] configLabel = this.convertExtendedAscii(this.getDoLabel());
+                //this.getDoLabel().getBytes();
+                printerConnection.write(configLabel);
+                //setStatus("Sending Data", Color.BLUE);
+                DemoSleeper.sleep(150);
+                if (printerConnection instanceof BluetoothConnection) {
+                    //String friendlyName = ((BluetoothConnection) printerConnection).getFriendlyName();
+                    //setStatus(friendlyName, Color.MAGENTA);
+                    //DemoSleeper.sleep(500);
+                }
+            } catch (ConnectionException e) {
+                //setStatus(e.getMessage(), Color.RED);
+            } finally {
+            	this.Zebra_Disconnect();
+            }
+        } else {
+        	this.Zebra_Disconnect();
+        }
+    }
+	
+	
+	private byte[] convertExtendedAscii(String input){
+		int length = input.length();
+		byte[] retVal = new byte[length];
+		for(int i=0; i<length; i++){
+			char c = input.charAt(i);
+			if (c < 127){
+				retVal[i] = (byte)c;
+			}else{
+				retVal[i] = (byte)(c - 256);
+			}
+		}
+		return retVal;
+	}
+	
+	
+	
+	
 	/**************************************************Inicio de las funciones propias para la impresion CPCL*****************************************************/
 	public void clearInformacion(){
 		this._infImpresora 	= "";
 		this._infArchivo 	= "";
 	}
 		
+	
 	public void DrawImage(String NameFile, double PosX, double PosY){
 		this._infImpresora 	+= "PCX "+(this._margenIzquierda+PosX)+" "+(this._lineaActual+PosY)+" !<"+NameFile+"\r\n";
         

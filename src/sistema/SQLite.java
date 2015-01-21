@@ -24,7 +24,7 @@ import android.util.Log;
 public class SQLite {
 	private static Archivos ArchSQL;	
 	private static String N_BD = null; 	
-	private static final int VERSION_BD = 4;																		
+	private static final int VERSION_BD = 5;																		
 	
 	private BDHelper nHelper;
 	private Context nContexto;
@@ -40,7 +40,7 @@ public class SQLite {
 		}
 
 		@Override
-		public void onCreate(SQLiteDatabase db) {
+		public void onCreate(SQLiteDatabase db){
 			/**************************************************************************************************************************/
 			/************************Creacion de las tablas basicas para el correcto funcionamiento del sistema************************/
 			/**************************************************************************************************************************/
@@ -64,7 +64,7 @@ public class SQLite {
 			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('cedula_tecnico','sin_asignar',0)");
 			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('nombre_tecnico','sin_asignar',0)");
 			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('impresora','sin asignar',1)");
-			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('version','2.1',0)");
+			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('version','2.2',0)");
 			
 			/**Tabla con la lista de solicitudes que se han asignado**/
 			db.execSQL( "CREATE TABLE in_ordenes_trabajo( id_serial			INTEGER NOT NULL PRIMARY KEY," +
@@ -273,9 +273,9 @@ public class SQLite {
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			db.execSQL("UPDATE amd_configuracion SET valor = '2.1' WHERE item = 'version'");
+			db.execSQL("UPDATE amd_configuracion SET valor = '2.2' WHERE item = 'version'");
 			
-			db.execSQL(	"CREATE TRIGGER tg_fecha_impresion AFTER INSERT ON dig_impresiones_inf FOR EACH ROW BEGIN " +
+			/*db.execSQL(	"CREATE TRIGGER tg_fecha_impresion AFTER INSERT ON dig_impresiones_inf FOR EACH ROW BEGIN " +
 						"	UPDATE dig_impresiones_inf SET fecha_imp=datetime('now','localtime') WHERE solicitud = NEW.solicitud AND id_impresion = NEW.id_impresion;" +
 						"END;");
 			
@@ -283,7 +283,7 @@ public class SQLite {
 															"id_impresion 	INTEGER NOT NULL," +
 															"nombre_archivo	VARCHAR(100)," +
 															"fecha_imp		TIMESTAMP NOT NULL DEFAULT current_timestamp," +
-															"PRIMARY KEY(solicitud, id_impresion));");
+															"PRIMARY KEY(solicitud, id_impresion));");*/
 		}
 	}
 	

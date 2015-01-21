@@ -138,7 +138,8 @@ public class Bluetooth {
 			Set<BluetoothDevice> pairedDevices = bluetooth.getBondedDevices();
 			if(pairedDevices.size() > 0){
 				for(BluetoothDevice device : pairedDevices){
-					_lstDevice.add(device.getName());
+					//_lstDevice.add(device.getName());
+					_lstDevice.add(device.getAddress());
 				}
 			}
 		}catch(Exception e){

@@ -81,8 +81,7 @@ public class DownLoadTrabajo extends AsyncTask<String, Integer, Integer>{ //doIn
 		
 		Toast.makeText(this.ConnectServerContext,"Iniciando conexion con el servidor, por favor espere...", Toast.LENGTH_SHORT).show();	
 		_pDialog = new ProgressDialog(this.ConnectServerContext);
-        _pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        _pDialog.setMessage("Ejecutando operaciones...");
+        _pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);        _pDialog.setMessage("Ejecutando operaciones...");
         _pDialog.setCancelable(false);
         _pDialog.setProgress(0);
         _pDialog.setMax(100);

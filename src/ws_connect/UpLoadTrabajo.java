@@ -1,5 +1,6 @@
 package ws_connect;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,8 +36,8 @@ public class  UpLoadTrabajo extends AsyncTask<String, Integer, Integer>{
 	
 	private ContentValues			_tempRegistro 	= new ContentValues();
 	private ArrayList<ContentValues>_tempTabla 		= new ArrayList<ContentValues>();
-	private ArrayList<ContentValues>_tempTabla1		= new ArrayList<ContentValues>();
 	private String					_informacion;
+	private String[]				_solicitudes;
 	private int 					Respuesta = 0;
 	
 	private String 	_ip_servidor	= "";
@@ -46,8 +47,8 @@ public class  UpLoadTrabajo extends AsyncTask<String, Integer, Integer>{
 	
 	private String URL; 			
 	private String NAMESPACE; 	
-	private static final String METHOD_NAME	= "UpLoadTrabajo";	
-	private static final String SOAP_ACTION	= "UpLoadTrabajo";
+	private static final String METHOD_NAME	= "UpLoadTrabajoMixto";	
+	private static final String SOAP_ACTION	= "UpLoadTrabajoMixto";
 	SoapPrimitive response = null;	
 	ProgressDialog 	_pDialog;
 
@@ -83,107 +84,110 @@ public class  UpLoadTrabajo extends AsyncTask<String, Integer, Integer>{
         _pDialog.setCancelable(false);
         _pDialog.setProgress(0);
         _pDialog.setMax(100);
-        _pDialog.show();
-        
-		this._tempTabla1 = this.UpLoadSQL.SelectData("in_ordenes_trabajo", "id_serial,solicitud", "estado = 'T'");
-		for(int i=0;i<this._tempTabla1.size();i++){
-			this._informacion += "SOL|"+this._tempTabla1.get(i).getAsString("id_serial")+"|"+this._tempTabla1.get(i).getAsString("solicitud")+"\n";
-			
-			this._tempRegistro = this.UpLoadSQL.SelectDataRegistro(	"dig_acometida", 
-																	"tipo_ingreso,conductor,tipo,calibre,clase,fases,longitud", 
-																	"solicitud='"+this._tempTabla1.get(i).getAsString("solicitud")+"'");
-			if(this._tempRegistro.size()>0){
-				this._informacion += "DIG_ACOMETIDA|"+this._tempRegistro.getAsString("tipo_ingreso")+"|"+this._tempRegistro.getAsString("conductor")+"|"+this._tempRegistro.getAsString("tipo")+"|"+this._tempRegistro.getAsString("calibre")+"|"+this._tempRegistro.getAsString("clase")+"|"+this._tempRegistro.getAsString("fases")+"|"+this._tempRegistro.getAsString("longitud")+"\n";
-			}
-			
-			this._tempRegistro = this.UpLoadSQL.SelectDataRegistro(	"dig_contador", 
-																	"marca,serie,lectura1,lectura2,tipo",
-																	"solicitud='"+this._tempTabla1.get(i).getAsString("solicitud")+"'" );
-			if(this._tempRegistro.size()>0){
-				this._informacion += "DIG_CONTADOR|"+this._tempRegistro.getAsString("marca")+"|"+this._tempRegistro.getAsString("serie")+"|"+this._tempRegistro.getAsString("lectura1")+"|"+this._tempRegistro.getAsString("lectura2")+"|"+this._tempRegistro.getAsString("tipo")+"\n";
-			}
-			
-			this._tempRegistro = this.UpLoadSQL.SelectDataRegistro(	"dig_actas", 
-																	"nom_enterado,doc_enterado,nom_testigo,doc_testigo,tipo_enterado,respuesta_pqr,fecha_ins",
-																	"solicitud='"+this._tempTabla1.get(i).getAsString("solicitud")+"'" );
-			if(this._tempRegistro.size()>0){
-				this._informacion += "DIG_ACTAS|"+this._tempRegistro.getAsString("nom_enterado")+"|"+this._tempRegistro.getAsString("doc_enterado")+"|"+this._tempRegistro.getAsString("nom_testigo")+"|"+this._tempRegistro.getAsString("doc_testigo")+"|"+this._tempRegistro.getAsString("tipo_enterado")+"|"+this._tempRegistro.getAsString("respuesta_pqr")+"|"+this._tempRegistro.getAsString("fecha_ins")+"\n";
-			}
-			
-			this._tempTabla = this.UpLoadSQL.SelectData("dig_censo_carga", 
-														"id_elemento,cantidad,vatios,carga,servicio",
-														"solicitud='"+this._tempTabla1.get(i).getAsString("solicitud")+"'" );
-			for(int j=0;j<this._tempTabla.size();j++){
-				this._tempRegistro = this._tempTabla.get(j);
-				this._informacion += "DIG_CENSO_CARGA|"+this._tempRegistro.getAsString("id_elemento")+"|"+this._tempRegistro.getAsString("cantidad")+"|"+this._tempRegistro.getAsString("vatios")+"|"+this._tempRegistro.getAsString("carga")+"|"+this._tempRegistro.getAsString("servicio")+"\n";
-			}
-			
-			
-			this._tempTabla = this.UpLoadSQL.SelectData("dig_sellos", 
-														"tipo_ingreso,tipo_sello,ubicacion,color,serie,irregularidad",
-														"solicitud='"+this._tempTabla1.get(i).getAsString("solicitud")+"'" );
-			for(int j=0;j<this._tempTabla.size();j++){
-				this._tempRegistro = this._tempTabla.get(j);
-				this._informacion += "DIG_SELLOS|"+this._tempRegistro.getAsString("tipo_ingreso")+"|"+this._tempRegistro.getAsString("tipo_sello")+"|"+this._tempRegistro.getAsString("ubicacion")+"|"+this._tempRegistro.getAsString("color")+"|"+this._tempRegistro.getAsString("serie")+"|"+this._tempRegistro.getAsString("irregularidad")+"\n";
-			}
-			
-			
-			this._tempTabla = this.UpLoadSQL.SelectData("dig_irregularidades", 
-														"irregularidad",
-														"solicitud='"+this._tempTabla1.get(i).getAsString("solicitud")+"'" );
-			for(int j=0;j<this._tempTabla.size();j++){
-				this._tempRegistro = this._tempTabla.get(j);
-				this._informacion += "DIG_IRREGULARIDADES|"+this._tempRegistro.getAsString("irregularidad")+"\n";
-			}
-			
-			this._tempTabla = this.UpLoadSQL.SelectData("dig_observaciones", 
-														"tipo_observacion,observacion",
-														"solicitud='"+this._tempTabla1.get(i).getAsString("solicitud")+"'" );
-			for(int j=0;j<this._tempTabla.size();j++){
-				this._tempRegistro = this._tempTabla.get(j);
-				this._informacion += "DIG_OBSERVACIONES|"+this._tempRegistro.getAsString("tipo_observacion")+"|"+this._tempRegistro.getAsString("observacion")+"\n";
-			}
-			
-			
-			this._tempRegistro = this.UpLoadSQL.SelectDataRegistro(	"dig_datos_actas", 
-																	"irregularidades,prueba_rozamiento,prueba_frenado,prueba_vacio,familias,fotos,electricista,clase_medidor,ubicacion_medidor,aplomado,registrador,telefono,porcentaje_no_res",
-																	"solicitud='"+this._tempTabla1.get(i).getAsString("solicitud")+"'" );
-			if(this._tempRegistro.size()>0){
-				this._informacion += "DIG_DATOS_ACTAS|"+this._tempRegistro.getAsString("irregularidades")+"|"+
-														this._tempRegistro.getAsString("prueba_rozamiento")+"|"+
-														this._tempRegistro.getAsString("prueba_frenado")+"|"+
-														this._tempRegistro.getAsString("prueba_vacio")+"|"+
-														this._tempRegistro.getAsString("familias")+"|"+
-														this._tempRegistro.getAsString("fotos")+"|"+
-														this._tempRegistro.getAsString("electricista")+"|"+
-														this._tempRegistro.getAsString("clase_medidor")+"|"+
-														this._tempRegistro.getAsString("ubicacion_medidor")+"|"+
-														this._tempRegistro.getAsString("aplomado")+"|"+
-														this._tempRegistro.getAsString("registrador")+"|"+
-														this._tempRegistro.getAsString("telefono")+"|"+
-														this._tempRegistro.getAsString("porcentaje_no_res")+"\n";
-			}
-			
-			this._tempRegistro = this.UpLoadSQL.SelectDataRegistro(	"dig_adecuaciones", 
-																	"suspension,tubo,armario,soporte,tierra,acometida,caja,medidor,otros",
-																	"solicitud='"+this._tempTabla1.get(i).getAsString("solicitud")+"'" );
-			if(this._tempRegistro.size()>0){
-				this._informacion += "DIG_ADECUACIONES|"+this._tempRegistro.getAsString("suspension")+"|"+
-														this._tempRegistro.getAsString("tubo")+"|"+
-														this._tempRegistro.getAsString("armario")+"|"+
-														this._tempRegistro.getAsString("soporte")+"|"+
-														this._tempRegistro.getAsString("tierra")+"|"+
-														this._tempRegistro.getAsString("acometida")+"|"+
-														this._tempRegistro.getAsString("caja")+"|"+
-														this._tempRegistro.getAsString("medidor")+"|"+
-														this._tempRegistro.getAsString("otros")+"|"+"\n";
-			}			
-		}
-		this.ArchUpLoadWS.DoFile("", "UpLoadTrabajo.txt", this._informacion);
+        _pDialog.show();	
 	}
 
 	@Override
 	protected Integer doInBackground(String... params) {
+		this._solicitudes = params[1].split("\\|");
+		for(int i=0;i<this._solicitudes.length;i++){
+			this._tempRegistro = this.UpLoadSQL.SelectDataRegistro("in_ordenes_trabajo", "id_serial,solicitud,estado", "solicitud='"+this._solicitudes[i]+"'");
+			if(this._tempRegistro.getAsString("estado").equals("P")){
+				this._informacion += "PEN|"+this._tempRegistro.getAsString("id_serial")+"|"+this._tempRegistro.getAsString("solicitud")+"\n";
+			}else if(this._tempRegistro.getAsString("estado").equals("T")){
+				this._informacion += "SOL|"+this._tempRegistro.getAsString("id_serial")+"|"+this._tempRegistro.getAsString("solicitud")+"\n";
+				this._tempRegistro = this.UpLoadSQL.SelectDataRegistro(	"dig_acometida", 
+																		"tipo_ingreso,conductor,tipo,calibre,clase,fases,longitud", 
+																		"solicitud='"+this._solicitudes[i]+"'");
+				if(this._tempRegistro.size()>0){
+					this._informacion += "DIG_ACOMETIDA|"+this._tempRegistro.getAsString("tipo_ingreso")+"|"+this._tempRegistro.getAsString("conductor")+"|"+this._tempRegistro.getAsString("tipo")+"|"+this._tempRegistro.getAsString("calibre")+"|"+this._tempRegistro.getAsString("clase")+"|"+this._tempRegistro.getAsString("fases")+"|"+this._tempRegistro.getAsString("longitud")+"\n";
+				}
+				
+				this._tempRegistro = this.UpLoadSQL.SelectDataRegistro(	"dig_contador", 
+																		"marca,serie,lectura1,lectura2,tipo",
+																		"solicitud='"+this._solicitudes[i]+"'" );
+				if(this._tempRegistro.size()>0){
+					this._informacion += "DIG_CONTADOR|"+this._tempRegistro.getAsString("marca")+"|"+this._tempRegistro.getAsString("serie")+"|"+this._tempRegistro.getAsString("lectura1")+"|"+this._tempRegistro.getAsString("lectura2")+"|"+this._tempRegistro.getAsString("tipo")+"\n";
+				}
+				
+				this._tempRegistro = this.UpLoadSQL.SelectDataRegistro(	"dig_actas", 
+																		"nom_enterado,doc_enterado,nom_testigo,doc_testigo,tipo_enterado,respuesta_pqr,fecha_ins",
+																		"solicitud='"+this._solicitudes[i]+"'" );
+				if(this._tempRegistro.size()>0){
+					this._informacion += "DIG_ACTAS|"+this._tempRegistro.getAsString("nom_enterado")+"|"+this._tempRegistro.getAsString("doc_enterado")+"|"+this._tempRegistro.getAsString("nom_testigo")+"|"+this._tempRegistro.getAsString("doc_testigo")+"|"+this._tempRegistro.getAsString("tipo_enterado")+"|"+this._tempRegistro.getAsString("respuesta_pqr")+"|"+this._tempRegistro.getAsString("fecha_ins")+"\n";
+				}
+				
+				this._tempTabla = this.UpLoadSQL.SelectData("dig_censo_carga", 
+															"id_elemento,cantidad,vatios,carga,servicio",
+															"solicitud='"+this._solicitudes[i]+"'" );
+				for(int j=0;j<this._tempTabla.size();j++){
+					this._tempRegistro = this._tempTabla.get(j);
+					this._informacion += "DIG_CENSO_CARGA|"+this._tempRegistro.getAsString("id_elemento")+"|"+this._tempRegistro.getAsString("cantidad")+"|"+this._tempRegistro.getAsString("vatios")+"|"+this._tempRegistro.getAsString("carga")+"|"+this._tempRegistro.getAsString("servicio")+"\n";
+				}
+				
+				
+				this._tempTabla = this.UpLoadSQL.SelectData("dig_sellos", 
+															"tipo_ingreso,tipo_sello,ubicacion,color,serie,irregularidad",
+															"solicitud='"+this._solicitudes[i]+"'" );
+				for(int j=0;j<this._tempTabla.size();j++){
+					this._tempRegistro = this._tempTabla.get(j);
+					this._informacion += "DIG_SELLOS|"+this._tempRegistro.getAsString("tipo_ingreso")+"|"+this._tempRegistro.getAsString("tipo_sello")+"|"+this._tempRegistro.getAsString("ubicacion")+"|"+this._tempRegistro.getAsString("color")+"|"+this._tempRegistro.getAsString("serie")+"|"+this._tempRegistro.getAsString("irregularidad")+"\n";
+				}
+				
+				
+				this._tempTabla = this.UpLoadSQL.SelectData("dig_irregularidades", 
+															"irregularidad",
+															"solicitud='"+this._solicitudes[i]+"'" );
+				for(int j=0;j<this._tempTabla.size();j++){
+					this._tempRegistro = this._tempTabla.get(j);
+					this._informacion += "DIG_IRREGULARIDADES|"+this._tempRegistro.getAsString("irregularidad")+"\n";
+				}
+				
+				this._tempTabla = this.UpLoadSQL.SelectData("dig_observaciones", 
+															"tipo_observacion,observacion",
+															"solicitud='"+this._solicitudes[i]+"'" );
+				for(int j=0;j<this._tempTabla.size();j++){
+					this._tempRegistro = this._tempTabla.get(j);
+					this._informacion += "DIG_OBSERVACIONES|"+this._tempRegistro.getAsString("tipo_observacion")+"|"+this._tempRegistro.getAsString("observacion")+"\n";
+				}
+				
+				
+				this._tempRegistro = this.UpLoadSQL.SelectDataRegistro(	"dig_datos_actas", 
+																		"irregularidades,prueba_rozamiento,prueba_frenado,prueba_vacio,familias,fotos,electricista,clase_medidor,ubicacion_medidor,aplomado,registrador,telefono,porcentaje_no_res",
+																		"solicitud='"+this._solicitudes[i]+"'" );
+				if(this._tempRegistro.size()>0){
+					this._informacion += "DIG_DATOS_ACTAS|"+this._tempRegistro.getAsString("irregularidades")+"|"+
+															this._tempRegistro.getAsString("prueba_rozamiento")+"|"+
+															this._tempRegistro.getAsString("prueba_frenado")+"|"+
+															this._tempRegistro.getAsString("prueba_vacio")+"|"+
+															this._tempRegistro.getAsString("familias")+"|"+
+															this._tempRegistro.getAsString("fotos")+"|"+
+															this._tempRegistro.getAsString("electricista")+"|"+
+															this._tempRegistro.getAsString("clase_medidor")+"|"+
+															this._tempRegistro.getAsString("ubicacion_medidor")+"|"+
+															this._tempRegistro.getAsString("aplomado")+"|"+
+															this._tempRegistro.getAsString("registrador")+"|"+
+															this._tempRegistro.getAsString("telefono")+"|"+
+															this._tempRegistro.getAsString("porcentaje_no_res")+"\n";
+				}
+				
+				this._tempRegistro = this.UpLoadSQL.SelectDataRegistro(	"dig_adecuaciones", 
+																		"suspension,tubo,armario,soporte,tierra,acometida,caja,medidor,otros",
+																		"solicitud='"+this._solicitudes[i]+"'" );
+				if(this._tempRegistro.size()>0){
+					this._informacion += "DIG_ADECUACIONES|"+this._tempRegistro.getAsString("suspension")+"|"+
+															this._tempRegistro.getAsString("tubo")+"|"+
+															this._tempRegistro.getAsString("armario")+"|"+
+															this._tempRegistro.getAsString("soporte")+"|"+
+															this._tempRegistro.getAsString("tierra")+"|"+
+															this._tempRegistro.getAsString("acometida")+"|"+
+															this._tempRegistro.getAsString("caja")+"|"+
+															this._tempRegistro.getAsString("medidor")+"|"+
+															this._tempRegistro.getAsString("otros")+"|"+"\n";
+				}			
+			}			
+		}
+		this.ArchUpLoadWS.DoFile("", "UpLoadTrabajo.txt", this._informacion);
 		try {
 			SoapObject so=new SoapObject(NAMESPACE, METHOD_NAME);
 			so.addProperty("id_interno", params[0]);
