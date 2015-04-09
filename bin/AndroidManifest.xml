@@ -40,8 +40,7 @@
         </activity>
         <activity
             android:name=".ListaTrabajo"
-            android:label="@string/title_activity_lista_trabajo"
-            android:screenOrientation="portrait" >
+            android:label="@string/title_activity_lista_trabajo">
         </activity>
         <activity
             android:name="dialogos.DialogoInformacion"
@@ -55,8 +54,7 @@
         </activity>
         <activity
             android:name=".Actas"
-            android:label="@string/title_activity_datos_actas"
-            android:screenOrientation="portrait" >
+            android:label="@string/title_activity_datos_actas" >
         </activity>
         <activity
             android:name=".Acometida"
@@ -90,8 +88,7 @@
         </activity>
         <activity
             android:name=".DatosActas"
-            android:label="@string/title_activity_adecuaciones"
-            android:screenOrientation="portrait" >
+            android:label="@string/title_activity_adecuaciones" >
         </activity>
         <activity
             android:name=".Adecuaciones"

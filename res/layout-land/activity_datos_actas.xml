@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+    	android:layout_width="fill_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/two_items_lbl1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="right|center_vertical"
+            android:text="@string/DatosCmbIrregularidades"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+        
+        <Spinner
+	        android:id="@+id/DatosCmbIrregularidades"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="2"
+	        android:gravity="right|center_vertical" />
+        
+        <TextView
+	        android:id="@+id/textView2"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3"
+	        android:gravity="right|center_vertical"
+	        android:text="@string/DatosCmbPruebaRozamiento"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+        
+        <Spinner
+	      	android:id="@+id/DatosCmbPruebaRozamiento"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="2" />
+    </LinearLayout>
+    
+    
+    <LinearLayout
+    	android:layout_width="fill_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal" >
+        
+        <TextView
+	        android:id="@+id/textView3"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3"
+	        android:gravity="right|center_vertical"
+	        android:text="@string/DatosCmbPruebaFrenado"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+        
+        <Spinner
+	        android:id="@+id/DatosCmbPruebaFrenado"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="2" />
+        
+        <TextView
+	        android:id="@+id/textView4"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3"
+	        android:gravity="right|center_vertical"
+	        android:text="@string/DatosCmbPruebaVacio"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+        
+        <Spinner
+	        android:id="@+id/DatosCmbPruebaVacio"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="2" />        
+  	</LinearLayout>
+
+    
+
+    <LinearLayout
+    	android:layout_width="fill_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal" >
+        
+        <TextView
+	        android:id="@+id/textView5"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3"
+	        android:gravity="right|center_vertical"
+	        android:text="@string/DatosCmbFamilias"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+        
+        <Spinner
+	        android:id="@+id/DatosCmbFamilias"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="2" />
+
+        <TextView
+	        android:id="@+id/textView6"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3"
+	        android:gravity="right|center_vertical"
+	        android:text="@string/DatosCmbFotos"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+        
+        <Spinner
+	        android:id="@+id/DatosCmbFotos" 
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="2" />
+  	</LinearLayout>
+    
+
+    <LinearLayout
+    	android:layout_width="fill_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal" >
+
+	    <TextView
+	        android:id="@+id/textView7"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3"
+	       	android:gravity="right|center_vertical"
+	        android:text="@string/DatosCmbElectricista"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+	
+	    <Spinner
+	        android:id="@+id/DatosCmbElectricista"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="2" />    
+	    
+	    <TextView
+	        android:id="@+id/textView8"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3"
+	        android:gravity="right|center_vertical"
+	        android:text="@string/DatosCmbClaseMedidor"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+      
+      	<Spinner
+	        android:id="@+id/DatosCmbClaseMedidor"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="2" />  
+    </LinearLayout>
+
+    <LinearLayout
+    	android:layout_width="fill_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal" >
+      	
+        <TextView
+	        android:id="@+id/textView9"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3"
+	        android:gravity="right|center_vertical"
+	        android:text="@string/DatosCmbUbicacionMedidor"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+	
+        <Spinner
+	        android:id="@+id/DatosCmbUbicacionMedidor"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="2" />
+        
+	    <TextView
+	        android:id="@+id/textView10"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3"
+	        android:gravity="right|center_vertical"
+	        android:text="@string/DatosCmbMedidorAplomado"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+	    
+	    <Spinner
+	        android:id="@+id/DatosCmbMedidorAplomado"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="2" />
+      	
+   	</LinearLayout>
+
+   	<LinearLayout
+    	android:layout_width="fill_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal" > 
+    	
+	    <TextView
+	        android:id="@+id/textView11"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3"
+	        android:gravity="right|center_vertical"
+	        android:text="@string/DatosCmbregistrador"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+	    
+	    <Spinner
+	        android:id="@+id/DatosCmbRegistrador"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="2" />
+	    
+	    <TextView
+	        android:id="@+id/textView12"
+	         android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3"
+	        android:gravity="right|center_vertical"
+	        android:text="@string/DatosTxtTelefono"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+	    
+	    <EditText
+	        android:id="@+id/DatosTxtTelefono"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="2"
+	        android:ems="10"
+	        android:inputType="numberDecimal"
+	        android:textSize="@dimen/Text6pts" >
+			<requestFocus />
+    	</EditText>
+	</LinearLayout>
+
+   	
+    <LinearLayout
+    	android:layout_width="fill_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal" > 
+    	
+        <TextView
+	        android:id="@+id/textView13"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3"
+	        android:gravity="right|center_vertical"
+	        android:text="@string/DatosTxtPorcentajeNoResidencial"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+        
+        <EditText
+	        android:id="@+id/DatosTxtPorcentajeNoResidencial"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="2"
+	        android:ems="10"
+	        android:inputType="numberDecimal"
+	        android:textSize="@dimen/Text6pts" />
+	    	
+        <Button
+	        android:id="@+id/DatosBtnRegistrar"
+	        style="?android:attr/buttonStyleSmall"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="5"
+	        android:text="@string/DatosBtnRegistrar" />
+        
+    </LinearLayout>
+</LinearLayout> 
