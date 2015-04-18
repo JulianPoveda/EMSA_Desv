@@ -170,6 +170,11 @@ public class SQLite {
 													"lectura3   DOUBLE PRECISION," +
 													"tipo 		VARCHAR(30));");
 			
+			db.execSQL( "CREATE TABLE dig_pruebas(  solicitud 			VARCHAR(20) NOT NULL PRIMARY KEY," +
+													"lectura_inicial 	NUMERIC(10,1) NOT NULL," +
+													"lectura_final		NUMERIC(10,1) NOT NULL," +
+													"coeficiente		NUMERIC(10,3) NOT NULL);");
+			
 			db.execSQL( "CREATE TABLE dig_actas(     solicitud 		VARCHAR(20) NOT NULL PRIMARY KEY," +
 													"doc_enterado 	VARCHAR(30)," +
 													"nom_enterado	VARCHAR(100)," +
@@ -627,6 +632,47 @@ public class SQLite {
 		}
 		cerrar();
 		return ValorRetorno;
+	}
+	
+	
+	
+	/**Funcion que retorna la cantidad de dias transcurridos desde la fecha actual y la recibida por parametro
+	 * @param _oldDate	->fecha anterior contra la cual se quiere calcular la diferencia en segundos
+	 * @return 			->String con el resultado en minutos
+	 */
+	public Double DaysBetweenDateAndNow(String _oldDate){
+		double _days = 0;
+		abrir();
+		try{
+			Cursor c = nBD.rawQuery("SELECT strftime('%s','now')-strftime('%s','"+_oldDate+"') as segundos", null);
+			c.moveToFirst();
+			_days = Double.parseDouble(c.getString(0))/86400;
+		}catch(Exception e){
+			Log.v("Excepcion",e.toString());
+			_days = 0;
+		}
+		cerrar();		
+		return _days;		
+	}
+	
+	
+	/**Funcion que retorna la cantidad de horas transcurridos desde la fecha actual y la recibida por parametro
+	 * @param _oldDate	->fecha anterior contra la cual se quiere calcular la diferencia en segundos
+	 * @return 			->String con el resultado en minutos
+	 */
+	public Double HoursBetweenDateAndNow(String _oldDate){
+		double _hours = 0;
+		abrir();
+		try{
+			Cursor c = nBD.rawQuery("SELECT strftime('%s','now')-strftime('%s','"+_oldDate+"') as segundos", null);
+			c.moveToFirst();
+			_hours = Double.parseDouble(c.getString(0))/360;
+		}catch(Exception e){
+			Log.v("Excepcion",e.toString());
+			_hours = 0;
+		}
+		cerrar();		
+		return _hours;		
 	}
 	
 	

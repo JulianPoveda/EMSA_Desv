@@ -4,11 +4,10 @@ import java.util.ArrayList;
 
 import clases.ClassContador;
 
+import sistema.DateTime;
 import sistema.SQLite;
 import sistema.Utilidades;
 
-import adaptadores.AdaptadorFiveItems;
-import adaptadores.DetalleFiveItems;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -20,19 +19,19 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class Contador extends Activity implements OnClickListener{
 	private Intent new_form;
 	
+	private DateTime		ContadorTime;
 	private Utilidades 		ContadorUtil;
 	private SQLite 			ContadorSQL;
 	private ClassContador	FcnContador;
 	
 	private ContentValues			_tempRegistro;
 	private ArrayList<ContentValues> _tempTabla;
-
 	
 	private int 		NivelUsuario = 1;
 	private String 		FolderAplicacion = "";
@@ -42,13 +41,9 @@ public class Contador extends Activity implements OnClickListener{
 	private ArrayAdapter<String> AdaptadorMarcaMedidor;
 	private ArrayAdapter<String> AdaptadorTipoMedidor;
 	
-	AdaptadorFiveItems AdaptadorTablaContador;
-	ArrayList<DetalleFiveItems> ArrayTablaContador = new ArrayList<DetalleFiveItems>();
-	
 	private Spinner 	_cmbMarcaMedidor, _cmbTipoMedidor;
-	private EditText 	_txtSerie, _txtLectura1, _txtLectura2;
-	private Button   	_btnRegistrar, _btnEliminar;
-	private ListView	_lstContador;
+	private EditText 	_txtSerie, _txtLectura1, _txtLectura2, _txtLectura3, _txtLecturaIni, _txtLecturaFin, _txtCoeficiente;
+	private Button   	_btnRegistrarContador, _btnEliminarContador, _btnRegistrarPrueba, _btnEliminarPrueba;
 	
 	private String 	StringTipo[]		= {"MONOFASICO","BIFASICO","TRIFASICO"};
 
@@ -65,15 +60,22 @@ public class Contador extends Activity implements OnClickListener{
 		this.FcnContador = new ClassContador(this, this.FolderAplicacion);
 		this.ContadorSQL = new SQLite(this, this.FolderAplicacion);
 		this.ContadorUtil= new Utilidades();
+		this.ContadorTime= DateTime.getInstance();
 		
-		_cmbMarcaMedidor= (Spinner) findViewById(R.id.ContadorCmbMarca);
-		_cmbTipoMedidor	= (Spinner) findViewById(R.id.ContadorCmbTipo);	
-		_txtSerie		= (EditText) findViewById(R.id.ContadorTxtSerie);
-		_txtLectura1	= (EditText) findViewById(R.id.ContadorTxtLectura1);
-		_txtLectura2	= (EditText) findViewById(R.id.ContadorTxtLectura2);
-		_btnRegistrar	= (Button) findViewById(R.id.ContadorBtnRegistrar);
-		_btnEliminar    = (Button) findViewById(R.id.ContadorBtnEliminar);
-		_lstContador 	= (ListView) findViewById(R.id.ContadorLstContador);
+		this._cmbMarcaMedidor	= (Spinner) findViewById(R.id.ContadorCmbMarca);
+		this._cmbTipoMedidor	= (Spinner) findViewById(R.id.ContadorCmbTipo);	
+		this._txtSerie			= (EditText) findViewById(R.id.ContadorTxtSerie);
+		this._txtLectura1		= (EditText) findViewById(R.id.ContadorTxtLectura1);
+		this._txtLectura2		= (EditText) findViewById(R.id.ContadorTxtLectura2);
+		this._txtLectura3		= (EditText) findViewById(R.id.ContadorTxtLectura3);
+		this._btnRegistrarContador	= (Button) findViewById(R.id.ContadorBtnRegistrar);
+		this._btnEliminarContador	= (Button) findViewById(R.id.ContadorBtnEliminar);
+		
+		this._txtLecturaIni	= (EditText) findViewById(R.id.IntegracionTxtLecturaIni);
+		this._txtLecturaFin	= (EditText) findViewById(R.id.IntegracionTxtLecturaFin);
+		this._txtCoeficiente= (EditText) findViewById(R.id.IntegracionTxtKd);
+		this._btnRegistrarPrueba= (Button) findViewById(R.id.IntegracionBtnRegistrar);
+		this._btnEliminarPrueba	= (Button) findViewById(R.id.IntegracionBtnEliminar);
 		
 		this._tempTabla = this.ContadorSQL.SelectData("vista_parametros_medidores", "resumen", "marca IS NOT NULL");
 		this.ContadorUtil.ArrayContentValuesToString(StringMarcaMedidores, this._tempTabla, "resumen",false);
@@ -83,24 +85,89 @@ public class Contador extends Activity implements OnClickListener{
 		AdaptadorTipoMedidor 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,StringTipo);
 		_cmbTipoMedidor.setAdapter(AdaptadorTipoMedidor);
 		
-		AdaptadorTablaContador = new AdaptadorFiveItems(this,ArrayTablaContador);
-		_lstContador.setAdapter(AdaptadorTablaContador);
-		
 		this.CargarContadoresRegistrados();
+		this.CargarPruebasContador();
 		
-		_btnRegistrar.setOnClickListener(this);
-		_btnEliminar.setOnClickListener(this);
+		this._btnRegistrarContador.setOnClickListener(this);
+		this._btnEliminarContador.setOnClickListener(this);
+		
+		this._btnRegistrarPrueba.setOnClickListener(this);
+		this._btnEliminarPrueba.setOnClickListener(this);
 	}
 
 	
 	private void CargarContadoresRegistrados(){
-		ArrayTablaContador.clear();
-		this._tempTabla = ContadorSQL.SelectData("dig_contador", "marca,serie,lectura1,lectura2,tipo", "solicitud='"+this.Solicitud+"'");
-		for(int i=0;i<_tempTabla.size();i++){
-			this._tempRegistro = _tempTabla.get(i);
-			ArrayTablaContador.add(new DetalleFiveItems(this._tempRegistro.getAsString("marca"),this._tempRegistro.getAsString("serie"),this._tempRegistro.getAsString("lectura1"),this._tempRegistro.getAsString("lectura2"),this._tempRegistro.getAsString("tipo")));
+		this._tempRegistro = ContadorSQL.SelectDataRegistro("dig_contador", "marca,serie,lectura1,lectura2,lectura3,tipo", "solicitud='"+this.Solicitud+"'");
+		if(this._tempRegistro.size()>0){
+			this._cmbMarcaMedidor.setSelection(this.AdaptadorMarcaMedidor.getPosition(this._tempRegistro.getAsString("marca")));
+			this._cmbTipoMedidor.setSelection(this.AdaptadorTipoMedidor.getPosition(this._tempRegistro.getAsString("tipo")));
+			this._txtSerie.setText(this._tempRegistro.getAsString("serie"));
+			this._txtLectura1.setText(this._tempRegistro.getAsString("lectura1"));
+			this._txtLectura2.setText(this._tempRegistro.getAsString("lectura2"));
+			this._txtLectura3.setText(this._tempRegistro.getAsString("lectura3"));
+			this._cmbMarcaMedidor.setEnabled(false);
+			this._cmbTipoMedidor.setEnabled(false);
+			this._txtSerie.setEnabled(false);
+			this._txtLectura1.setEnabled(false);
+			this._txtLectura2.setEnabled(false);
+			this._txtLectura3.setEnabled(false);
+			this._btnRegistrarContador.setEnabled(false);
+			this._btnEliminarContador.setEnabled(true);
+		}else{
+			this._cmbMarcaMedidor.setSelection(0);
+			this._cmbTipoMedidor.setSelection(0);
+			this._txtSerie.setText("");
+			this._txtLectura1.setText("");
+			this._txtLectura2.setText("");
+			this._cmbMarcaMedidor.setEnabled(true);
+			this._cmbTipoMedidor.setEnabled(true);
+			this._txtSerie.setEnabled(true);
+			this._txtLectura1.setEnabled(true);
+			this._txtLectura2.setEnabled(true);
+			this._txtLectura3.setEnabled(true);
+			this._btnRegistrarContador.setEnabled(true);
+			this._btnEliminarContador.setEnabled(false);
 		}
-		AdaptadorTablaContador.notifyDataSetChanged();
+	}
+	
+	private void CargarPruebasContador(){
+		this._tempRegistro.clear();
+		this._tempRegistro = this.ContadorSQL.SelectDataRegistro("dig_pruebas", 
+				"lectura_inicial,lectura_final,coeficiente", 
+				"solicitud='"+this.Solicitud+"'");
+		if(this._tempRegistro.size()>0){
+			String lecturaInicial = this._tempRegistro.getAsString("lectura_inicial");
+			this._txtLecturaIni.setText(this._tempRegistro.getAsString("lectura_inicial"));
+			this._txtLecturaFin.setText(this._tempRegistro.getAsString("lectura_final"));
+			this._txtCoeficiente.setText(this._tempRegistro.getAsString("coeficiente"));
+			this._txtLecturaIni.setEnabled(false);
+			this._txtLecturaFin.setEnabled(false);
+			this._txtCoeficiente.setEnabled(false);
+			this._btnRegistrarPrueba.setEnabled(false);
+			this._btnEliminarPrueba.setEnabled(true);
+			
+			this._tempRegistro = this.ContadorSQL.SelectDataRegistro("in_consumos", 
+					"fecha_tomada,lectura_tomada,consumo", 
+					"solicitud='"+this.Solicitud+"' ORDER BY periodo DESC ");
+			
+			try{
+				double numDias = this.ContadorSQL.DaysBetweenDateAndNow(this.ContadorTime.reformatDate(this._tempRegistro.getAsString("fecha_tomada"))+" 00:00:00");
+				double promedioDiarioEstimado = ((Double.parseDouble(lecturaInicial)-Double.parseDouble(this._tempRegistro.getAsString("lectura_tomada")))/(int)numDias);
+				int consumoMensualEstimado = (int)promedioDiarioEstimado*30;			
+				Toast.makeText(this, "Consumo Anterior: "+this._tempRegistro.getAsString("consumo")+"\n Cosumo Estimado: "+consumoMensualEstimado, Toast.LENGTH_LONG).show();
+			}catch(Exception e){
+				
+			}
+		}else{
+			this._txtLecturaIni.setText("");
+			this._txtLecturaFin.setText("");
+			this._txtCoeficiente.setText("");
+			this._txtLecturaIni.setEnabled(true);
+			this._txtLecturaFin.setEnabled(true);
+			this._txtCoeficiente.setEnabled(true);
+			this._btnRegistrarPrueba.setEnabled(true);
+			this._btnEliminarPrueba.setEnabled(false);
+		}
 	}
 	
 	@Override
@@ -196,18 +263,42 @@ public class Contador extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		switch(v.getId()){
 			case R.id.ContadorBtnRegistrar:
-				this.FcnContador.datosContador(	this.Solicitud, 
-												this.ContadorSQL.StrSelectShieldWhere("vista_parametros_medidores", "marca", "resumen='"+_cmbMarcaMedidor.getSelectedItem().toString()+"'"), 
-												_cmbTipoMedidor.getSelectedItem().toString(), 
-												_txtSerie.getText().toString(), 
-												_txtLectura1.getText().toString(), 
-												_txtLectura2.getText().toString());
-				this.CargarContadoresRegistrados();
+				if(this.FcnContador.datosContador(	this.Solicitud, 
+						this.ContadorSQL.StrSelectShieldWhere("vista_parametros_medidores", "marca", "resumen='"+_cmbMarcaMedidor.getSelectedItem().toString()+"'"), 
+						this._cmbTipoMedidor.getSelectedItem().toString(), 
+						this._txtSerie.getText().toString(), 
+						this._txtLectura1.getText().toString(), 
+						this._txtLectura2.getText().toString(),
+						this._txtLectura3.getText().toString())){
+					this.CargarContadoresRegistrados();
+					Toast.makeText(this, "Datos Contador Registrados Correctamente", Toast.LENGTH_LONG).show();
+				}
 				break;
 				
 			case R.id.ContadorBtnEliminar:
-				this.FcnContador.eliminarDatosContador(	this.Solicitud);
-				this.CargarContadoresRegistrados();
+				if(this.FcnContador.eliminarDatosContador(	this.Solicitud)){
+					Toast.makeText(this, "Datos Contador Eliminados Correctamente", Toast.LENGTH_LONG).show();
+					this.CargarContadoresRegistrados();
+				}
+				
+				break;
+				
+			case R.id.IntegracionBtnRegistrar:
+				if(this.FcnContador.datosPrueba(this.Solicitud,
+						this._txtLecturaIni.getText().toString(),
+						this._txtLecturaFin.getText().toString(),
+						this._txtCoeficiente.getText().toString())){
+					this.CargarPruebasContador();
+					Toast.makeText(this, "Prueba Registrada Correctamente", Toast.LENGTH_LONG).show();
+				}
+				break;
+				
+			case R.id.IntegracionBtnEliminar:
+				if(this.FcnContador.eliminarDatosPruebas(this.Solicitud)){
+					this.CargarPruebasContador();
+					Toast.makeText(this, "Prueba Eliminada Correctamente", Toast.LENGTH_LONG).show();
+				}
+				
 				break;
 		}
 		

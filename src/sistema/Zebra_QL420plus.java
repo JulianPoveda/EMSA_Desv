@@ -293,7 +293,7 @@ public class Zebra_QL420plus {
 	
 	
 	public String getDoLabel(){
-		this._infImpresora = "! " + this._margenIzquierda+ " 200 200 " + (this._lineaActual + this._lineaFinal) + " 1" + " \r\n" + "ENCODING UTF-8 \r\n LABEL " + " \r\n" + this._infImpresora+ " \r\n";
+		this._infImpresora = "! " + this._margenIzquierda+ " 200 200 " + (this._lineaActual + this._lineaFinal) + " 1" + " \r\n LABEL " + " \r\n" + this._infImpresora+ " \r\n";
 		this._infImpresora += "PRINT \r\n";
 	    return this._infImpresora;
 	}

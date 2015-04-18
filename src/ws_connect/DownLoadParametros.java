@@ -111,14 +111,17 @@ public class DownLoadParametros extends AsyncTask<String, Integer, Integer>{ //d
 			}else if(response.toString().isEmpty()){
 				_retorno = -2;
 			}else{
-				byte[] resultado = Base64.decode(response.toString());
+				//byte[] resultado = Base64.decode(response.toString());
+				String informacion = new String(Base64.decode(response.toString()), "ISO-8859-1");
 				try {
-					this.FcnArch.ByteArrayToFile(resultado, "Parametros.txt");
+					//this.FcnArch.ByteArrayToFile(resultado, "Parametros.txt");
+					this.FcnArch.DoFile("", "Parametros.txt", informacion);
+					
 					this.InformacionDescarga = FcnArch.FileToArrayString("Parametros.txt",false);
 					this.FcnParametros.InsertParametros(this.InformacionDescarga);
 					this.FcnArch.DeleteFile("Parametros.txt");
 					_retorno = 1;
-				} catch (IOException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 					_retorno = -3;
 				}

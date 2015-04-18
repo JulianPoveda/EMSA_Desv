@@ -1,115 +1,308 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="${relativePackage}.${activityClass}" >
-
-    <Spinner
-        android:id="@+id/ContadorCmbMarca"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp" />
+    android:weightSum="14"
+    android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/ContadorLblMarca"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/ContadorCmbMarca"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/ContadorCmbMarca"
-        android:layout_toLeftOf="@+id/ContadorCmbMarca"
-        android:gravity="right|center_vertical"
-        android:text="@string/ContadorLblMarca"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <Spinner
-        android:id="@+id/ContadorCmbTipo"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignLeft="@+id/ContadorCmbMarca"
-        android:layout_below="@+id/ContadorCmbMarca" />
-
-    <EditText
-        android:id="@+id/ContadorTxtSerie"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignLeft="@+id/ContadorCmbTipo"
-        android:layout_below="@+id/ContadorCmbTipo"
-        android:ems="10"
-        android:inputType="text" >
-
-        <requestFocus />
-    </EditText>
-
-    <EditText
-        android:id="@+id/ContadorTxtLectura1"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignLeft="@+id/ContadorTxtSerie"
-        android:layout_below="@+id/ContadorTxtSerie"
-        android:ems="10"
-        android:inputType="numberDecimal" />
-
-    <EditText
-        android:id="@+id/ContadorTxtLectura2"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignLeft="@+id/ContadorTxtLectura1"
-        android:layout_below="@+id/ContadorTxtLectura1"
-        android:ems="10"
-        android:inputType="numberDecimal" />
-
+        android:id="@+id/ContadorLblTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/ContadorLblTitulo"
+        android:textSize="@dimen/Text8pts"
+        android:textStyle="bold" />
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="10">
+        
+        <TextView
+	        android:id="@+id/ContadorLblMarca"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3"
+	        android:gravity="right|center_vertical"
+	        android:text="@string/ContadorLblMarca"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <Spinner
+	        android:id="@+id/ContadorCmbMarca"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="7" />        
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="10">
+        
+        <TextView
+	        android:id="@+id/ContadorLblTipo"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3"
+	        android:gravity="right|center_vertical"
+	        android:text="@string/ContadorLblTipo"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <Spinner
+	        android:id="@+id/ContadorCmbTipo"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="7"/>
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="10">
+        
+        <TextView
+	        android:id="@+id/ContadorLblSerie"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3"
+	        android:gravity="right|center_vertical"
+	        android:text="@string/ContadorLblSerie"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <EditText
+	        android:id="@+id/ContadorTxtSerie"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="7"
+	        android:inputType="text" />
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="10">
+        
+        <TextView
+	        android:id="@+id/ContadorLblLectura1"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3"
+	        android:gravity="right|center_vertical"
+	        android:text="@string/ContadorLblLectura1"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+	
+	    <EditText
+	        android:id="@+id/ContadorTxtLectura1"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+			android:layout_weight="7"
+	        android:inputType="numberDecimal" />
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="10">
+        
+        <TextView
+	        android:id="@+id/ContadorLblLectura2"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3"
+	        android:gravity="right|center_vertical"
+	        android:text="@string/ContadorLblLectura2"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	    <EditText
+	        android:id="@+id/ContadorTxtLectura2"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="7"
+	        android:inputType="numberDecimal" />        
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="10">
+        
+        <TextView
+	        android:id="@+id/ContadorLblLectura3"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3"
+	        android:gravity="right|center_vertical"
+	        android:text="@string/ContadorLblLectura3"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	    <EditText
+	        android:id="@+id/ContadorTxtLectura3"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="7"
+	        android:inputType="numberDecimal" />
+        
+    </LinearLayout>
+    
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical|center_horizontal"
+        android:weightSum="10">
+        
+        <Button
+	        android:id="@+id/ContadorBtnRegistrar"
+	        style="?android:attr/buttonStyleSmall"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3.5"
+	        android:text="@string/ContadorBtnRegistrar" />
+	
+	    <Button
+	        android:id="@+id/ContadorBtnEliminar"
+	        style="?android:attr/buttonStyleSmall"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3.5"
+	        android:text="@string/ContadorBtnEliminar" />
+        
+    </LinearLayout>
+    
     <TextView
-        android:id="@+id/ContadorLblTipo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/ContadorTxtSerie"
-        android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/ContadorLblMarca"
-        android:layout_below="@+id/ContadorLblMarca"
-        android:gravity="right|center_vertical"
-        android:text="@string/ContadorLblTipo"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:id="@+id/IntegracionLblTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:gravity="center_vertical|center_horizontal"
+        android:paddingTop="20dp"
+        android:text="@string/IntegracionLblTitulo"
+        android:textSize="@dimen/Text8pts"
+        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/ContadorLblSerie"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/ContadorTxtLectura1"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/ContadorTxtSerie"
-        android:layout_toLeftOf="@+id/ContadorTxtSerie"
-        android:gravity="right|center_vertical"
-        android:text="@string/ContadorLblSerie"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+  	<LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="10">
+        
+        <TextView
+	        android:id="@+id/IntegracionLblLecturaIni"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="4"
+	        android:gravity="right|center_vertical"
+	        android:text="@string/IntegracionLblLecturaIni"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+	
+	    <EditText
+	        android:id="@+id/IntegracionTxtLecturaIni"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+			android:layout_weight="6"
+	        android:inputType="numberDecimal" />
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="10">
+        
+        <TextView
+	        android:id="@+id/IntegracionLblLecturaFin"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="4"
+	        android:gravity="right|center_vertical"
+	        android:text="@string/IntegracionLblLecturaFin"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	    <EditText
+	        android:id="@+id/IntegracionTxtLecturaFin"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="6"
+	        android:inputType="numberDecimal" />        
+    </LinearLayout>
+	
+	<LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="10">
+        
+        <TextView
+	        android:id="@+id/IntegracionLblKd"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="4"
+	        android:gravity="right|center_vertical"
+	        android:text="@string/IntegracionLblKd"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	    <EditText
+	        android:id="@+id/IntegracionTxtKd"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="6"
+	        android:inputType="numberDecimal" />
+        
+    </LinearLayout>
+    
+	<LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical|center_horizontal"
+        android:weightSum="10">
+        
+        <Button
+	        android:id="@+id/IntegracionBtnRegistrar"
+	        style="?android:attr/buttonStyleSmall"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3.5"
+	        android:text="@string/IntegracionBtnRegistrar" />
+	
+	    <Button
+	        android:id="@+id/IntegracionBtnEliminar"
+	        style="?android:attr/buttonStyleSmall"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="3.5"
+	        android:text="@string/IntegracionBtnEliminar" />
+        
+    </LinearLayout>
+    
 
-    <TextView
-        android:id="@+id/ContadorLblLectura1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/ContadorTxtLectura2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/ContadorLblSerie"
-        android:layout_below="@+id/ContadorLblSerie"
-        android:gravity="right|center_vertical"
-        android:text="@string/ContadorLblLectura1"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
 
-    <TextView
-        android:id="@+id/ContadorLblLectura2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/ContadorTxtLectura2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/ContadorLblLectura1"
-        android:layout_alignTop="@+id/ContadorTxtLectura2"
-        android:gravity="right|center_vertical"
-        android:text="@string/ContadorLblLectura2"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
 
-    <HorizontalScrollView
+    <!-- HorizontalScrollView
         android:id="@+id/horizontalScrollView1"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
@@ -123,26 +316,8 @@
             android:layout_height="match_parent" >
         </ListView>
 
-    </HorizontalScrollView>
+    </HorizontalScrollView-->
 
-    <Button
-        android:id="@+id/ContadorBtnRegistrar"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="150dp"
-        android:layout_height="35dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/ContadorTxtLectura2"
-        android:text="@string/ContadorBtnRegistrar" />
+    
 
-    <Button
-        android:id="@+id/ContadorBtnEliminar"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/ContadorBtnRegistrar"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/ContadorBtnRegistrar"
-        android:layout_toRightOf="@+id/ContadorBtnRegistrar"
-        android:text="@string/ContadorBtnEliminar" />
-
-</RelativeLayout>
+</LinearLayout>

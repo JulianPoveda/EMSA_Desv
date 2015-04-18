@@ -19,5 +19,6 @@
     <string name="title_activity_lista_consumos">Lista Consumos</string>
     <string name="title_activity_form_descarga">Descarga Trabajo</string>
     <string name="Chk_Item1">Chk</string>
+    <string name="title_activity_lista_sellos">Lista de Sellos</string>
 
 </resources>

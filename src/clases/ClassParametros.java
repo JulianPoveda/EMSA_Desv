@@ -33,6 +33,7 @@ public class ClassParametros {
 		this.ParametrosSQL.DeleteRegistro("parametros_municipios", "id_municipio IS NOT NULL");
 		this.ParametrosSQL.DeleteRegistro("parametros_irregularidades", "id_irregularidad IS NOT NULL");
 		this.ParametrosSQL.DeleteRegistro("parametros_medidores", "marca IS NOT NULL");
+		this.ParametrosSQL.DeleteRegistro("parametros_elementos_censo", "codigo IS NOT NULL");
 		
 		for(int i=0;i<_informacion.size();i++){
 			this._tempRegistro.clear();

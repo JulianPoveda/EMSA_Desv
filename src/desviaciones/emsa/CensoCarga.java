@@ -44,8 +44,8 @@ public class CensoCarga extends Activity implements OnClickListener, OnItemSelec
 	private int		ElementoSelect;
 	private String 	CargaSelect, TipoSelect;
 	
-	private String[] strVatios;
-	private String[] strCantidad;
+	private ArrayList<String> strVatios;
+	private ArrayList<String> strCantidad;
 	private String[] strCarga 		= {"...","Registrada","Directa"};
 	private String[] strTipoServicio= {"...","Residencial","No Residencial"};
 	
@@ -101,7 +101,7 @@ public class CensoCarga extends Activity implements OnClickListener, OnItemSelec
 		_btnEliminar	= (Button) findViewById(R.id.CensoBtnEliminar);
 		_btnRegistrar	= (Button) findViewById(R.id.CensoBtnRegistrar);
 		
-		this.strCantidad= this.CensoUtil.getCmbIncremento(1, 100, 1);
+		this.strCantidad= this.CensoUtil.getRangeAdapter(1, 100, 1);
 		this.AdaptadorCantidad		= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,strCantidad); 
 		this._cmbCantidad.setAdapter(this.AdaptadorCantidad);
 		
@@ -220,7 +220,7 @@ public class CensoCarga extends Activity implements OnClickListener, OnItemSelec
 		switch(parent.getId()){
 			case R.id.CensoCmbElemento:
 				this._tempRegistro = this.CensoSQL.SelectDataRegistro("parametros_elementos_censo", "minimo,maximo", "descripcion='"+_cmbElementos.getSelectedItem().toString()+"'");
-				this.strVatios	= this.CensoUtil.getCmbIncremento(this._tempRegistro.getAsInteger("minimo"), this._tempRegistro.getAsInteger("minimo"), 10);
+				this.strVatios	= this.CensoUtil.getRangeAdapter(this._tempRegistro.getAsInteger("minimo"), this._tempRegistro.getAsInteger("maximo"), 10);
 				this.AdaptadorVatios= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,strVatios); 
 				this._cmbVatios.setAdapter(this.AdaptadorVatios);
 				break;

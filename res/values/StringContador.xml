@@ -5,7 +5,15 @@
     <string name="ContadorLblSerie">Serie</string>
     <string name="ContadorLblLectura1">Lectura 1</string>
     <string name="ContadorLblLectura2">Lectura 2</string>
+    <string name="ContadorLblLectura3">Lectura 3</string>
     <string name="ContadorBtnRegistrar">Registrar</string>
     <string name="ContadorBtnEliminar">Eliminar</string>
+    <string name="ContadorLblTitulo">DATOS CONTADOR ENCONTRADO</string>
+    <string name="IntegracionLblTitulo">PRUEBA DE INTEGRACION</string>
+    <string name="IntegracionLblLecturaIni">Lectura Inicial</string>
+    <string name="IntegracionLblLecturaFin">Lectura Final</string>
+    <string name="IntegracionLblKd">Coeficiente Kd</string>
+    <string name="IntegracionBtnRegistrar">Registrar</string>
+    <string name="IntegracionBtnEliminar">Eliminar</string>
     
 </resources>

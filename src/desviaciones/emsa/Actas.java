@@ -194,7 +194,13 @@ public class Actas extends Activity implements OnClickListener{
 				startActivity(this.new_form);
 				return true;
 				
-				
+			case R.id.VerSellos:
+				this.new_form = new Intent(this, ListaSellos.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;	
+								
 			case R.id.Volver:
 				finish();
 				this.new_form = new Intent(this, ListaTrabajo.class);

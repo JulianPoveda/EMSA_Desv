@@ -40,7 +40,7 @@
         </activity>
         <activity
             android:name=".ListaTrabajo"
-            android:label="@string/title_activity_lista_trabajo">
+            android:label="@string/title_activity_lista_trabajo" >
         </activity>
         <activity
             android:name="dialogos.DialogoInformacion"
@@ -107,8 +107,13 @@
         </activity>
         <activity
             android:name=".FormDescarga"
-            android:label="@string/title_activity_form_descarga" 
-            android:screenOrientation="portrait">
+            android:label="@string/title_activity_form_descarga"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ListaSellos"
+            android:label="@string/title_activity_lista_sellos"
+            android:theme="@android:style/Theme.Dialog" >
         </activity>
     </application>
 
