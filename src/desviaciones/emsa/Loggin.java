@@ -3,7 +3,9 @@ package desviaciones.emsa;
 import java.io.File;
 
 import sistema.FormatosActas;
+import sistema.SQLite;
 
+import ws_connect.UpLoadFoto;
 import ws_connect.DownLoadParametros;
 import ws_connect.DownLoadTrabajo;
 import ws_connect.UpLoadActaImpresa;
@@ -27,6 +29,7 @@ public class Loggin extends Activity implements OnClickListener{
 	private ClassUsuario		FcnUsuario;
 	private ClassConfiguracion 	FcnCfg;
 	private FormatosActas		FormatoImp;
+	private SQLite				LoginSQL;
 
 	private String 	FolderAplicacion;
 	private int 	NivelUsuario;
@@ -44,6 +47,7 @@ public class Loggin extends Activity implements OnClickListener{
 		this.FolderAplicacion 	= Environment.getExternalStorageDirectory() + File.separator + "EMSA";
 		this.FcnCfg				= new ClassConfiguracion(this ,this.FolderAplicacion);
 		this.FcnUsuario 		= new ClassUsuario(this, this.FolderAplicacion);
+		this.LoginSQL	    	= new SQLite(this, this.FolderAplicacion);
 		this.UsuarioLogged 		= false;
 		
 		this.FormatoImp		= new FormatosActas(this, this.FolderAplicacion, false);
@@ -148,6 +152,23 @@ public class Loggin extends Activity implements OnClickListener{
 				this.k.putExtra("FolderAplicacion", this.FolderAplicacion);
 				startActivity(this.k);
 				return true;
+				
+			case R.id.sincronizar:
+				File f = new File(this.FolderAplicacion);
+				File[] fotos = f.listFiles();
+				for (int i=0;i<fotos.length;i++){
+					if(!fotos[i].isDirectory()){
+						String extension = getFileExtension(fotos[i]);
+						if(extension.equals("jpeg")){
+							String[] _foto = fotos[i].getName().split("_");
+							String _orden = this.LoginSQL.StrSelectShieldWhere("in_ordenes_trabajo", "dependencia", "solicitud="+_foto[0]) + _foto[0];
+							String _acta = _orden + this.LoginSQL.StrSelectShieldWhere("in_ordenes_trabajo", "pda", "solicitud="+_foto[0]) +this.LoginSQL.StrSelectShieldWhere("in_ordenes_trabajo", "id_serial", "solicitud="+_foto[0]);
+							String _cuenta = this.LoginSQL.StrSelectShieldWhere("in_ordenes_trabajo", "cuenta", "solicitud="+_foto[0]);
+							new UpLoadFoto(this, this.FolderAplicacion).execute(_orden,_acta,_cuenta,fotos[i].toString());
+						}
+					}
+				}
+				return true;
 									
 			default:
 				return super.onOptionsItemSelected(item);	
@@ -164,4 +185,11 @@ public class Loggin extends Activity implements OnClickListener{
 		}
 		
 	}
+	
+	private static String getFileExtension(File file) {
+        String fileName = file.getName();
+        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+        return fileName.substring(fileName.lastIndexOf(".")+1);
+        else return "";
+    }
 }

@@ -1,10 +1,13 @@
 package desviaciones.emsa;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import sistema.FormatosActas;
 import sistema.SQLite;
 import sistema.Utilidades;
+import ws_connect.UpLoadFoto;
 
 import clases.ClassActas;
 import clases.ClassConfiguracion;
@@ -12,7 +15,9 @@ import clases.ClassInSolicitudes;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +29,7 @@ import android.widget.Spinner;
 
 public class Actas extends Activity implements OnClickListener{
 	private Intent new_form;
+	private static int 	INICIAR_CAMARA	 	     = 2;
 	
 	private FormatosActas		FormatoImp;
 	private ClassConfiguracion 	FcnConfig;
@@ -31,6 +37,8 @@ public class Actas extends Activity implements OnClickListener{
 	private Utilidades			ActasUtil;
 	private SQLite				ActasSQL;
 	private ClassActas 			FcnActas;
+	
+	Intent 	    IniciarCamara;
 	
 	//private ContentValues				_tempRegistro;
 	private ArrayList<ContentValues> 	_tempTabla;
@@ -42,6 +50,7 @@ public class Actas extends Activity implements OnClickListener{
 	private int 						NivelUsuario = 1;
 	private String 						Solicitud;
 	private String 						FolderAplicacion = "";
+	private String 						fotoParcial		 = "";
 	
 	EditText	_txtOrden, _txtActa, _txtCuenta, _txtDocEnterado, _txtNomEnterado, _txtDocTestigo, _txtNomTestigo;
 	Spinner		_cmbTipoEnterado, _cmbRespuesta;
@@ -63,6 +72,8 @@ public class Actas extends Activity implements OnClickListener{
 		this.FcnSolicitudes = new ClassInSolicitudes(this, this.FolderAplicacion);
 		this.FcnActas 		= new ClassActas(this, this.FolderAplicacion);
 		this.ActasSQL		= new SQLite(this, this.FolderAplicacion);
+		
+		this.IniciarCamara	= new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 		
 		_txtOrden 		= (EditText) findViewById(R.id.ActaTxtOrden);
 		_txtActa 		= (EditText) findViewById(R.id.ActaTxtActa);
@@ -220,6 +231,10 @@ public class Actas extends Activity implements OnClickListener{
 			case R.id.ImpresionArchivo:
 				this.FormatoImp.FormatoDesviacion(this.Solicitud, "Archivo", 3);
 				return true;
+			
+			case R.id.Foto:
+				this.getFoto();
+				return true;
 				
 			default:
 				return super.onOptionsItemSelected(item);	
@@ -241,4 +256,33 @@ public class Actas extends Activity implements OnClickListener{
 				break;
 		}	
 	}
+	
+	@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        try{
+        	if(resultCode == RESULT_OK && requestCode == INICIAR_CAMARA){        		
+        		new UpLoadFoto(this, this.FolderAplicacion).execute(_txtOrden.getText().toString(),_txtActa.getText().toString(),_txtCuenta.getText().toString(),this.fotoParcial);        		
+            }
+        }catch(Exception e){
+
+        }
+    }
+	
+	private void getFoto(){
+		long ahora = System.currentTimeMillis();
+		Calendar calendario = Calendar.getInstance();
+		calendario.setTimeInMillis(ahora);
+		int minuto = calendario.get(Calendar.MINUTE);
+		
+        File imagesFolder   = new File(this.FolderAplicacion);
+        File image          = new File(imagesFolder,
+        								this.Solicitud+"_"+minuto+".jpeg");
+        
+        this.fotoParcial = image.toString();
+        
+        Uri uriSavedImage = Uri.fromFile(image);
+        this.IniciarCamara.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+        
+        startActivityForResult(IniciarCamara, INICIAR_CAMARA);
+    }
 }

@@ -89,8 +89,6 @@ public class DownLoadParametros extends AsyncTask<String, Integer, Integer>{ //d
         _pDialog.show();
 	}
 	
-
-	
 	//Conexion con el servidor en busca de actualizaciones de trabajo programado
 	@Override
 	protected Integer doInBackground(String... params) {

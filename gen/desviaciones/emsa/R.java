@@ -20,8 +20,8 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int AbrirEnLinea=0x7f0800f4;
-        public static final int AbrirSolicitud=0x7f0800f5;
+        public static final int AbrirEnLinea=0x7f0800f6;
+        public static final int AbrirSolicitud=0x7f0800f7;
         public static final int Acometida=0x7f0800df;
         public static final int AcometidaBtnEliminar=0x7f08000e;
         public static final int AcometidaBtnRegistrar=0x7f08000f;
@@ -60,7 +60,7 @@ public final class R {
         public static final int ActaTxtNomEnterado=0x7f080018;
         public static final int ActaTxtNomTestigo=0x7f08001c;
         public static final int ActaTxtOrden=0x7f080012;
-        public static final int ActasImpresas=0x7f0800f1;
+        public static final int ActasImpresas=0x7f0800f2;
         public static final int AdecBtnRegistrar=0x7f080037;
         public static final int AdecCmbAcometida=0x7f08002a;
         public static final int AdecCmbArmario=0x7f080027;
@@ -72,7 +72,7 @@ public final class R {
         public static final int AdecCmbTubo=0x7f080026;
         public static final int AdecTxtOtros=0x7f08002d;
         public static final int Adecuaciones=0x7f0800d8;
-        public static final int Cargue=0x7f0800ea;
+        public static final int Cargue=0x7f0800eb;
         public static final int CensoBtnEliminar=0x7f080043;
         public static final int CensoBtnRegistrar=0x7f080042;
         public static final int CensoCarga=0x7f0800d9;
@@ -111,7 +111,7 @@ public final class R {
         public static final int CfgTxtServidor=0x7f08004a;
         public static final int CfgTxtVersion=0x7f08004f;
         public static final int CfgTxtWebService=0x7f08004e;
-        public static final int Configuracion=0x7f0800f2;
+        public static final int Configuracion=0x7f0800f3;
         public static final int Contador=0x7f0800da;
         public static final int ContadorBtnEliminar=0x7f08006b;
         public static final int ContadorBtnRegistrar=0x7f08006a;
@@ -145,13 +145,14 @@ public final class R {
         public static final int DatosTxtTelefono=0x7f080082;
         public static final int DescargaBtnSolicitudes=0x7f080093;
         public static final int DescargaLstSolicitudes=0x7f080092;
-        public static final int Descargue=0x7f0800ef;
+        public static final int Descargue=0x7f0800f0;
+        public static final int Foto=0x7f0800e8;
         public static final int Impresion=0x7f0800e0;
         public static final int ImpresionArchivo=0x7f0800e1;
         public static final int ImpresionOriginal=0x7f0800e2;
-        public static final int ImpresionPrueba=0x7f0800e9;
+        public static final int ImpresionPrueba=0x7f0800ea;
         public static final int ImpresionUsuario=0x7f0800e3;
-        public static final int IniciarSolicitud=0x7f0800f6;
+        public static final int IniciarSolicitud=0x7f0800f8;
         public static final int IntegracionBtnEliminar=0x7f080074;
         public static final int IntegracionBtnRegistrar=0x7f080073;
         public static final int IntegracionLblKd=0x7f080071;
@@ -179,11 +180,11 @@ public final class R {
         public static final int ObsLblObservacion=0x7f0800a3;
         public static final int ObsTxtObservacion=0x7f0800a4;
         public static final int Observaciones=0x7f0800dd;
-        public static final int OrdenesRealizadas=0x7f0800f0;
-        public static final int OrdenesTrabajo=0x7f0800e8;
-        public static final int ParametrosArchivo=0x7f0800eb;
-        public static final int ParametrosRed=0x7f0800ec;
-        public static final int Salir=0x7f0800f3;
+        public static final int OrdenesRealizadas=0x7f0800f1;
+        public static final int OrdenesTrabajo=0x7f0800e9;
+        public static final int ParametrosArchivo=0x7f0800ec;
+        public static final int ParametrosRed=0x7f0800ed;
+        public static final int Salir=0x7f0800f5;
         public static final int Sellos=0x7f0800de;
         public static final int SellosBtnEliminar=0x7f0800b4;
         public static final int SellosBtnRegistrar=0x7f0800b3;
@@ -200,11 +201,11 @@ public final class R {
         public static final int SellosLblrregularidad=0x7f0800b1;
         public static final int SellosLstSellos=0x7f0800b2;
         public static final int SellosTxtSerie=0x7f0800aa;
-        public static final int TerminarSolicitud=0x7f0800f7;
-        public static final int TrabajoArchivo=0x7f0800ed;
+        public static final int TerminarSolicitud=0x7f0800f9;
+        public static final int TrabajoArchivo=0x7f0800ee;
         public static final int TrabajoCmbNodos=0x7f080099;
         public static final int TrabajoLstSolicitudes=0x7f08009a;
-        public static final int TrabajoRed=0x7f0800ee;
+        public static final int TrabajoRed=0x7f0800ef;
         public static final int VerConsumos=0x7f0800e5;
         public static final int VerDatosOrden=0x7f0800e4;
         public static final int VerSellos=0x7f0800e6;
@@ -245,6 +246,7 @@ public final class R {
         public static final int sevenitem5=0x7f0800cb;
         public static final int sevenitem6=0x7f0800cc;
         public static final int sevenitem7=0x7f0800cd;
+        public static final int sincronizar=0x7f0800f4;
         public static final int sixItem1=0x7f0800ce;
         public static final int sixItem2=0x7f0800cf;
         public static final int sixItem3=0x7f0800d0;
