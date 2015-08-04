@@ -3,6 +3,7 @@ package desviaciones.emsa;
 import java.util.ArrayList;
 
 import clases.ClassContador;
+import dialogos.DialogoConfirmacion;
 
 import sistema.DateTime;
 import sistema.SQLite;
@@ -24,6 +25,10 @@ import android.widget.Toast;
 
 public class Contador extends Activity implements OnClickListener{
 	private Intent new_form;
+	private Intent DialogConfirmacion;
+	
+	private static int    	CONFIRMACION_MARCA	 = 1;
+	private static int    	CONFIRMACION_SERIE	 = 1;
 	
 	private DateTime		ContadorTime;
 	private Utilidades 		ContadorUtil;
@@ -61,6 +66,8 @@ public class Contador extends Activity implements OnClickListener{
 		this.ContadorSQL = new SQLite(this, this.FolderAplicacion);
 		this.ContadorUtil= new Utilidades();
 		this.ContadorTime= DateTime.getInstance();
+		
+		DialogConfirmacion 	= new Intent(this,DialogoConfirmacion.class);
 		
 		this._cmbMarcaMedidor	= (Spinner) findViewById(R.id.ContadorCmbMarca);
 		this._cmbTipoMedidor	= (Spinner) findViewById(R.id.ContadorCmbTipo);	
@@ -263,16 +270,31 @@ public class Contador extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		switch(v.getId()){
 			case R.id.ContadorBtnRegistrar:
-				if(this.FcnContador.datosContador(	this.Solicitud, 
-						this.ContadorSQL.StrSelectShieldWhere("vista_parametros_medidores", "marca", "resumen='"+_cmbMarcaMedidor.getSelectedItem().toString()+"'"), 
-						this._cmbTipoMedidor.getSelectedItem().toString(), 
-						this._txtSerie.getText().toString(), 
-						this._txtLectura1.getText().toString(), 
-						this._txtLectura2.getText().toString(),
-						this._txtLectura3.getText().toString())){
-					this.CargarContadoresRegistrados();
-					Toast.makeText(this, "Datos Contador Registrados Correctamente", Toast.LENGTH_LONG).show();
+				if(this._txtSerie.getText().toString().isEmpty()){
+					Toast.makeText(this, "Debe Registrar la serie del medidor.",Toast.LENGTH_SHORT).show();
+				}else if(this._txtLectura1.getText().toString().isEmpty()){
+					Toast.makeText(this, "Debe Registrar la lectura del medidor.",Toast.LENGTH_SHORT).show();
+				}else{
+					String marca = this.ContadorSQL.StrSelectShieldWhere("in_ordenes_trabajo", "marca", "solicitud="+this.Solicitud);
+					String serie = this.ContadorSQL.StrSelectShieldWhere("in_ordenes_trabajo", "serie", "solicitud="+this.Solicitud);
+					if(!this._txtSerie.getText().toString().equals(serie) || !marca.equals(this.ContadorSQL.StrSelectShieldWhere("vista_parametros_medidores", "marca", "resumen='"+_cmbMarcaMedidor.getSelectedItem().toString()+"'"))){
+						DialogConfirmacion.putExtra("informacion", "Los Datos del Medido no Coinciden, Desea Continuar");						
+						startActivityForResult(DialogConfirmacion, CONFIRMACION_SERIE);
+					}else{
+							if(this.FcnContador.datosContador(	this.Solicitud, 
+								this.ContadorSQL.StrSelectShieldWhere("vista_parametros_medidores", "marca", "resumen='"+_cmbMarcaMedidor.getSelectedItem().toString()+"'"), 
+								this._cmbTipoMedidor.getSelectedItem().toString(), 
+								this._txtSerie.getText().toString(), 
+								this._txtLectura1.getText().toString(), 
+								this._txtLectura2.getText().toString(),
+								this._txtLectura3.getText().toString())){
+								this.CargarContadoresRegistrados();
+								Toast.makeText(this, "Datos Contador Registrados Correctamente", Toast.LENGTH_LONG).show();
+							}
+						}
+					
 				}
+				
 				break;
 				
 			case R.id.ContadorBtnEliminar:
@@ -302,5 +324,23 @@ public class Contador extends Activity implements OnClickListener{
 				break;
 		}
 		
+	}
+	
+	@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	 if(resultCode == RESULT_OK && requestCode == CONFIRMACION_SERIE){
+			if(data.getExtras().getBoolean("accion")){
+				if(this.FcnContador.datosContador(	this.Solicitud, 
+						this.ContadorSQL.StrSelectShieldWhere("vista_parametros_medidores", "marca", "resumen='"+_cmbMarcaMedidor.getSelectedItem().toString()+"'"), 
+						this._cmbTipoMedidor.getSelectedItem().toString(), 
+						this._txtSerie.getText().toString(), 
+						this._txtLectura1.getText().toString(), 
+						this._txtLectura2.getText().toString(),
+						this._txtLectura3.getText().toString())){
+					this.CargarContadoresRegistrados();
+					Toast.makeText(this, "Datos Contador Registrados Correctamente", Toast.LENGTH_LONG).show();
+				}
+			}
+		}
 	}
 }

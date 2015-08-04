@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class Actas extends Activity implements OnClickListener{
 	private Intent new_form;
@@ -246,13 +247,22 @@ public class Actas extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		switch(v.getId()){
 			case R.id.ActaBtnRegistrar:
-				this.FcnActas.setDatosActas(this.Solicitud, 
-											_txtDocEnterado.getText().toString(), 
-											_txtNomEnterado.getText().toString(), 
-											_txtDocTestigo.getText().toString(), 
-											_txtNomTestigo.getText().toString(), 
-											_cmbTipoEnterado.getSelectedItem().toString(), 
-											_cmbRespuesta.getSelectedItem().toString());
+				if(_txtDocEnterado.getText().toString().equals("") || _txtNomEnterado.getText().toString().equals("")){
+					Toast.makeText(this, "Se debe Diligenciar las datos del Enterado", Toast.LENGTH_SHORT).show();
+				}else{
+					if(_cmbRespuesta.getSelectedItem().toString().equals("")){
+						Toast.makeText(this, "Debe Seleccionar una respueta PQR", Toast.LENGTH_SHORT).show();
+					}
+					else{
+						this.FcnActas.setDatosActas(this.Solicitud, 
+								_txtDocEnterado.getText().toString(), 
+								_txtNomEnterado.getText().toString(), 
+								_txtDocTestigo.getText().toString(), 
+								_txtNomTestigo.getText().toString(), 
+								_cmbTipoEnterado.getSelectedItem().toString(), 
+								_cmbRespuesta.getSelectedItem().toString());	
+					}
+				}				
 				break;
 		}	
 	}

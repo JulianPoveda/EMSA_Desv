@@ -116,13 +116,21 @@ public class ListaTrabajo extends Activity implements OnItemSelectedListener{
 			
 			
 			case R.id.TerminarSolicitud:
-				if(this.FcnInSolicitudes.getEstadoSolicitud(this.SolicitudSeleccionada).equals("E")){
-					DialogConfirmacion.putExtra("informacion", "Desea Cerrar La Solicitud "+this.SolicitudSeleccionada);
-					startActivityForResult(DialogConfirmacion, CONFIRMACION_CERRAR_ORDEN);	
-				}else{
-					DialogInformacion.putExtra("informacion", "No se puede dar por terminada la actividad ya que no esta en estado EJECUCION.");
+				if(!this.FcnSQL.ExistRegistros("dig_actas","solicitud="+this.SolicitudSeleccionada)){
+					DialogInformacion.putExtra("informacion", "No hay registrada Informacion de Actas, No puede Terminar la Solicitud");
 					startActivityForResult(DialogInformacion, CONFIRMACION_INFORMACION);
-				}
+				}else if(!this.FcnSQL.ExistRegistros("dig_contador","solicitud="+this.SolicitudSeleccionada)){
+					DialogInformacion.putExtra("informacion", "No hay registro de Contador, No puede Terminar la Solicitud");
+					startActivityForResult(DialogInformacion, CONFIRMACION_INFORMACION);
+				}else{
+					if(this.FcnInSolicitudes.getEstadoSolicitud(this.SolicitudSeleccionada).equals("E")){
+						DialogConfirmacion.putExtra("informacion", "Desea Cerrar La Solicitud "+this.SolicitudSeleccionada);
+						startActivityForResult(DialogConfirmacion, CONFIRMACION_CERRAR_ORDEN);	
+					}else{
+						DialogInformacion.putExtra("informacion", "No se puede dar por terminada la actividad ya que no esta en estado EJECUCION.");
+						startActivityForResult(DialogInformacion, CONFIRMACION_INFORMACION);
+					}
+				}				
 				return true;
 			
 			case R.id.AbrirEnLinea:

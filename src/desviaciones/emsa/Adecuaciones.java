@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class Adecuaciones extends Activity implements OnClickListener{
 	private Intent new_form;
@@ -188,7 +189,7 @@ public class Adecuaciones extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		switch(v.getId()){
-		case R.id.AdecBtnRegistrar:
+		case R.id.AdecBtnRegistrar:			
 			this.FcnAdecuaciones.saveAdecuaciones(	this.Solicitud, 
 													_cmbSuspension.getSelectedItem().toString(), 
 													_cmbTubo.getSelectedItem().toString(),
@@ -199,6 +200,7 @@ public class Adecuaciones extends Activity implements OnClickListener{
 													_cmbCaja.getSelectedItem().toString(), 
 													_cmbMedidor.getSelectedItem().toString(), 
 													_txtOtros.getText().toString());
+			
 			break;
 	}
 		

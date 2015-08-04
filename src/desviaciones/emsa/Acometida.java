@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
@@ -267,15 +268,32 @@ public class Acometida extends Activity implements OnClickListener, OnItemSelect
 	public void onClick(View v) {
 		switch(v.getId()){
 			case R.id.AcometidaBtnRegistrar:
-				this.FcnAcometida.saveAcometida(this.Solicitud,
-												_cmbTipoIngreso.getSelectedItem().toString(),
-												_cmbConductor.getSelectedItem().toString(),
-												_cmbTipo.getSelectedItem().toString(),
-												_cmbCalibre.getSelectedItem().toString(),
-												_cmbClase.getSelectedItem().toString(),
-												_cmbFases.getSelectedItem().toString(),
-												_txtLongitud.getText().toString());
-				this.verAcometidaRegistrada();
+				if(_cmbTipoIngreso.getSelectedItem().toString().equals("...")){
+					Toast.makeText(this, "Debe Seleccionar un tipo de Ingreso", Toast.LENGTH_SHORT).show();
+				}else if(_cmbConductor.getSelectedItem().toString().equals("...")){
+					Toast.makeText(this, "Debe Seleccionar un Conductor", Toast.LENGTH_SHORT).show();
+				}else if(_cmbTipo.getSelectedItem().toString().equals("...")){
+					Toast.makeText(this, "Debe Seleccionar un Tipo de alamabre", Toast.LENGTH_SHORT).show();
+				}else if(_cmbCalibre.getSelectedItem().toString().equals("")){
+					Toast.makeText(this, "Debe Seleccionar el Calibre", Toast.LENGTH_SHORT).show();
+				}else if(_cmbClase.getSelectedItem().toString().equals("...")){
+					Toast.makeText(this, "Debe Seleccionar la Clase", Toast.LENGTH_SHORT).show();
+				}else if(_cmbFases.getSelectedItem().toString().equals("...")){
+					Toast.makeText(this, "Debe Seleccionar la Fase", Toast.LENGTH_SHORT).show();
+				}else if(_txtLongitud.getText().toString().equals("")){
+					Toast.makeText(this, "Debe Digitar la Longitud", Toast.LENGTH_SHORT).show();
+				}else{
+					this.FcnAcometida.saveAcometida(this.Solicitud,
+												   _cmbTipoIngreso.getSelectedItem().toString(),
+													_cmbConductor.getSelectedItem().toString(),
+													_cmbTipo.getSelectedItem().toString(),
+													_cmbCalibre.getSelectedItem().toString(),
+													_cmbClase.getSelectedItem().toString(),
+													_cmbFases.getSelectedItem().toString(),
+													_txtLongitud.getText().toString());
+					this.verAcometidaRegistrada();
+				}
+								
 				break;
 				
 			case R.id.AcometidaBtnEliminar:

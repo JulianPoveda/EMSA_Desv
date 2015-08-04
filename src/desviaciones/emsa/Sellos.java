@@ -3,6 +3,7 @@ package desviaciones.emsa;
 import java.util.ArrayList;
 
 import clases.ClassSellos;
+import dialogos.DialogoConfirmacion;
 
 import sistema.SQLite;
 import adaptadores.AdaptadorSixItems;
@@ -21,13 +22,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class Sellos extends Activity implements OnClickListener, OnItemSelectedListener, OnItemClickListener{
 	private Intent 			new_form;
+	private Intent DialogConfirmacion; 	
 	private	SQLite			SellosSQL;
 	private ClassSellos		FcnSellos;
+	
+	private static int    	CONFIRMACION_SELLOS	 = 1;
 	
 	private ContentValues				_tempRegistro;
 	private ArrayList<ContentValues> 	_tempTabla;
@@ -81,6 +86,8 @@ public class Sellos extends Activity implements OnClickListener, OnItemSelectedL
 		
 		_btnRegistrar		= (Button) findViewById(R.id.SellosBtnRegistrar);
 		_btnEliminar		= (Button) findViewById(R.id.SellosBtnEliminar);
+		
+		DialogConfirmacion 	= new Intent(this,DialogoConfirmacion.class);
 		
 		this._strTipoIngreso = this.FcnSellos.getTipoIngreso();
 		this.AdaptadorTipoIngreso	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,this._strTipoIngreso); 
@@ -232,14 +239,32 @@ public class Sellos extends Activity implements OnClickListener, OnItemSelectedL
 	public void onClick(View v) {
 		switch(v.getId()){
 			case R.id.SellosBtnRegistrar:
-				this.FcnSellos.registrarSello(	this.Solicitud, 
-												_cmbTipoIngreso.getSelectedItem().toString(), 
-												_cmbTipoSello.getSelectedItem().toString(), 
-												_cmbUbicacion.getSelectedItem().toString(), 
-												_cmbColor.getSelectedItem().toString(), 
-												_txtSerie.getText().toString(), 
-												_cmbIrregularidad.getSelectedItem().toString());
-				this.CargarSellosRegistrados();
+				if(_cmbTipoIngreso.getSelectedItem().toString().equals("...")){
+					Toast.makeText(this, "No ha seleccionado el tipo de ingreso.",Toast.LENGTH_SHORT).show();	
+				}else if(_cmbTipoSello.getSelectedItem().toString().equals("...")){
+					Toast.makeText(this, "No ha seleccionado el tipo de sello.",Toast.LENGTH_SHORT).show();	
+				}else if(_cmbUbicacion.getSelectedItem().toString().equals("...")){
+					Toast.makeText(this, "No ha seleccionadola ubicacion del sello.",Toast.LENGTH_SHORT).show();	
+				}else if(_cmbColor.getSelectedItem().toString().equals("...")){
+					Toast.makeText(this, "No ha seleccionado el color del sello.",Toast.LENGTH_SHORT).show();	
+				}else if(_txtSerie.getText().toString().isEmpty()){
+					Toast.makeText(this, "No ha ingresado la serie.",Toast.LENGTH_SHORT).show();	
+				}else{
+					if(!this.Solicitud.equals(this.SellosSQL.StrSelectShieldWhere("in_sellos", "solicitud", "serie="+_txtSerie.getText().toString()))){
+						DialogConfirmacion.putExtra("informacion", "La serie no coincide desea Continuar");						
+						startActivityForResult(DialogConfirmacion, CONFIRMACION_SELLOS);
+					}else{
+						this.FcnSellos.registrarSello(	this.Solicitud, 
+								_cmbTipoIngreso.getSelectedItem().toString(), 
+								_cmbTipoSello.getSelectedItem().toString(), 
+								_cmbUbicacion.getSelectedItem().toString(), 
+								_cmbColor.getSelectedItem().toString(), 
+								_txtSerie.getText().toString(), 
+								_cmbIrregularidad.getSelectedItem().toString());
+						this.CargarSellosRegistrados();
+					}									
+				}
+				
 				break;
 				
 			case R.id.SellosBtnEliminar:
@@ -249,6 +274,22 @@ public class Sellos extends Activity implements OnClickListener, OnItemSelectedL
 												this.ArrayTablaSellos.get(this.FilaSeleccionada).getItem5());
 				this.CargarSellosRegistrados();
 				break;
+		}
+	}
+	
+	@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(resultCode == RESULT_OK && requestCode == CONFIRMACION_SELLOS) {
+			if(data.getExtras().getBoolean("accion")){
+				this.FcnSellos.registrarSello(	this.Solicitud, 
+						_cmbTipoIngreso.getSelectedItem().toString(), 
+						_cmbTipoSello.getSelectedItem().toString(), 
+						_cmbUbicacion.getSelectedItem().toString(), 
+						_cmbColor.getSelectedItem().toString(), 
+						_txtSerie.getText().toString(), 
+						_cmbIrregularidad.getSelectedItem().toString());
+				this.CargarSellosRegistrados();
+			}
 		}
 	}
 }
