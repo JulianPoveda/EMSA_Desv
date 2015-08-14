@@ -12,6 +12,8 @@ import ws_connect.UpLoadFoto;
 import clases.ClassActas;
 import clases.ClassConfiguracion;
 import clases.ClassInSolicitudes;
+import clases.ManagerImageResize;
+import global.global_var;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -28,7 +30,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class Actas extends Activity implements OnClickListener{
+public class Actas extends Activity implements OnClickListener, global_var{
 	private Intent new_form;
 	private static int 	INICIAR_CAMARA	 	     = 2;
 	
@@ -38,6 +40,7 @@ public class Actas extends Activity implements OnClickListener{
 	private Utilidades			ActasUtil;
 	private SQLite				ActasSQL;
 	private ClassActas 			FcnActas;
+	private ManagerImageResize  FcnImage;
 	
 	Intent 	    IniciarCamara;
 	
@@ -52,6 +55,7 @@ public class Actas extends Activity implements OnClickListener{
 	private String 						Solicitud;
 	private String 						FolderAplicacion = "";
 	private String 						fotoParcial		 = "";
+	private String						nombreFoto;
 	
 	EditText	_txtOrden, _txtActa, _txtCuenta, _txtDocEnterado, _txtNomEnterado, _txtDocTestigo, _txtNomTestigo;
 	Spinner		_cmbTipoEnterado, _cmbRespuesta;
@@ -73,6 +77,7 @@ public class Actas extends Activity implements OnClickListener{
 		this.FcnSolicitudes = new ClassInSolicitudes(this, this.FolderAplicacion);
 		this.FcnActas 		= new ClassActas(this, this.FolderAplicacion);
 		this.ActasSQL		= new SQLite(this, this.FolderAplicacion);
+		this.FcnImage           = ManagerImageResize.getInstance();
 		
 		this.IniciarCamara	= new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 		
@@ -270,7 +275,9 @@ public class Actas extends Activity implements OnClickListener{
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         try{
-        	if(resultCode == RESULT_OK && requestCode == INICIAR_CAMARA){        		
+        	if(resultCode == RESULT_OK && requestCode == INICIAR_CAMARA){
+        		this.FcnImage.resizeImage(this.nombreFoto,_WIDTH_PICTURE, _HEIGHT_PICTURE);
+        		
         		new UpLoadFoto(this, this.FolderAplicacion).execute(_txtOrden.getText().toString(),_txtActa.getText().toString(),_txtCuenta.getText().toString(),this.fotoParcial);        		
             }
         }catch(Exception e){
@@ -284,9 +291,10 @@ public class Actas extends Activity implements OnClickListener{
 		calendario.setTimeInMillis(ahora);
 		int minuto = calendario.get(Calendar.MINUTE);
 		
+		this.nombreFoto = this.Solicitud+"_"+minuto+".jpeg";
+		
         File imagesFolder   = new File(this.FolderAplicacion);
-        File image          = new File(imagesFolder,
-        								this.Solicitud+"_"+minuto+".jpeg");
+        File image          = new File(imagesFolder,this.nombreFoto);
         
         this.fotoParcial = image.toString();
         

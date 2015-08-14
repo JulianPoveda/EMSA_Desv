@@ -74,7 +74,7 @@ public class  UpLoadActaImpresa extends AsyncTask<Void, Void, Void>{
 		//publishProgress(valor_Tipo_duranteBackground); //Opcional. Para pasar el valor y llamar a onProgressUpdate()
 		//cancel(true); //Opcional. Para cancelar en vez de ejecutar al terminar onPostExecute(), ejecutar onCancelled(). Comprobar si se ha cancelado con isCancelled()
 		
-		
+		String usuario = this.UpLoadSQL.StrSelectShieldWhere("amd_configuracion", "valor", "item='nombre_tecnico'");
 		try {
 			this._tempTabla = this.UpLoadSQL.SelectData("dig_impresiones_inf", "solicitud, id_impresion, nombre_archivo, fecha_imp", "solicitud IS NOT NULL ORDER BY solicitud, id_impresion");
 			for(int i=0; i<this._tempTabla.size();i++){
@@ -85,7 +85,8 @@ public class  UpLoadActaImpresa extends AsyncTask<Void, Void, Void>{
 				so.addProperty("nombre_archivo", this._tempRegistro.getAsString("nombre_archivo"));
 				so.addProperty("archivo", this.ArchUpLoadWS.FileToArrayBytes(this.FolderWS+File.separator+this._tempRegistro.getAsString("solicitud")+File.separator+this._tempRegistro.getAsString("nombre_archivo")));
 				so.addProperty("fecha_impresion", this._tempRegistro.getAsString("fecha_imp"));
-								
+				so.addProperty("usuario", usuario);
+				
 				SoapSerializationEnvelope sse=new SoapSerializationEnvelope(SoapEnvelope.VER11);
 				new MarshalBase64().register(sse);
 				sse.dotNet=true;
