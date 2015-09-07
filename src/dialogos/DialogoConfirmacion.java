@@ -46,7 +46,7 @@ public class DialogoConfirmacion extends Activity implements OnClickListener{
 				break;
 			
 			case R.id.dc_Btn_Cancelar:
-				finish(false);
+				finish(true);
 				break;
 				
 			default:

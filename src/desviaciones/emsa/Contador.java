@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import clases.ClassContador;
 import dialogos.DialogoConfirmacion;
+import dialogos.DialogoInformacion;
 
 import sistema.DateTime;
 import sistema.SQLite;
@@ -23,12 +24,16 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+
 public class Contador extends Activity implements OnClickListener{
 	private Intent new_form;
 	private Intent DialogConfirmacion;
+	private Intent DialogInformacion;
 	
 	private static int    	CONFIRMACION_MARCA	 = 1;
-	private static int    	CONFIRMACION_SERIE	 = 1;
+	private static int    	CONFIRMACION_SERIE	 = 2;
 	
 	private DateTime		ContadorTime;
 	private Utilidades 		ContadorUtil;
@@ -39,6 +44,8 @@ public class Contador extends Activity implements OnClickListener{
 	private ArrayList<ContentValues> _tempTabla;
 	
 	private int 		NivelUsuario = 1;
+	private int         intentoMarca = 0;
+	private int         intentoSerie = 0;
 	private String 		FolderAplicacion = "";
 	private String 		Solicitud	= "";
 	private ArrayList<String> StringMarcaMedidores = new ArrayList<String>();
@@ -48,6 +55,9 @@ public class Contador extends Activity implements OnClickListener{
 	
 	private Spinner 	_cmbMarcaMedidor, _cmbTipoMedidor;
 	private EditText 	_txtSerie, _txtLectura1, _txtLectura2, _txtLectura3, _txtLecturaIni, _txtLecturaFin, _txtCoeficiente;
+	private EditText et;
+	private ArrayList<String> array_sort = new ArrayList<String>();
+    int textlength = 0;
 	private Button   	_btnRegistrarContador, _btnEliminarContador, _btnRegistrarPrueba, _btnEliminarPrueba;
 	
 	private String 	StringTipo[]		= {"MONOFASICO","BIFASICO","TRIFASICO"};
@@ -68,6 +78,7 @@ public class Contador extends Activity implements OnClickListener{
 		this.ContadorTime= DateTime.getInstance();
 		
 		DialogConfirmacion 	= new Intent(this,DialogoConfirmacion.class);
+		DialogInformacion 	= new Intent(this,DialogoInformacion.class);
 		
 		this._cmbMarcaMedidor	= (Spinner) findViewById(R.id.ContadorCmbMarca);
 		this._cmbTipoMedidor	= (Spinner) findViewById(R.id.ContadorCmbTipo);	
@@ -75,15 +86,16 @@ public class Contador extends Activity implements OnClickListener{
 		this._txtLectura1		= (EditText) findViewById(R.id.ContadorTxtLectura1);
 		this._txtLectura2		= (EditText) findViewById(R.id.ContadorTxtLectura2);
 		this._txtLectura3		= (EditText) findViewById(R.id.ContadorTxtLectura3);
+		this.et 				= (EditText) findViewById(R.id.BuscarMarca);
 		this._btnRegistrarContador	= (Button) findViewById(R.id.ContadorBtnRegistrar);
 		this._btnEliminarContador	= (Button) findViewById(R.id.ContadorBtnEliminar);
 		
-		this._txtLecturaIni	= (EditText) findViewById(R.id.IntegracionTxtLecturaIni);
-		this._txtLecturaFin	= (EditText) findViewById(R.id.IntegracionTxtLecturaFin);
-		this._txtCoeficiente= (EditText) findViewById(R.id.IntegracionTxtKd);
-		this._btnRegistrarPrueba= (Button) findViewById(R.id.IntegracionBtnRegistrar);
-		this._btnEliminarPrueba	= (Button) findViewById(R.id.IntegracionBtnEliminar);
-		
+		//this._txtLecturaIni	= (EditText) findViewById(R.id.IntegracionTxtLecturaIni);
+		//this._txtLecturaFin	= (EditText) findViewById(R.id.IntegracionTxtLecturaFin);
+		//this._txtCoeficiente= (EditText) findViewById(R.id.IntegracionTxtKd);
+		//this._btnRegistrarPrueba= (Button) findViewById(R.id.IntegracionBtnRegistrar);
+		//this._btnEliminarPrueba	= (Button) findViewById(R.id.IntegracionBtnEliminar);
+			 
 		this._tempTabla = this.ContadorSQL.SelectData("vista_parametros_medidores", "resumen", "marca IS NOT NULL");
 		this.ContadorUtil.ArrayContentValuesToString(StringMarcaMedidores, this._tempTabla, "resumen",false);
 		this.AdaptadorMarcaMedidor 	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,StringMarcaMedidores);
@@ -93,13 +105,38 @@ public class Contador extends Activity implements OnClickListener{
 		_cmbTipoMedidor.setAdapter(AdaptadorTipoMedidor);
 		
 		this.CargarContadoresRegistrados();
-		this.CargarPruebasContador();
+		//this.CargarPruebasContador();
 		
 		this._btnRegistrarContador.setOnClickListener(this);
 		this._btnEliminarContador.setOnClickListener(this);
 		
-		this._btnRegistrarPrueba.setOnClickListener(this);
-		this._btnEliminarPrueba.setOnClickListener(this);
+		//this._btnRegistrarPrueba.setOnClickListener(this);
+		//this._btnEliminarPrueba.setOnClickListener(this);
+		 et.addTextChangedListener(new TextWatcher() {
+	            public void afterTextChanged(Editable s) {
+	                // Abstract Method of TextWatcher Interface.
+	            }
+	 
+	            public void beforeTextChanged(CharSequence s, int start, int count,
+	                    int after) {
+	                // Abstract Method of TextWatcher Interface.
+	            }
+	 
+	            public void onTextChanged(CharSequence s, int start, int before, int count) {
+	                textlength = et.getText().length();
+	                array_sort.clear();
+	                 
+	                for (int i = 0; i < StringMarcaMedidores.size(); i++) {
+	                    if (textlength <= StringMarcaMedidores.get(i).length()) {
+	                        if (et.getText().toString().equalsIgnoreCase((String) StringMarcaMedidores.get(i).subSequence(0, textlength))) {
+	                            array_sort.add(StringMarcaMedidores.get(i));
+	                        }
+	                    }
+	                }
+	                 
+	                _cmbMarcaMedidor.setAdapter(new ArrayAdapter<String>(Contador.this, android.R.layout.simple_list_item_1, array_sort));
+	            }
+	        });
 	}
 
 	
@@ -136,7 +173,7 @@ public class Contador extends Activity implements OnClickListener{
 			this._btnEliminarContador.setEnabled(false);
 		}
 	}
-	
+	/*
 	private void CargarPruebasContador(){
 		this._tempRegistro.clear();
 		this._tempRegistro = this.ContadorSQL.SelectDataRegistro("dig_pruebas", 
@@ -175,7 +212,7 @@ public class Contador extends Activity implements OnClickListener{
 			this._btnRegistrarPrueba.setEnabled(true);
 			this._btnEliminarPrueba.setEnabled(false);
 		}
-	}
+	}*/
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -277,35 +314,41 @@ public class Contador extends Activity implements OnClickListener{
 				}else{
 					String marca = this.ContadorSQL.StrSelectShieldWhere("in_ordenes_trabajo", "marca", "solicitud="+this.Solicitud);
 					String serie = this.ContadorSQL.StrSelectShieldWhere("in_ordenes_trabajo", "serie", "solicitud="+this.Solicitud);
-					if(!this._txtSerie.getText().toString().equals(serie) || !marca.equals(this.ContadorSQL.StrSelectShieldWhere("vista_parametros_medidores", "marca", "resumen='"+_cmbMarcaMedidor.getSelectedItem().toString()+"'"))){
-						DialogConfirmacion.putExtra("informacion", "Los Datos del Medido no Coinciden, Desea Continuar");						
-						startActivityForResult(DialogConfirmacion, CONFIRMACION_SERIE);
+					if(!marca.equals(this.ContadorSQL.StrSelectShieldWhere("vista_parametros_medidores", "marca", "resumen='"+_cmbMarcaMedidor.getSelectedItem().toString()+"'")) & intentoMarca==0){
+						DialogInformacion.putExtra("informacion", "La Marca del Medidor No Coincide");						
+						startActivityForResult(DialogInformacion, CONFIRMACION_MARCA);
 					}else{
-							if(this.FcnContador.datosContador(	this.Solicitud, 
-								this.ContadorSQL.StrSelectShieldWhere("vista_parametros_medidores", "marca", "resumen='"+_cmbMarcaMedidor.getSelectedItem().toString()+"'"), 
-								this._cmbTipoMedidor.getSelectedItem().toString(), 
-								this._txtSerie.getText().toString(), 
-								this._txtLectura1.getText().toString(), 
-								this._txtLectura2.getText().toString(),
-								this._txtLectura3.getText().toString())){
-								this.CargarContadoresRegistrados();
-								Toast.makeText(this, "Datos Contador Registrados Correctamente", Toast.LENGTH_LONG).show();
-							}
-						}
-					
+						if(!this._txtSerie.getText().toString().equals(serie) & intentoSerie == 0){
+							DialogInformacion.putExtra("informacion", "Los Datos de la Serie no Coinciden");						
+							startActivityForResult(DialogInformacion, CONFIRMACION_SERIE);
+						 }else{
+							 if(this.FcnContador.datosContador(	this.Solicitud, 
+										this.ContadorSQL.StrSelectShieldWhere("vista_parametros_medidores", "marca", "resumen='"+_cmbMarcaMedidor.getSelectedItem().toString()+"'"), 
+										this._cmbTipoMedidor.getSelectedItem().toString(), 
+										this._txtSerie.getText().toString(), 
+										this._txtLectura1.getText().toString(), 
+										this._txtLectura2.getText().toString(),
+										this._txtLectura3.getText().toString())){
+										this.CargarContadoresRegistrados();
+										Toast.makeText(this, "Datos Contador Registrados Correctamente", Toast.LENGTH_LONG).show();
+									} 
+						 }												
+					}					
 				}
 				
 				break;
 				
 			case R.id.ContadorBtnEliminar:
 				if(this.FcnContador.eliminarDatosContador(	this.Solicitud)){
+					this.intentoMarca = 0;
+					this.intentoSerie = 0;
 					Toast.makeText(this, "Datos Contador Eliminados Correctamente", Toast.LENGTH_LONG).show();
 					this.CargarContadoresRegistrados();
 				}
 				
 				break;
 				
-			case R.id.IntegracionBtnRegistrar:
+			/*case R.id.IntegracionBtnRegistrar:
 				if(this.FcnContador.datosPrueba(this.Solicitud,
 						this._txtLecturaIni.getText().toString(),
 						this._txtLecturaFin.getText().toString(),
@@ -313,33 +356,30 @@ public class Contador extends Activity implements OnClickListener{
 					this.CargarPruebasContador();
 					Toast.makeText(this, "Prueba Registrada Correctamente", Toast.LENGTH_LONG).show();
 				}
-				break;
+				break;*/
 				
-			case R.id.IntegracionBtnEliminar:
+		  /*case R.id.IntegracionBtnEliminar:
 				if(this.FcnContador.eliminarDatosPruebas(this.Solicitud)){
 					this.CargarPruebasContador();
 					Toast.makeText(this, "Prueba Eliminada Correctamente", Toast.LENGTH_LONG).show();
 				}
 				
-				break;
+				break;*/
 		}
 		
 	}
 	
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	 if(resultCode == RESULT_OK && requestCode == CONFIRMACION_SERIE){
-			if(data.getExtras().getBoolean("accion")){
-				if(this.FcnContador.datosContador(	this.Solicitud, 
-						this.ContadorSQL.StrSelectShieldWhere("vista_parametros_medidores", "marca", "resumen='"+_cmbMarcaMedidor.getSelectedItem().toString()+"'"), 
-						this._cmbTipoMedidor.getSelectedItem().toString(), 
-						this._txtSerie.getText().toString(), 
-						this._txtLectura1.getText().toString(), 
-						this._txtLectura2.getText().toString(),
-						this._txtLectura3.getText().toString())){
-					this.CargarContadoresRegistrados();
-					Toast.makeText(this, "Datos Contador Registrados Correctamente", Toast.LENGTH_LONG).show();
-				}
+	 if(resultCode == RESULT_OK && requestCode == CONFIRMACION_MARCA){
+			if(data.getExtras().getBoolean("accion")){				
+				this.intentoMarca = 1;
+				_cmbMarcaMedidor.setSelection(0);
+			}
+		}else if(resultCode == RESULT_OK && requestCode == CONFIRMACION_SERIE){
+			if(data.getExtras().getBoolean("accion")){				
+				this.intentoSerie = 1;
+				this._txtSerie.setText("");
 			}
 		}
 	}

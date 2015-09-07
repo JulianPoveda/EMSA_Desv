@@ -153,7 +153,7 @@ public class Loggin extends Activity implements OnClickListener{
 				startActivity(this.k);
 				return true;
 				
-			case R.id.sincronizar:
+			/*case R.id.sincronizar:
 				File f = new File(this.FolderAplicacion);
 				File[] fotos = f.listFiles();
 				for (int i=0;i<fotos.length;i++){
@@ -168,7 +168,7 @@ public class Loggin extends Activity implements OnClickListener{
 						}
 					}
 				}
-				return true;
+				return true;*/
 									
 			default:
 				return super.onOptionsItemSelected(item);	

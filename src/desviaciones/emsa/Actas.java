@@ -238,9 +238,9 @@ public class Actas extends Activity implements OnClickListener, global_var{
 				this.FormatoImp.FormatoDesviacion(this.Solicitud, "Archivo", 3);
 				return true;
 			
-			case R.id.Foto:
+			/*case R.id.Foto:
 				this.getFoto();
-				return true;
+				return true;*/
 				
 			default:
 				return super.onOptionsItemSelected(item);	

@@ -130,22 +130,41 @@ public class FormatosActas {
 		FcnZebra.WrSubTitulo("MEDIDOR",10,0,1);
 		this._infRegistro1 = this.ImpSQL.SelectDataRegistro("dig_contador", "marca,serie,lectura1,lectura2,tipo", "solicitud='"+_solicitud+"'");
 		if(this._infRegistro1.size()>0){
+			String lectura = "";			
+			if(this._infRegistro1.getAsString("lectura1").equals("-1")){
+				    lectura = "No Valido";
+			}else if(this._infRegistro1.getAsString("lectura1").equals("-2")){
+			    	lectura = "Trocada";
+			}else{
+					lectura = this._infRegistro1.getAsString("lectura1"); 
+			}
+			
+			String lectura2 = "";			
+			if(this._infRegistro1.getAsString("lectura2").equals("-1")){
+				    lectura2 = "No Valido";
+			}else if(this._infRegistro1.getAsString("lectura2").equals("-2")){
+			    	lectura2 = "Trocada";
+			}else{
+					lectura2 = this._infRegistro1.getAsString("lectura2"); 
+			}
+			
 			FcnZebra.WrLabel("Marca:    ", this._infRegistro1.getAsString("marca"),20,0,1);
 			FcnZebra.WrLabel("Serie:    ", this._infRegistro1.getAsString("serie"),20,0,1); 
-			FcnZebra.WrLabel("Lectura1: ", this._infRegistro1.getAsString("lectura1"),20,0,1);
-			FcnZebra.WrLabel("Lectura2: ", this._infRegistro1.getAsString("lectura2"),20,0,1);
+			FcnZebra.WrLabel("Lectura1: ", lectura,20,0,1);
+			FcnZebra.WrLabel("Lectura2: ", lectura2,20,0,1);
 			FcnZebra.WrLabel("tipo:     ", this._infRegistro1.getAsString("tipo"),20,0,1);
 		}
 		
-		FcnZebra.WrSubTitulo("PRUEBA DE INTEGRACION",10,1,1);
+		/*FcnZebra.WrSubTitulo("PRUEBA DE INTEGRACION",10,1,1);
 		this._infRegistro1 = this.ImpSQL.SelectDataRegistro("dig_pruebas", "lectura_inicial,lectura_final,coeficiente", "solicitud='"+_solicitud+"'");
 		if(this._infRegistro1.size()>0){
 			FcnZebra.WrLabel("Lectura Inicial:", this._infRegistro1.getAsString("lectura_inicial"),20,0,1);
 			FcnZebra.WrLabel("Lectura Final:  ", this._infRegistro1.getAsString("lectura_final"),20,0,1); 
 			FcnZebra.WrLabel("Coeficiente Kd: ", this._infRegistro1.getAsString("coeficiente"),20,0,1);
 			FcnZebra.WrLabel("Numero Giros:   ", ""+(int)(Double.parseDouble(this._infRegistro1.getAsString("coeficiente"))/10),20,0,1);
-			
-			/*NumberFormat formatter = NumberFormat.getNumberInstance();
+			*/
+			/*--- Ya estaba comentado antes de quitar la prueba del acta
+			 * NumberFormat formatter = NumberFormat.getNumberInstance();
 			formatter.setMinimumFractionDigits(1);
 			formatter.setMaximumFractionDigits(1);
 			String diferencia = formatter.format(this._infRegistro1.getAsDouble("lectura_final")-this._infRegistro1.getAsDouble("lectura_inicial"));
@@ -154,8 +173,8 @@ public class FormatosActas {
 				FcnZebra.WrLabel("Estado Prueba:  ", "Conforme",20,0,1);
 			}else{
 				FcnZebra.WrLabel("Estado Prueba:  ", "No Conforme",20,0,1);
-			}*/
-			int diferencia = -1;
+			}--- Ya estaba comentado antes de quitar la prueba del acta */
+		/*	int diferencia = -1;
 			try{
 				diferencia = (int) ((this._infRegistro1.getAsDouble("lectura_final")*10)-(this._infRegistro1.getAsDouble("lectura_inicial")*10));
 			}catch(Exception e){
@@ -166,7 +185,7 @@ public class FormatosActas {
 			}else{
 				FcnZebra.WrLabel("Estado Prueba:  ", "No Conforme",20,0,1);
 			}
-		}
+		}*/
 		
 		FcnZebra.WrSubTitulo("ACOMETIDAS",10,1,1);
 		this._infRegistro1 = this.ImpSQL.SelectDataRegistro("dig_acometida", "tipo_ingreso,conductor,tipo,calibre,clase,fases,longitud", "solicitud='"+_solicitud+"'");

@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:weightSum="15"
     android:orientation="vertical" >
-
+    
+   
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -16,7 +17,8 @@
 	        android:id="@+id/CensoLblElemento"
 	        android:layout_width="0dp"
 	        android:layout_height="match_parent"
-	        android:layout_weight="3"	        
+	        android:layout_weight="3"
+	        android:textSize="13dp"	        
 	       	android:gravity="right|center_vertical"
 	        android:text="@string/CensoLblElemento"
 	        android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -41,6 +43,7 @@
 	        android:layout_width="0dp"
 	        android:layout_height="match_parent"
 	        android:layout_weight="3"
+	        android:textSize="13dp"	
 	        android:gravity="right|center_vertical"
 	        android:text="@string/CensoLblCarga"
 	        android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -64,6 +67,7 @@
 	        android:layout_width="0dp"
 	        android:layout_height="match_parent"
 	        android:layout_weight="3"
+	        android:textSize="13dp"	
 	        android:gravity="right|center_vertical"
 	        android:text="@string/CensoLblTipoServicio"
 	        android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -87,6 +91,7 @@
 	        android:layout_width="0dp"
 	        android:layout_height="match_parent"
 	        android:layout_weight="3"
+	        android:textSize="13dp"	
 	        android:gravity="right|center_vertical"
 	        android:text="@string/CensoLblVatios"
 	        android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -156,7 +161,7 @@
 	            android:id="@+id/CensoLstElementos"
 	            android:layout_width="wrap_content"
 	            android:layout_height="match_parent" 
-	            android:choiceMode="singleChoice" 
+	            android:choiceMode="singleChoice"
 	        	android:listSelector="@android:color/darker_gray">
 	        </ListView>	
 	    </HorizontalScrollView>
@@ -167,6 +172,7 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="0dp"
 	    android:layout_weight="0.7"
+	    android:textSize="13dp"	
 	    android:text="@string/CensoLblTotalCargaResidencial"
 	    android:textAppearance="?android:attr/textAppearanceMedium" />
 	
@@ -175,6 +181,7 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="0dp"
 	    android:layout_weight="0.7"
+	    android:textSize="13dp"	
 	    android:text="@string/CensoLblTotalCargaComercial"
 	    android:textAppearance="?android:attr/textAppearanceMedium" />
 	
@@ -183,6 +190,7 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="0dp"
 	    android:layout_weight="0.7"
+	    android:textSize="13dp"	
 	    android:text="@string/CensoLblTotalCargaDirecta"
 	    android:textAppearance="?android:attr/textAppearanceMedium" />
 	
@@ -191,6 +199,7 @@
 	   	android:layout_width="match_parent"
 	    android:layout_height="0dp"
 	    android:layout_weight="0.7"
+	    android:textSize="13dp"	
 	    android:text="@string/CensoLblTotalCargaRegistrada"
 	    android:textAppearance="?android:attr/textAppearanceMedium" />
 	
@@ -199,6 +208,7 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="0dp"
 	    android:layout_weight="0.7"
+	    android:textSize="13dp"	
 	    android:text="@string/CensoLblTotalCensoCarga"
 	   	android:textAppearance="?android:attr/textAppearanceMedium" />
 </LinearLayout>

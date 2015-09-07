@@ -119,10 +119,7 @@ public class ListaTrabajo extends Activity implements OnItemSelectedListener{
 				if(!this.FcnSQL.ExistRegistros("dig_actas","solicitud="+this.SolicitudSeleccionada)){
 					DialogInformacion.putExtra("informacion", "No hay registrada Informacion de Actas, No puede Terminar la Solicitud");
 					startActivityForResult(DialogInformacion, CONFIRMACION_INFORMACION);
-				}else if(!this.FcnSQL.ExistRegistros("dig_contador","solicitud="+this.SolicitudSeleccionada)){
-					DialogInformacion.putExtra("informacion", "No hay registro de Contador, No puede Terminar la Solicitud");
-					startActivityForResult(DialogInformacion, CONFIRMACION_INFORMACION);
-				}else{
+				}else {
 					if(this.FcnInSolicitudes.getEstadoSolicitud(this.SolicitudSeleccionada).equals("E")){
 						DialogConfirmacion.putExtra("informacion", "Desea Cerrar La Solicitud "+this.SolicitudSeleccionada);
 						startActivityForResult(DialogConfirmacion, CONFIRMACION_CERRAR_ORDEN);	

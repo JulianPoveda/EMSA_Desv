@@ -16,7 +16,9 @@
             <item android:id="@+id/ActasImpresas" android:title="Actas Impresas"/>
         </menu>
     </item>
-    <item android:id="@+id/Configuracion" android:title="Configuracion"></item><item android:id="@+id/sincronizar" android:title="Sincronizar Fotos"></item><item android:id="@+id/Salir" android:title="Salir"></item>
+    <item android:id="@+id/Configuracion" android:title="Configuracion"></item>
+    <!-- <item android:id="@+id/sincronizar" android:title="Sincronizar Fotos"></item>-->
+    <item android:id="@+id/Salir" android:title="Salir"></item>
     
     
     

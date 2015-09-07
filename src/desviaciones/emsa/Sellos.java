@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import clases.ClassSellos;
 import dialogos.DialogoConfirmacion;
+import dialogos.DialogoInformacion;
 
 import sistema.SQLite;
 import adaptadores.AdaptadorSixItems;
@@ -28,11 +29,14 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 public class Sellos extends Activity implements OnClickListener, OnItemSelectedListener, OnItemClickListener{
 	private Intent 			new_form;
-	private Intent DialogConfirmacion; 	
+	private Intent DialogConfirmacion;
+	private Intent DialogInformacion;
 	private	SQLite			SellosSQL;
 	private ClassSellos		FcnSellos;
 	
-	private static int    	CONFIRMACION_SELLOS	 = 1;
+	private static int    	CONFIRMACION_SERIE	 = 1;
+	private static int    	CONFIRMACION_CLASE	 = 2;
+	private static int    	CONFIRMACION_TIPO	 = 3;
 	
 	private ContentValues				_tempRegistro;
 	private ArrayList<ContentValues> 	_tempTabla;
@@ -40,6 +44,9 @@ public class Sellos extends Activity implements OnClickListener, OnItemSelectedL
 	private String 	FolderAplicacion;
 	private int 	NivelUsuario = 1;	
 	private int 	FilaSeleccionada = -1;
+	private int     intentoNumero    = 0;
+	private int     intentoTipo      = 0;
+	private int     intentoUbicacion = 0;
 	
 	private ArrayList<String> _strTipoIngreso 	= new ArrayList<String>();
 	private ArrayList<String> _strTipoSello	 	= new ArrayList<String>();
@@ -88,6 +95,7 @@ public class Sellos extends Activity implements OnClickListener, OnItemSelectedL
 		_btnEliminar		= (Button) findViewById(R.id.SellosBtnEliminar);
 		
 		DialogConfirmacion 	= new Intent(this,DialogoConfirmacion.class);
+		DialogInformacion   = new Intent(this,DialogoInformacion.class);
 		
 		this._strTipoIngreso = this.FcnSellos.getTipoIngreso();
 		this.AdaptadorTipoIngreso	= new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,this._strTipoIngreso); 
@@ -250,10 +258,15 @@ public class Sellos extends Activity implements OnClickListener, OnItemSelectedL
 				}else if(_txtSerie.getText().toString().isEmpty()){
 					Toast.makeText(this, "No ha ingresado la serie.",Toast.LENGTH_SHORT).show();	
 				}else{
-					if(!this.Solicitud.equals(this.SellosSQL.StrSelectShieldWhere("in_sellos", "solicitud", "serie="+_txtSerie.getText().toString()))){
-						DialogConfirmacion.putExtra("informacion", "La serie no coincide desea Continuar");						
-						startActivityForResult(DialogConfirmacion, CONFIRMACION_SELLOS);
-					}else{
+					String[] claseSello     = _cmbTipoSello.getSelectedItem().toString().split("-");
+					String[] tipoSello      = _cmbUbicacion.getSelectedItem().toString().split("-");					
+					String sello = _txtSerie.getText().toString();
+					String solicitud = this.SellosSQL.StrSelectShieldWhere("in_sellos", "solicitud", "numero="+_txtSerie.getText().toString());
+					
+					if(!this.Solicitud.equals(solicitud) & this.intentoNumero==0){
+						DialogInformacion.putExtra("informacion", "El numero de sello No Coincide");						
+						startActivityForResult(DialogInformacion, CONFIRMACION_SERIE);
+					}else if(!this.Solicitud.equals(solicitud) & this.intentoNumero==1){
 						this.FcnSellos.registrarSello(	this.Solicitud, 
 								_cmbTipoIngreso.getSelectedItem().toString(), 
 								_cmbTipoSello.getSelectedItem().toString(), 
@@ -262,7 +275,54 @@ public class Sellos extends Activity implements OnClickListener, OnItemSelectedL
 								_txtSerie.getText().toString(), 
 								_cmbIrregularidad.getSelectedItem().toString());
 						this.CargarSellosRegistrados();
-					}									
+					}else if(!claseSello[1].equals(this.SellosSQL.StrSelectShieldWhere("in_sellos", "clase", "numero="+_txtSerie.getText().toString())) & this.intentoTipo == 0){
+						DialogInformacion.putExtra("informacion", "El tipo de Sello no Coincide");						
+						startActivityForResult(DialogInformacion, CONFIRMACION_CLASE);
+					}else  if(!claseSello[1].equals(this.SellosSQL.StrSelectShieldWhere("in_sellos", "clase", "numero="+_txtSerie.getText().toString())) & this.intentoTipo == 1){
+						if(!tipoSello[1].equals(this.SellosSQL.StrSelectShieldWhere("in_sellos", "tipo", "numero="+_txtSerie.getText().toString())) & this.intentoUbicacion == 0){
+							DialogInformacion.putExtra("informacion", "La Ubicacion no Coincide");						
+							startActivityForResult(DialogInformacion, CONFIRMACION_TIPO);
+						}else if(!tipoSello[1].equals(this.SellosSQL.StrSelectShieldWhere("in_sellos", "tipo", "numero="+_txtSerie.getText().toString())) & this.intentoUbicacion == 1){
+							this.FcnSellos.registrarSello(	this.Solicitud, 
+									_cmbTipoIngreso.getSelectedItem().toString(), 
+									_cmbTipoSello.getSelectedItem().toString(), 
+									_cmbUbicacion.getSelectedItem().toString(), 
+									_cmbColor.getSelectedItem().toString(), 
+									_txtSerie.getText().toString(), 
+									_cmbIrregularidad.getSelectedItem().toString());
+							this.CargarSellosRegistrados();
+						}else{						
+								this.FcnSellos.registrarSello(	this.Solicitud, 
+										_cmbTipoIngreso.getSelectedItem().toString(), 
+										_cmbTipoSello.getSelectedItem().toString(), 
+										_cmbUbicacion.getSelectedItem().toString(), 
+										_cmbColor.getSelectedItem().toString(), 
+										_txtSerie.getText().toString(), 
+										_cmbIrregularidad.getSelectedItem().toString());
+								this.CargarSellosRegistrados();
+							}
+					}else if(!tipoSello[1].equals(this.SellosSQL.StrSelectShieldWhere("in_sellos", "tipo", "numero="+_txtSerie.getText().toString())) & this.intentoUbicacion == 0){
+						DialogInformacion.putExtra("informacion", "La Ubicacion no Coincide");						
+						startActivityForResult(DialogInformacion, CONFIRMACION_TIPO);
+					}else if(!tipoSello[1].equals(this.SellosSQL.StrSelectShieldWhere("in_sellos", "tipo", "numero="+_txtSerie.getText().toString())) & this.intentoUbicacion == 1){
+						this.FcnSellos.registrarSello(	this.Solicitud, 
+								_cmbTipoIngreso.getSelectedItem().toString(), 
+								_cmbTipoSello.getSelectedItem().toString(), 
+								_cmbUbicacion.getSelectedItem().toString(), 
+								_cmbColor.getSelectedItem().toString(), 
+								_txtSerie.getText().toString(), 
+								_cmbIrregularidad.getSelectedItem().toString());
+						this.CargarSellosRegistrados();
+					}else{						
+							this.FcnSellos.registrarSello(	this.Solicitud, 
+									_cmbTipoIngreso.getSelectedItem().toString(), 
+									_cmbTipoSello.getSelectedItem().toString(), 
+									_cmbUbicacion.getSelectedItem().toString(), 
+									_cmbColor.getSelectedItem().toString(), 
+									_txtSerie.getText().toString(), 
+									_cmbIrregularidad.getSelectedItem().toString());
+							this.CargarSellosRegistrados();
+						}									
 				}
 				
 				break;
@@ -278,18 +338,22 @@ public class Sellos extends Activity implements OnClickListener, OnItemSelectedL
 	}
 	
 	@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(resultCode == RESULT_OK && requestCode == CONFIRMACION_SELLOS) {
-			if(data.getExtras().getBoolean("accion")){
-				this.FcnSellos.registrarSello(	this.Solicitud, 
-						_cmbTipoIngreso.getSelectedItem().toString(), 
-						_cmbTipoSello.getSelectedItem().toString(), 
-						_cmbUbicacion.getSelectedItem().toString(), 
-						_cmbColor.getSelectedItem().toString(), 
-						_txtSerie.getText().toString(), 
-						_cmbIrregularidad.getSelectedItem().toString());
-				this.CargarSellosRegistrados();
-			}
-		}
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {				
+		if(resultCode == RESULT_OK && requestCode == CONFIRMACION_SERIE){
+			if(data.getExtras().getBoolean("accion")){				
+				_txtSerie.setText("");
+				this.intentoNumero = 1;
+			}			
+		}else if(resultCode == RESULT_OK && requestCode == CONFIRMACION_CLASE){
+			if(data.getExtras().getBoolean("accion")){				
+				_cmbTipoSello.setSelection(0);
+				this.intentoTipo = 1;
+			}			
+		}else if(resultCode == RESULT_OK && requestCode == CONFIRMACION_TIPO){
+			if(data.getExtras().getBoolean("accion")){				
+				_cmbUbicacion.setSelection(0);
+				this.intentoUbicacion = 1;
+			}			
+		} 		
 	}
 }
