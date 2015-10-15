@@ -32,6 +32,6 @@ public class ClassUsuario {
 	
 	public int getNivelUsuario(String _usuario){
 		return (this.UsuarioSQL.IntSelectShieldWhere("amd_usuarios", "perfil", "login='"+_usuario+"'"));
-	}
+	}	
 
 }

@@ -226,6 +226,14 @@ public class Actas extends Activity implements OnClickListener, global_var{
 				startActivity(this.new_form);
 				return true;
 				
+			case R.id.Pruebas:
+				this.new_form = new Intent(this, PruebaIntegracion.class);
+				this.new_form.putExtra("Solicitud", this.Solicitud);
+				this.new_form.putExtra("NivelUsuario", this.NivelUsuario);
+				this.new_form.putExtra("FolderAplicacion", this.FolderAplicacion);
+				startActivity(this.new_form);
+				return true;
+				
 			case R.id.ImpresionOriginal:
 				this.FormatoImp.FormatoDesviacion(this.Solicitud, "Original", 1);
 				return true;
@@ -238,9 +246,9 @@ public class Actas extends Activity implements OnClickListener, global_var{
 				this.FormatoImp.FormatoDesviacion(this.Solicitud, "Archivo", 3);
 				return true;
 			
-			/*case R.id.Foto:
+			case R.id.Foto:
 				this.getFoto();
-				return true;*/
+				return true;
 				
 			default:
 				return super.onOptionsItemSelected(item);	

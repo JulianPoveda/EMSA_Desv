@@ -52,8 +52,13 @@ public class DateTime {
 			if(dateSplit[1].equals(NameOfMonthShort[i].toUpperCase())){
 				_mes = i+1;
 			}
+		}
+		if(_mes < 10){
+			return "20"+dateSplit[2]+"-"+"0"+_mes+"-"+dateSplit[0];
+		}
+		else{
+			return "20"+dateSplit[2]+"-"+_mes+"-"+dateSplit[0];	
 		}		
-		return "20"+dateSplit[2]+"-"+_mes+"-"+dateSplit[0];
 	}
 	
 	public String GetFecha(){

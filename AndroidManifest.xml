@@ -115,6 +115,10 @@
             android:label="@string/title_activity_lista_sellos"
             android:theme="@android:style/Theme.Dialog" >
         </activity>
+        <activity
+            android:name=".PruebaIntegracion"
+            android:label="@string/title_activity_prueba_integracion" >
+        </activity>
     </application>
 
 </manifest>

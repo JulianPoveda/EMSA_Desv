@@ -46,4 +46,11 @@ public class ClassContador {
 	public boolean eliminarDatosPruebas(String _solicitud){
 		return this.ContadorSQL.DeleteRegistro("dig_pruebas", "solicitud='"+_solicitud+"'");
 	}
+	
+	public boolean datosConsumos(String _solicitud, int consumoEstimado, String consumoAnterior){
+		this._tempRegistro.clear();
+		this._tempRegistro.put("consumo_anterior",consumoAnterior);
+		this._tempRegistro.put("consumo_estimado", consumoEstimado);		
+		return this.ContadorSQL.UpdateRegistro("dig_pruebas", this._tempRegistro,"solicitud='"+_solicitud+"'");
+	}
 }

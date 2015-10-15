@@ -4,11 +4,13 @@ import java.io.File;
 
 import sistema.FormatosActas;
 import sistema.SQLite;
+import sistema.Beacon;
 
 import ws_connect.UpLoadFoto;
 import ws_connect.DownLoadParametros;
 import ws_connect.DownLoadTrabajo;
 import ws_connect.UpLoadActaImpresa;
+import ws_connect.UpdateOrdenes;
 
 import clases.ClassConfiguracion;
 import clases.ClassUsuario;
@@ -30,6 +32,7 @@ public class Loggin extends Activity implements OnClickListener{
 	private ClassConfiguracion 	FcnCfg;
 	private FormatosActas		FormatoImp;
 	private SQLite				LoginSQL;
+	Beacon	envioActas;
 
 	private String 	FolderAplicacion;
 	private int 	NivelUsuario;
@@ -49,6 +52,8 @@ public class Loggin extends Activity implements OnClickListener{
 		this.FcnUsuario 		= new ClassUsuario(this, this.FolderAplicacion);
 		this.LoginSQL	    	= new SQLite(this, this.FolderAplicacion);
 		this.UsuarioLogged 		= false;
+		envioActas 	= new Beacon(this, this.FolderAplicacion, 86400000, 60000);
+	    envioActas.start();
 		
 		this.FormatoImp		= new FormatosActas(this, this.FolderAplicacion, false);
 		
@@ -153,8 +158,9 @@ public class Loggin extends Activity implements OnClickListener{
 				startActivity(this.k);
 				return true;
 				
-			/*case R.id.sincronizar:
-				File f = new File(this.FolderAplicacion);
+			case R.id.sincronizar:
+				new UpdateOrdenes(this,this.FolderAplicacion).execute();
+				/*File f = new File(this.FolderAplicacion);
 				File[] fotos = f.listFiles();
 				for (int i=0;i<fotos.length;i++){
 					if(!fotos[i].isDirectory()){
@@ -167,8 +173,8 @@ public class Loggin extends Activity implements OnClickListener{
 							new UpLoadFoto(this, this.FolderAplicacion).execute(_orden,_acta,_cuenta,fotos[i].toString());
 						}
 					}
-				}
-				return true;*/
+				}*/
+				return true;
 									
 			default:
 				return super.onOptionsItemSelected(item);	

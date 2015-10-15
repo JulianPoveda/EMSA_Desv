@@ -12,8 +12,11 @@
     <string name="IntegracionLblTitulo">PRUEBA DE INTEGRACION</string>
     <string name="IntegracionLblLecturaIni">Lectura Inicial</string>
     <string name="IntegracionLblLecturaFin">Lectura Final</string>
+    <string name="ConsumoAnterior">Consumo Anterior:</string>
+    <string name="ConsumoEstimado">Consumo Proyectado:</string>
     <string name="IntegracionLblKd">Coeficiente Kd</string>
     <string name="IntegracionBtnRegistrar">Registrar</string>
     <string name="IntegracionBtnEliminar">Eliminar</string>
     
 </resources>
+

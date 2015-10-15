@@ -32,22 +32,23 @@ public class ClassInSolicitudes {
 			if(this.LineasSQL[0].equals("D")){
 				this.BorrarRegistroBySolicitud(this.LineasSQL[1]);		
 			}else if(this.LineasSQL[0].equals("T")){
-				this._tempRegistro.put("id_serial", 		this.LineasSQL[1]);
-				this._tempRegistro.put("solicitud", 		this.LineasSQL[2]);
-				this._tempRegistro.put("dependencia", 		this.LineasSQL[3]);
-				this._tempRegistro.put("pda", 				this.LineasSQL[4]);
-				this._tempRegistro.put("cuenta", 			this.LineasSQL[5]);
-				this._tempRegistro.put("municipio", 		this.LineasSQL[6]);
-				this._tempRegistro.put("suscriptor", 		this.LineasSQL[7]);
-				this._tempRegistro.put("direccion", 		this.LineasSQL[8]);
-				this._tempRegistro.put("clase_servicio",	this.LineasSQL[9]);
-				this._tempRegistro.put("estrato", 			this.LineasSQL[10]);
-				this._tempRegistro.put("nodo", 				this.LineasSQL[11]);
-				this._tempRegistro.put("marca", 			this.LineasSQL[12]);
-				this._tempRegistro.put("serie", 			this.LineasSQL[13]);
-				this._tempRegistro.put("carga_contratada", 	this.LineasSQL[14]);
-				this._tempRegistro.put("cod_apertura", 		this.LineasSQL[15]);
-				this._tempRegistro.put("tipo_accion", 		this.LineasSQL[16]);
+				this._tempRegistro.put("id_serial", 			this.LineasSQL[1]);
+				this._tempRegistro.put("solicitud", 			this.LineasSQL[2]);
+				this._tempRegistro.put("dependencia", 			this.LineasSQL[3]);
+				this._tempRegistro.put("pda", 					this.LineasSQL[4]);
+				this._tempRegistro.put("cuenta", 				this.LineasSQL[5]);
+				this._tempRegistro.put("municipio", 			this.LineasSQL[6]);
+				this._tempRegistro.put("suscriptor", 			this.LineasSQL[7]);
+				this._tempRegistro.put("direccion", 			this.LineasSQL[8]);
+				this._tempRegistro.put("clase_servicio",		this.LineasSQL[9]);
+				this._tempRegistro.put("estrato", 				this.LineasSQL[10]);
+				this._tempRegistro.put("nodo", 					this.LineasSQL[11]);
+				this._tempRegistro.put("marca", 				this.LineasSQL[12]);
+				this._tempRegistro.put("serie", 				this.LineasSQL[13]);
+				this._tempRegistro.put("carga_contratada", 		this.LineasSQL[14]);
+				this._tempRegistro.put("cod_apertura", 			this.LineasSQL[15]);
+				this._tempRegistro.put("tipo_accion", 			this.LineasSQL[16]);
+				this._tempRegistro.put("factor_multiplicacion", this.LineasSQL[17]);
 				this.InSolicitudesSQL.InsertRegistro("in_ordenes_trabajo", this._tempRegistro);
 			}else if(this.LineasSQL[0].equals("S")){
 				this._tempRegistro.put("id_serial",	this.LineasSQL[1]);

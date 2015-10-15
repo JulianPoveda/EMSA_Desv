@@ -67,23 +67,24 @@ public class SQLite {
 			db.execSQL("INSERT INTO amd_configuracion (item,valor,nivel) VALUES ('version','2.2',0)");
 			
 			/**Tabla con la lista de solicitudes que se han asignado**/
-			db.execSQL( "CREATE TABLE in_ordenes_trabajo( id_serial			INTEGER NOT NULL PRIMARY KEY," +
-														" solicitud			VARCHAR(20) UNIQUE NOT NULL," +
-														" dependencia 		VARCHAR(20) NOT NULL," +
-														" pda				INTEGER NOT NULL," +
-														" cuenta			VARCHAR(20) NOT NULL," +
-														" municipio 		INTEGER NOT NULL," +
-														" suscriptor		VARCHAR(100) NOT NULL," +
-														" direccion			VARCHAR(100) NOT NULL," +
-														" clase_servicio	VARCHAR(20) NOT NULL," +
-														" estrato 			INTEGER," +
-														" nodo				VARCHAR(10) NOT NULL," +
-														" marca				VARCHAR(20) NOT NULL," +
-														" serie				VARCHAR(50) NOT NULL," +
-														" carga_contratada	INTEGER," +
-														" cod_apertura		VARCHAR(10) NOT NULL," +
-														" tipo_accion		INTEGER," +
-														" estado			VARCHAR(1) NOT NULL DEFAULT 'P');");
+			db.execSQL( "CREATE TABLE in_ordenes_trabajo( id_serial			    INTEGER NOT NULL PRIMARY KEY," +
+														" solicitud			    VARCHAR(20) UNIQUE NOT NULL," +
+														" dependencia 		    VARCHAR(20) NOT NULL," +
+														" pda				    INTEGER NOT NULL," +
+														" cuenta			    VARCHAR(20) NOT NULL," +
+														" municipio 		    INTEGER NOT NULL," +
+														" suscriptor		    VARCHAR(100) NOT NULL," +
+														" direccion			    VARCHAR(100) NOT NULL," +
+														" clase_servicio	    VARCHAR(20) NOT NULL," +
+														" estrato 			    INTEGER," +
+														" nodo				    VARCHAR(10) NOT NULL," +
+														" marca				    VARCHAR(20) NOT NULL," +
+														" serie				    VARCHAR(50) NOT NULL," +
+														" carga_contratada	    INTEGER," +
+														" cod_apertura		    VARCHAR(10) NOT NULL," +
+														" tipo_accion		    INTEGER," +
+														" factor_multiplicacion INTEGER,"+
+														" estado			    VARCHAR(1) NOT NULL DEFAULT 'P');");
 			
 			db.execSQL(	"CREATE TABLE in_sellos( id_serial 	INTEGER NOT NULL," +
 												"solicitud  VARCHAR(20) NOT NULL," +
@@ -173,6 +174,8 @@ public class SQLite {
 			db.execSQL( "CREATE TABLE dig_pruebas(  solicitud 			VARCHAR(20) NOT NULL PRIMARY KEY," +
 													"lectura_inicial 	NUMERIC(10,1) NOT NULL," +
 													"lectura_final		NUMERIC(10,1) NOT NULL," +
+													"consumo_anterior	NUMERIC(10,1) NULL," +
+													"consumo_estimado	NUMERIC(10,1) NULL," +
 													"coeficiente		NUMERIC(10,3) NOT NULL);");
 			
 			db.execSQL( "CREATE TABLE dig_actas(     solicitud 		VARCHAR(20) NOT NULL PRIMARY KEY," +
@@ -279,6 +282,13 @@ public class SQLite {
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			db.execSQL("UPDATE amd_configuracion SET valor = '2.2' WHERE item = 'version'");
+			
+			db.execSQL( "CREATE TABLE dig_pruebas(  solicitud 	VARCHAR(20) NOT NULL PRIMARY KEY," +
+													"lectura_inicial 	NUMERIC(10,1) NOT NULL," +
+													"lectura_final		NUMERIC(10,1) NOT NULL," +
+													"consumo_anterior	NUMERIC(10,1) NULL," +
+													"consumo_estimado	NUMERIC(10,1) NULL," +
+													"coeficiente		NUMERIC(10,3) NOT NULL);");
 			
 			/*db.execSQL(	"CREATE TRIGGER tg_fecha_impresion AFTER INSERT ON dig_impresiones_inf FOR EACH ROW BEGIN " +
 						"	UPDATE dig_impresiones_inf SET fecha_imp=datetime('now','localtime') WHERE solicitud = NEW.solicitud AND id_impresion = NEW.id_impresion;" +

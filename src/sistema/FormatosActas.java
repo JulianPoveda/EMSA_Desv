@@ -155,14 +155,14 @@ public class FormatosActas {
 			FcnZebra.WrLabel("tipo:     ", this._infRegistro1.getAsString("tipo"),20,0,1);
 		}
 		
-		/*FcnZebra.WrSubTitulo("PRUEBA DE INTEGRACION",10,1,1);
-		this._infRegistro1 = this.ImpSQL.SelectDataRegistro("dig_pruebas", "lectura_inicial,lectura_final,coeficiente", "solicitud='"+_solicitud+"'");
+		FcnZebra.WrSubTitulo("PRUEBA DE INTEGRACION",10,1,1);
+		this._infRegistro1 = this.ImpSQL.SelectDataRegistro("dig_pruebas", "lectura_inicial,lectura_final,coeficiente,consumo_anterior,consumo_estimado", "solicitud='"+_solicitud+"'");
 		if(this._infRegistro1.size()>0){
 			FcnZebra.WrLabel("Lectura Inicial:", this._infRegistro1.getAsString("lectura_inicial"),20,0,1);
 			FcnZebra.WrLabel("Lectura Final:  ", this._infRegistro1.getAsString("lectura_final"),20,0,1); 
 			FcnZebra.WrLabel("Coeficiente Kd: ", this._infRegistro1.getAsString("coeficiente"),20,0,1);
 			FcnZebra.WrLabel("Numero Giros:   ", ""+(int)(Double.parseDouble(this._infRegistro1.getAsString("coeficiente"))/10),20,0,1);
-			*/
+			
 			/*--- Ya estaba comentado antes de quitar la prueba del acta
 			 * NumberFormat formatter = NumberFormat.getNumberInstance();
 			formatter.setMinimumFractionDigits(1);
@@ -174,7 +174,8 @@ public class FormatosActas {
 			}else{
 				FcnZebra.WrLabel("Estado Prueba:  ", "No Conforme",20,0,1);
 			}--- Ya estaba comentado antes de quitar la prueba del acta */
-		/*	int diferencia = -1;
+			
+			int diferencia = -1;
 			try{
 				diferencia = (int) ((this._infRegistro1.getAsDouble("lectura_final")*10)-(this._infRegistro1.getAsDouble("lectura_inicial")*10));
 			}catch(Exception e){
@@ -185,7 +186,9 @@ public class FormatosActas {
 			}else{
 				FcnZebra.WrLabel("Estado Prueba:  ", "No Conforme",20,0,1);
 			}
-		}*/
+			FcnZebra.WrLabel("Consumo Anterior:  ", this._infRegistro1.getAsString("consumo_anterior")+" kwh/mes",20,1,1);
+			FcnZebra.WrLabel("Consumo Proyectado:  ", this._infRegistro1.getAsString("consumo_estimado")+" kwh/mes",20,0,1);
+		}
 		
 		FcnZebra.WrSubTitulo("ACOMETIDAS",10,1,1);
 		this._infRegistro1 = this.ImpSQL.SelectDataRegistro("dig_acometida", "tipo_ingreso,conductor,tipo,calibre,clase,fases,longitud", "solicitud='"+_solicitud+"'");

@@ -54,11 +54,11 @@ public class Contador extends Activity implements OnClickListener{
 	private ArrayAdapter<String> AdaptadorTipoMedidor;
 	
 	private Spinner 	_cmbMarcaMedidor, _cmbTipoMedidor;
-	private EditText 	_txtSerie, _txtLectura1, _txtLectura2, _txtLectura3, _txtLecturaIni, _txtLecturaFin, _txtCoeficiente;
-	private EditText et;
+	private EditText 	_txtSerie, _txtLectura1, _txtLectura2, _txtLectura3;
+	private EditText    et;
 	private ArrayList<String> array_sort = new ArrayList<String>();
     int textlength = 0;
-	private Button   	_btnRegistrarContador, _btnEliminarContador, _btnRegistrarPrueba, _btnEliminarPrueba;
+	private Button   	_btnRegistrarContador, _btnEliminarContador;
 	
 	private String 	StringTipo[]		= {"MONOFASICO","BIFASICO","TRIFASICO"};
 
@@ -72,10 +72,10 @@ public class Contador extends Activity implements OnClickListener{
 		this.FolderAplicacion 	= bundle.getString("FolderAplicacion");
 		this.Solicitud			= bundle.getString("Solicitud");
 		
-		this.FcnContador = new ClassContador(this, this.FolderAplicacion);
-		this.ContadorSQL = new SQLite(this, this.FolderAplicacion);
-		this.ContadorUtil= new Utilidades();
-		this.ContadorTime= DateTime.getInstance();
+		this.FcnContador 		= new ClassContador(this, this.FolderAplicacion);
+		this.ContadorSQL 		= new SQLite(this, this.FolderAplicacion);
+		this.ContadorUtil		= new Utilidades();
+		this.ContadorTime		= DateTime.getInstance();
 		
 		DialogConfirmacion 	= new Intent(this,DialogoConfirmacion.class);
 		DialogInformacion 	= new Intent(this,DialogoInformacion.class);
@@ -88,13 +88,7 @@ public class Contador extends Activity implements OnClickListener{
 		this._txtLectura3		= (EditText) findViewById(R.id.ContadorTxtLectura3);
 		this.et 				= (EditText) findViewById(R.id.BuscarMarca);
 		this._btnRegistrarContador	= (Button) findViewById(R.id.ContadorBtnRegistrar);
-		this._btnEliminarContador	= (Button) findViewById(R.id.ContadorBtnEliminar);
-		
-		//this._txtLecturaIni	= (EditText) findViewById(R.id.IntegracionTxtLecturaIni);
-		//this._txtLecturaFin	= (EditText) findViewById(R.id.IntegracionTxtLecturaFin);
-		//this._txtCoeficiente= (EditText) findViewById(R.id.IntegracionTxtKd);
-		//this._btnRegistrarPrueba= (Button) findViewById(R.id.IntegracionBtnRegistrar);
-		//this._btnEliminarPrueba	= (Button) findViewById(R.id.IntegracionBtnEliminar);
+		this._btnEliminarContador	= (Button) findViewById(R.id.ContadorBtnEliminar);		
 			 
 		this._tempTabla = this.ContadorSQL.SelectData("vista_parametros_medidores", "resumen", "marca IS NOT NULL");
 		this.ContadorUtil.ArrayContentValuesToString(StringMarcaMedidores, this._tempTabla, "resumen",false);
@@ -109,9 +103,7 @@ public class Contador extends Activity implements OnClickListener{
 		
 		this._btnRegistrarContador.setOnClickListener(this);
 		this._btnEliminarContador.setOnClickListener(this);
-		
-		//this._btnRegistrarPrueba.setOnClickListener(this);
-		//this._btnEliminarPrueba.setOnClickListener(this);
+				
 		 et.addTextChangedListener(new TextWatcher() {
 	            public void afterTextChanged(Editable s) {
 	                // Abstract Method of TextWatcher Interface.
@@ -173,8 +165,8 @@ public class Contador extends Activity implements OnClickListener{
 			this._btnEliminarContador.setEnabled(false);
 		}
 	}
-	/*
-	private void CargarPruebasContador(){
+	
+	/*private void CargarPruebasContador(){
 		this._tempRegistro.clear();
 		this._tempRegistro = this.ContadorSQL.SelectDataRegistro("dig_pruebas", 
 				"lectura_inicial,lectura_final,coeficiente", 
@@ -356,9 +348,9 @@ public class Contador extends Activity implements OnClickListener{
 					this.CargarPruebasContador();
 					Toast.makeText(this, "Prueba Registrada Correctamente", Toast.LENGTH_LONG).show();
 				}
-				break;*/
+				break;
 				
-		  /*case R.id.IntegracionBtnEliminar:
+		  case R.id.IntegracionBtnEliminar:
 				if(this.FcnContador.eliminarDatosPruebas(this.Solicitud)){
 					this.CargarPruebasContador();
 					Toast.makeText(this, "Prueba Eliminada Correctamente", Toast.LENGTH_LONG).show();
