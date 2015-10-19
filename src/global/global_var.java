@@ -20,8 +20,8 @@ public interface global_var {
      * Constantes para el manejo de las fotos
      */
     final int   _SIZZE_BUFFER       = 5;
-    final int   _WIDTH_PICTURE      = 640;
-    final int   _HEIGHT_PICTURE     = 480;
+    final int   _WIDTH_PICTURE      = 500;
+    final int   _HEIGHT_PICTURE     = 500;
 
 
     public static String name_database      = "BdDesviaciones_Lecturas";

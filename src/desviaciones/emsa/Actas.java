@@ -8,6 +8,7 @@ import sistema.FormatosActas;
 import sistema.SQLite;
 import sistema.Utilidades;
 import ws_connect.UpLoadFoto;
+import ws_connect.UploaderFoto;
 
 import clases.ClassActas;
 import clases.ClassConfiguracion;
@@ -286,7 +287,8 @@ public class Actas extends Activity implements OnClickListener, global_var{
         	if(resultCode == RESULT_OK && requestCode == INICIAR_CAMARA){
         		this.FcnImage.resizeImage(this.nombreFoto,_WIDTH_PICTURE, _HEIGHT_PICTURE);
         		
-        		new UpLoadFoto(this, this.FolderAplicacion).execute(_txtOrden.getText().toString(),_txtActa.getText().toString(),_txtCuenta.getText().toString(),this.fotoParcial);        		
+        		//new UpLoadFoto(this, this.FolderAplicacion).execute(_txtOrden.getText().toString(),_txtActa.getText().toString(),_txtCuenta.getText().toString(),this.fotoParcial);        		
+        		 new UploaderFoto(this, this.FolderAplicacion).execute(this.fotoParcial,_txtOrden.getText().toString(),_txtActa.getText().toString(),_txtCuenta.getText().toString());
             }
         }catch(Exception e){
 
